@@ -42,7 +42,7 @@ class ItemDetailScreen<T extends ExplorableItem> extends StatelessWidget {
 class ItemDetail<T extends ExplorableItem> extends StatefulWidget {
   final T item;
 
-  static const StorageImage _image = StorageImage(size: ImageSize.large);
+  static const StorageImage _image = StorageImage(size: ImageSize.full);
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
