@@ -99,11 +99,11 @@ class ItemsTab extends StatelessWidget {
         ),
         NavigationCard(
           title: 'Attachments',
-          image: 'assets/images/card_heroes/visors.png',
+          image: 'assets/images/card_heroes/attachments.png',
           pageRoute: () => MaterialPageRoute<void>(
             builder: (context) => const ItemSectionListScreen<Armor>(),
             settings: RouteSettings(
-              name: '${ItemSectionListScreen.routeName}/visors',
+              name: '${ItemSectionListScreen.routeName}/attachments',
               arguments: ItemSectionListScreenArguments(
                 title: 'Attachments',
                 query: ItemType.attachment.getQuery('armor.class'),
