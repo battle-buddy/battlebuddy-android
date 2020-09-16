@@ -1,0 +1,27 @@
+# Todo List
+
+- [x] Implement item detail screen
+- [x] Implement Firestore user object managment
+- [ ] Implement metadata
+- [x] Implement Firebase Analytics
+- [x] Implement Damage Calculator
+- [x] Implement Penetration Calculator
+- [x] Implement Price Check
+- [x] Implement Ballistics screen
+- [x] Implement item comparison feature
+- [x] Implement more screen
+- [x] Implement item tables
+- [ ] Implement item search
+- [ ] Implement item section comparison
+- [ ] Implement ammo grenade properties
+- [x] Improve item tables
+- [ ] Fix price check star state
+- [x] Add unit types to comparison graph values
+- [ ] Improve item detail tile lists
+- [ ] Implement BLoC pattern (?)
+- [x] Implement in-app review API
+- [ ] Implement embedded YouTube player
+- [ ] Implement predefined queries by item type (?)
+- [ ] Cleanup
+- [ ] Polishing
+- [ ] Write tests

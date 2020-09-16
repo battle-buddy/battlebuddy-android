@@ -1,0 +1,72 @@
+include: package:pedantic/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - lib/l10n/**
+    - lib/modules/ballistics_engine/bindings.dart
+  strong-mode:
+    implicit-dynamic: false
+  errors:
+    missing_required_param: warning
+
+linter:
+  rules:
+    public_member_api_docs: false
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+    directives_ordering: true
+    prefer_relative_imports: true
+    avoid_catches_without_on_clauses: true
+    file_names: true
+    use_to_and_as_if_applicable: true
+    avoid_function_literals_in_foreach_calls: true
+    # - always_declare_return_types
+    # - always_specify_types
+    # - annotate_overrides
+    # - avoid_as
+    avoid_empty_else: true
+    avoid_init_to_null: true
+    avoid_return_types_on_setters: true
+    avoid_web_libraries_in_flutter: true
+    await_only_futures: true
+    camel_case_types: true
+    cancel_subscriptions: true
+    close_sinks: true
+    # comment_references: true # we do not presume as to what people want to reference in their dartdocs
+    # constant_identifier_names: true # https://github.com/dart-lang/linter/issues/204
+    control_flow_in_finally: true
+    empty_constructor_bodies: true
+    empty_statements: true
+    hash_and_equals: true
+    implementation_imports: true
+    # invariant_booleans: true
+    # iterable_contains_unrelated_type: true
+    library_names: true
+    # library_prefixes: true
+    # list_remove_unrelated_type: true
+    # literal_only_boolean_expressions: true
+    non_constant_identifier_names: true
+    # one_member_abstracts: true
+    # only_throw_errors: true
+    # overridden_fields: true
+    package_api_docs: true
+    package_names: true
+    package_prefixed_library_names: true
+    prefer_is_not_empty: true
+    # prefer_mixin: true # https://github.com/dart-lang/language/issues/32
+    slash_for_doc_comments: true
+    # sort_constructors_first: true
+    # sort_unnamed_constructors_first: true
+    # super_goes_last: true # no longer needed w/ Dart 2
+    test_types_in_equals: true
+    throw_in_finally: true
+    # type_annotate_public_apis: true # subset of always_specify_types
+    type_init_formals: true
+    # unawaited_futures: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_getters_setters: true
+    unnecessary_statements: true
+    unrelated_type_equality_checks: true
+    valid_regexps: true

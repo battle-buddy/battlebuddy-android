@@ -1,0 +1,7 @@
+name: 'BallisticsEngine'
+description: 'Bindings to Ballistics Engine RS'
+
+output: 'lib/modules/ballistics_engine/bindings.dart'
+headers:
+  entry-points:
+    - 'android/app/src/main/jniLibs/ballistics_engine_rs.h'
