@@ -254,15 +254,15 @@ class _SectionListState<T extends ExplorableSectionItem>
                         ? () => _onCompare(index)
                         : null,
                     child: Padding(
-                      padding: const EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(3),
                       child: Text(
                         'Compare',
                         style: Theme.of(context).textTheme.subtitle1.copyWith(
                               color: section.items.length > 1
                                   ? Theme.of(context).accentColor
-                                  : Colors.grey,
+                                  : Colors.grey[600],
                               fontWeight: FontWeight.w400,
-                              fontSize: 18,
+                              fontSize: 17,
                             ),
                       ),
                     ),
