@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +7,7 @@ import '../../../common/error.dart';
 import '../../../firebase.dart';
 import '../../../models/items/item.dart';
 import '../../../providers/item.dart';
+import 'item_compare.dart';
 import 'item_detail.dart';
 
 class ItemListScreenArguments {
@@ -192,6 +195,22 @@ class _SectionListState<T extends ExplorableSectionItem>
     super.dispose();
   }
 
+  void _onCompare(int index) {
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ItemComparisonScreen<T>(),
+        settings: RouteSettings(
+          name: ItemComparisonScreen.routeName,
+          arguments: ItemComparisonScreenArguments(
+            _sections.expand((e) => e.items).toList(growable: false),
+            HashSet.from(_sections[index].items.map<String>((e) => e.id)),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildSeparator(BuildContext context, int index) {
     return const SizedBox(height: 15);
   }
@@ -217,12 +236,39 @@ class _SectionListState<T extends ExplorableSectionItem>
               right: 15,
               bottom: 15,
             ),
-            child: Text(
-              section.title,
-              style: Theme.of(context).textTheme.headline5.copyWith(
-                    color: Theme.of(context).textTheme.bodyText2.color,
-                    fontWeight: FontWeight.w600,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  section.title,
+                  style: Theme.of(context).textTheme.headline5.copyWith(
+                        color: Theme.of(context).textTheme.bodyText2.color,
+                        fontWeight: FontWeight.w600,
+                      ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: section.items.length > 1
+                        ? () => _onCompare(index)
+                        : null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Text(
+                        'Compare',
+                        style: Theme.of(context).textTheme.subtitle1.copyWith(
+                              color: section.items.length > 1
+                                  ? Theme.of(context).accentColor
+                                  : Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                            ),
+                      ),
+                    ),
                   ),
+                ),
+              ],
             ),
           ),
           Container(
