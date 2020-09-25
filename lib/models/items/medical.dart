@@ -114,7 +114,9 @@ class Medical extends Item implements ExplorableSectionItem {
                           ? 'Supressed for ${e.value.duration.inSeconds}s'
                           : 'Removed')
                       : (e.value.value != 0
-                          ? '${e.value.value} ${e.value.isPercent ? '%' : ''}'
+                          ? (e.value.isPercent
+                              ? (e.value.value * 100).toString() + ' %'
+                              : '${e.value.value}')
                           : 'Added for ${e.value.duration.inSeconds}s'),
                 ),
               )
