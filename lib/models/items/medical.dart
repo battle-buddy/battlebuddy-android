@@ -67,7 +67,8 @@ class Medical extends Item implements ExplorableSectionItem {
         assert(map['useTime'] != null),
         medicalType = (map['type'] as String).toMedicalType(),
         resources = map['resources'].toInt(),
-        useTime = Duration(seconds: map['useTime'].toInt()),
+        useTime =
+            Duration(milliseconds: (map['useTime'].toDouble() * 1000).toInt()),
         effects = Effects.fromMap(map['effects']),
         super.fromMap(map, reference: reference);
 
@@ -111,13 +112,13 @@ class Medical extends Item implements ExplorableSectionItem {
                   name: '${e.key.asTitle}',
                   value: e.value.removes
                       ? (e.value.duration.inSeconds > 0
-                          ? 'Supressed for ${e.value.duration.inSeconds}s'
+                          ? 'Supressed for ${e.value.duration.inMilliseconds / 1000}s'
                           : 'Removed')
                       : (e.value.value != 0
                           ? (e.value.isPercent
                               ? (e.value.value * 100).toString() + ' %'
                               : '${e.value.value}')
-                          : 'Added for ${e.value.duration.inSeconds}s'),
+                          : 'Added for ${e.value.duration.inMilliseconds / 1000}s'),
                 ),
               )
               .toList(growable: false),
@@ -131,7 +132,7 @@ class Medical extends Item implements ExplorableSectionItem {
                         (e) => DisplayProperty(
                           name: '${e.name.asTitle}',
                           value:
-                              '${e.value.truncate()} lvl. for ${e.duration.inSeconds}s',
+                              '${e.value.truncate()} lvl. for ${e.duration.inMilliseconds / 1000}s',
                         ),
                       )
                       .toList(growable: false),
@@ -143,8 +144,9 @@ class Medical extends Item implements ExplorableSectionItem {
   @override
   List<ComparableProperty> get comparableProperties => [
         ComparableProperty('Resources', resources),
-        ComparableProperty('Use Time', useTime.inSeconds,
-            isLowerBetter: true, displayValue: '${useTime.inSeconds} sec.'),
+        ComparableProperty('Use Time', useTime.inMilliseconds,
+            isLowerBetter: true,
+            displayValue: '${useTime.inMilliseconds / 1000} sec.'),
       ];
 }
 
@@ -208,11 +210,15 @@ class Effect {
   Effect.fromMap(Map<String, dynamic> map)
       : name = map['name'],
         resourceCosts = map['resourceCosts'],
-        fadeIn = Duration(milliseconds: map['fadeIn'].toInt()),
-        fadeOut = Duration(milliseconds: map['fadeOut'].toInt()),
+        fadeIn =
+            Duration(microseconds: (map['fadeIn'].toDouble() * 1000).toInt()),
+        fadeOut =
+            Duration(microseconds: (map['fadeOut'].toDouble() * 1000).toInt()),
         chance = map['chance'].toDouble(),
-        delay = Duration(milliseconds: map['delay'].toInt()),
-        duration = Duration(seconds: map['duration'].toInt()),
+        delay =
+            Duration(microseconds: (map['delay'].toDouble() * 1000).toInt()),
+        duration =
+            Duration(milliseconds: (map['duration'].toDouble() * 1000).toInt()),
         value = map['value'].toDouble(),
         isPercent = map['isPercent'],
         removes = map['removes'],

@@ -68,13 +68,15 @@ class Throwable extends Item implements ExplorableSectionItem {
         assert(map['strength'] != null),
         assert(map['emitTime'] != null),
         throwableType = map['type'].toString().parseThrowableType,
-        delay = Duration(seconds: map['delay'].toInt()),
+        delay =
+            Duration(milliseconds: (map['delay'].toDouble() * 1000).toInt()),
         fragCount = map['fragCount'].toInt(),
         minDistance = Length(meter: map['minDistance'].toDouble()),
         maxDistance = Length(meter: map['maxDistance'].toDouble()),
         contusionDistance = Length(meter: map['contusionDistance'].toDouble()),
         strength = map['strength'].toDouble(),
-        emitTime = Duration(seconds: map['emitTime'].toInt()),
+        emitTime =
+            Duration(milliseconds: (map['emitTime'].toDouble() * 1000).toInt()),
         super.fromMap(map, reference: reference);
 
   Throwable.fromSnapshot(DocumentSnapshot snapshot)
@@ -97,7 +99,7 @@ class Throwable extends Item implements ExplorableSectionItem {
             ),
             DisplayProperty(
               name: 'Delay',
-              value: '${delay.inSeconds} sec.',
+              value: '${delay.inMilliseconds / 1000} sec.',
             ),
             ...throwableType == ThrowableType.fragmentation
                 ? [
@@ -115,7 +117,7 @@ class Throwable extends Item implements ExplorableSectionItem {
                 ? [
                     DisplayProperty(
                       name: 'Burn Time',
-                      value: '${emitTime.inSeconds} sec.',
+                      value: '${emitTime.inMilliseconds / 1000} sec.',
                     )
                   ]
                 : [],
@@ -133,8 +135,9 @@ class Throwable extends Item implements ExplorableSectionItem {
 
   @override
   List<ComparableProperty> get comparableProperties => [
-        ComparableProperty('Delay', delay.inSeconds,
-            isLowerBetter: true, displayValue: '${delay.inSeconds} sec.'),
+        ComparableProperty('Delay', delay.inMilliseconds,
+            isLowerBetter: true,
+            displayValue: '${delay.inMilliseconds / 1000} sec.'),
         ComparableProperty(
           'Maximum Radius',
           throwableType == ThrowableType.flash
