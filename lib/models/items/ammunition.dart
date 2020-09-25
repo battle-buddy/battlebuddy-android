@@ -12,6 +12,8 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
   final int projectiles;
   final bool isTracer;
   final bool isSubsonic;
+  final WeaponModifier modifier;
+  // final GrenadeProperties grenadeProperties;
 
   Ammunition.fromMap(Map<String, dynamic> map, {DocumentReference reference})
       : assert(map['caliber'] != null),
@@ -23,6 +25,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         assert(map['velocity'] != null),
         assert(map['tracer'] != null),
         assert(map['subsonic'] != null),
+        assert(map['weaponModifier'] != null),
         caliber = map['caliber'],
         penetration = map['penetration'].toDouble(),
         damage = map['damage'].toDouble(),
@@ -32,6 +35,8 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         velocity = Speed(metersPerSecond: map['velocity'].toDouble()),
         isTracer = map['tracer'],
         isSubsonic = map['subsonic'],
+        modifier = WeaponModifier.fromMap(map['weaponModifier']),
+        // grenadeProperties = GrenadeProperties.fromMap(map['grenadeProps']),
         super.fromMap(map, reference: reference);
 
   Ammunition.fromSnapshot(DocumentSnapshot snapshot)
@@ -81,7 +86,24 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
               value: isSubsonic ? 'Yes' : 'No',
             ),
           ],
-        )
+        ),
+        ...modifier.accuracy != 0 || modifier.recoil != 0
+            ? [
+                PropertySection(
+                  title: 'Modifier',
+                  properties: <DisplayProperty>[
+                    DisplayProperty(
+                      name: 'Accuracy',
+                      value: '${modifier.accuracy} %',
+                    ),
+                    DisplayProperty(
+                      name: 'Recoil',
+                      value: '${modifier.recoil} %',
+                    ),
+                  ],
+                )
+              ]
+            : []
       ];
 
   @override
@@ -126,3 +148,31 @@ class Fragmentation {
         min = map['min'].toInt(),
         max = map['max'].toInt();
 }
+
+class WeaponModifier {
+  final double accuracy;
+  final double recoil;
+
+  WeaponModifier.fromMap(Map<String, dynamic> map)
+      : assert(map['accuracy'] != null),
+        assert(map['recoil'] != null),
+        accuracy = map['accuracy'].toDouble(),
+        recoil = map['recoil'].toDouble();
+}
+
+// class GrenadeProperties {
+//   final Duration delay;
+//   final int fragmentCount;
+//   final double minRadius;
+//   final double maxRadius;
+
+//   GrenadeProperties.fromMap(Map<String, dynamic> map)
+//       : assert(map['delay'] != null),
+//         assert(map['fragCount'] != null),
+//         assert(map['minRadius'] != null),
+//         assert(map['maxRadius'] != null),
+//         delay = Duration(milliseconds: (map['delay'] * 1000).toInt()),
+//         fragmentCount = map['fragCount'].toInt(),
+//         minRadius = map['minRadius'].toDouble(),
+//         maxRadius = map['maxRadius'].toDouble();
+// }
