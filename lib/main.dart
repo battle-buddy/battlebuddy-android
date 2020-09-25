@@ -2,12 +2,12 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'common/theme.dart';
 import 'firebase.dart';
 import 'global.dart';
 import 'screens/items.dart';
 import 'screens/learn.dart';
 import 'screens/more.dart';
-import 'common/theme.dart';
 
 void main() {
   runApp(App());
