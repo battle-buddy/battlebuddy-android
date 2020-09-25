@@ -53,7 +53,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
               value: caliber,
             ),
             DisplayProperty(
-              name: 'Penetetration',
+              name: 'Penetration',
               value: '${penetration.toStringAsFixed(0)}',
             ),
             DisplayProperty(
