@@ -12,7 +12,7 @@
 - [x] Implement more screen
 - [x] Implement item tables
 - [ ] Implement item search
-- [ ] Implement item section comparison
+- [x] Implement item section comparison
 - [ ] Implement ammo grenade properties
 - [x] Improve item tables
 - [ ] Fix price check star state
