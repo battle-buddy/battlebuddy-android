@@ -4,7 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_image/firebase_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/rendering.dart';
+
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 import 'models/items/item.dart';
 
@@ -23,6 +26,12 @@ Future<void> initializeSession() async {
             SetOptions(merge: true));
 
     print('Anonymous session initialized ${creds.user.uid}');
+
+    if (!kDebugMode) {
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+      await FirebaseCrashlytics.instance.setUserIdentifier(creds.user.uid);
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    }
   } on FirebaseException catch (e) {
     print('Initialization failed: $e');
     rethrow;
