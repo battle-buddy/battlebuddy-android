@@ -8,6 +8,7 @@ import 'stacks/learn/ballistics.dart';
 import 'stacks/learn/damage_calc.dart';
 import 'stacks/learn/item_table.dart';
 import 'stacks/learn/penetration_chance.dart';
+import 'stacks/learn/penetration_chance_help.dart';
 import 'stacks/learn/price_check.dart';
 
 class LearnTab extends StatelessWidget {
@@ -20,6 +21,8 @@ class LearnTab extends StatelessWidget {
   static final Map<String, Widget Function(BuildContext)> routes = {
     PriceCheckScreen.routeName: (context) => PriceCheckScreen(),
     PenetrationChanceScreen.routeName: (context) => PenetrationChanceScreen(),
+    PenetrationChanceHelpScreen.routeName: (context) =>
+        PenetrationChanceHelpScreen(),
     DamageCalculatorScreen.routeName: (context) => DamageCalculatorScreen(),
     BallisticsScreen.routeName: (context) => BallisticsScreen(),
     '${ItemTableScreen.routeName}/ammunition': (context) =>

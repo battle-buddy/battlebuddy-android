@@ -8,6 +8,7 @@ import '../../../models/items/chestrig.dart';
 import '../../../models/items/item.dart';
 import '../../../modules/ballistics_engine/penetration.dart';
 import 'item_table.dart';
+import 'penetration_chance_help.dart';
 
 class PenetrationChanceScreenArguments {
   final Armored armor;
@@ -30,6 +31,15 @@ class PenetrationChanceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(title),
+        actions: <IconButton>[
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              PenetrationChanceHelpScreen.routeName,
+            ),
+          ),
+        ],
       ),
       body: PenetrationChance(
         armor: args?.armor,
