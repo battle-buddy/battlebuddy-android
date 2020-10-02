@@ -252,7 +252,7 @@ class SelectionCard extends StatefulWidget {
   final Item item;
   final void Function() onTab;
 
-  static const StorageImage _image = StorageImage();
+  static const StorageImage _image = StorageImage(size: ImageSize.large);
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
@@ -317,7 +317,7 @@ class _SelectionCardState extends State<SelectionCard> {
         alignment: Alignment.center,
         children: <Widget>[
           Container(
-            width: 145,
+            width: MediaQuery.of(context).size.width * 0.39,
             child: AspectRatio(
               aspectRatio: 1 / 1,
               child: ClipRRect(
