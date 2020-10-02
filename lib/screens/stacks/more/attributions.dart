@@ -35,7 +35,6 @@ class AttributionList extends StatelessWidget {
     final docs = snapshot.data.docs
         .map<Attribution>((s) => Attribution.fromSnapshot(s))
         .toList(growable: false);
-    docs.sort((a, b) => a.index.compareTo(b.index));
 
     return ListView.separated(
         itemCount: snapshot.data.size,
@@ -49,7 +48,10 @@ class AttributionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('attributions').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('attributions')
+          .orderBy('index')
+          .snapshots(),
       builder: _builder,
     );
   }
