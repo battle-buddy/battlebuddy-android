@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../common/error.dart';
+import '../../../firebase.dart';
 import '../../../models/items/ammunition.dart';
 import '../../../models/items/item.dart';
 import '../../../models/learn/character.dart';
 import '../../../modules/ballistics_engine/health.dart';
+import 'character_select.dart';
 import 'item_table.dart';
 
 class DamageCalculatorScreenArguments {
@@ -49,6 +51,7 @@ class DamageCalculator extends StatefulWidget {
 class _DamageCalculatorState extends State<DamageCalculator> {
   final HealthCalculator _calculator = HealthCalculator();
 
+  Character _character;
   Ammunition _ammo;
 
   Health _health;
@@ -59,14 +62,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   void _onData(DocumentSnapshot snapshot) {
     final character = Character.fromSnapshot(snapshot);
 
-    setState(() {
-      _health = character.health;
-      _healthInitial = character.health;
-    });
-
-    if (_ammo != null) {
-      _calculator.createCalculation(_health, _ammo);
-    }
+    _setCharacter(character);
   }
 
   void _onError(dynamic error) {
@@ -93,6 +89,18 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   void dispose() {
     _calculator.dispose();
     super.dispose();
+  }
+
+  void _setCharacter(Character character) {
+    setState(() {
+      _character = character;
+      _health = character.health;
+      _healthInitial = character.health;
+    });
+
+    if (_ammo != null) {
+      _calculator.createCalculation(_health, _ammo);
+    }
   }
 
   void _onItemChange() {
@@ -126,6 +134,17 @@ class _DamageCalculatorState extends State<DamageCalculator> {
     });
 
     _onItemChange();
+  }
+
+  void _onTabCharacter(BuildContext context) async {
+    final character = await Navigator.pushNamed(
+      context,
+      CharacterSelectionScreen.routeName,
+    );
+
+    if (character != null) {
+      _setCharacter(character);
+    }
   }
 
   void _onTabReset() {
@@ -169,7 +188,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
     );
 
     return Container(
-      padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+      padding: const EdgeInsets.only(top: 5, left: 15, right: 15),
       decoration: const BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
@@ -179,8 +198,38 @@ class _DamageCalculatorState extends State<DamageCalculator> {
       child: Column(
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Container(
+                key: Key(_character.id),
+                height: 90,
+                width: 90,
+                child: Column(
+                  children: [
+                    Material(
+                      type: MaterialType.circle,
+                      color: Colors.transparent,
+                      child: InkWell(
+                        child: CharacterAvatar(
+                          key: Key(_character.id),
+                          character: _character,
+                        ),
+                        onTap: () => _onTabCharacter(context),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: Text(
+                        _character.name,
+                        style: Theme.of(context).textTheme.subtitle2,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               ZoneBar(
                 key: const Key('head'),
                 title: 'Head',
@@ -190,7 +239,8 @@ class _DamageCalculatorState extends State<DamageCalculator> {
               ),
             ],
           ),
-          const Spacer(),
+          // const Spacer(),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -256,7 +306,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
             children: <Widget>[
               Container(
                 key: const Key('currentPoints'),
-                width: 60,
+                width: 72,
                 alignment: Alignment.center,
                 child: _health != null
                     ? AnimatedCount(
@@ -285,7 +335,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
               ),
               Container(
                 key: const Key('initialPoints'),
-                width: 54,
+                width: 58,
                 alignment: Alignment.center,
                 child: Text(
                   '${_healthInitial?.total?.floor() ?? '-'}',
@@ -451,6 +501,56 @@ class _ZoneBarState extends State<ZoneBar> {
         ),
       ),
     );
+  }
+}
+
+class CharacterAvatar extends StatefulWidget {
+  final Character character;
+
+  static const StorageImage _image = StorageImage();
+  static const AssetImage _placeholder =
+      AssetImage('assets/images/placeholders/generic.png');
+
+  const CharacterAvatar({Key key, this.character}) : super(key: key);
+
+  @override
+  _CharacterAvatarState createState() => _CharacterAvatarState();
+}
+
+class _CharacterAvatarState extends State<CharacterAvatar> {
+  Widget _avatar;
+
+  @override
+  void initState() {
+    super.initState();
+    _avatar = _getAvatar(widget.character.id);
+  }
+
+  @override
+  void didUpdateWidget(covariant CharacterAvatar oldWidget) {
+    if (oldWidget.character.id != widget.character.id) {
+      _avatar = _getAvatar(widget.character.id);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  Widget _getAvatar(String id) {
+    return CircleAvatar(
+      radius: 30,
+      backgroundColor: Colors.black54,
+      backgroundImage: CharacterAvatar._image.getCharacterImage(id),
+      onBackgroundImageError: (dynamic error, stackTrace) =>
+          const Image(image: CharacterAvatar._placeholder, fit: BoxFit.cover),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_avatar == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return _avatar;
   }
 }
 

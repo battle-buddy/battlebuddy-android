@@ -104,5 +104,16 @@ class StorageImage {
       firebaseApp: Firebase.app(),
     );
   }
+
+  ImageProvider<FirebaseImage> getCharacterImage(String id) {
+    final filename = '${id}_avatar.png';
+    final ref = _reference.root.child('character');
+
+    final path = ref.child(filename).fullPath;
+    final bucket = ref.bucket;
+    return FirebaseImage(
+      'gs://$bucket/$path',
+      firebaseApp: Firebase.app(),
+    );
   }
 }

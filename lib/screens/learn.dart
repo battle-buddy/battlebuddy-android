@@ -5,6 +5,7 @@ import '../models/items/ammunition.dart';
 import '../models/items/armor.dart';
 import '../models/items/chestrig.dart';
 import 'stacks/learn/ballistics.dart';
+import 'stacks/learn/character_select.dart';
 import 'stacks/learn/damage_calc.dart';
 import 'stacks/learn/item_table.dart';
 import 'stacks/learn/penetration_chance.dart';
@@ -26,6 +27,7 @@ class LearnTab extends StatelessWidget {
         ItemTableScreen<Ammunition>(),
     '${ItemDualTableScreen.routeName}/armored': (context) =>
         ItemDualTableScreen<Armor, ChestRig>(),
+    CharacterSelectionScreen.routeName: (context) => CharacterSelectionScreen(),
   };
 
   LearnTab({Key key}) : super(key: key);
