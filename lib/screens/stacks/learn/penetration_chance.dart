@@ -8,7 +8,6 @@ import '../../../models/items/chestrig.dart';
 import '../../../models/items/item.dart';
 import '../../../modules/ballistics_engine/penetration.dart';
 import 'item_table.dart';
-import 'penetration_chance_help.dart';
 
 class PenetrationChanceScreenArguments {
   final Armored armor;
@@ -23,6 +22,26 @@ class PenetrationChanceScreen extends StatelessWidget {
 
   PenetrationChanceScreen({Key key}) : super(key: key);
 
+  Future<void> _onPressHelp(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Penetration Chance Calculator'),
+            content: const SingleChildScrollView(
+              child: Text(
+                  'This tool calculates the chance that a chosen bullet will penetrate a given body armor. Once you select a bullet and armor, you can use the slider to adjust the simulated durability of the armor to see how effective different rounds are against armor at various levels of durability!'),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final PenetrationChanceScreenArguments args =
@@ -34,10 +53,7 @@ class PenetrationChanceScreen extends StatelessWidget {
         actions: <IconButton>[
           IconButton(
             icon: const Icon(Icons.help_outline),
-            onPressed: () => Navigator.pushNamed(
-              context,
-              PenetrationChanceHelpScreen.routeName,
-            ),
+            onPressed: () => _onPressHelp(context),
           ),
         ],
       ),
@@ -285,13 +301,13 @@ class _SelectionCardState extends State<SelectionCard> {
   }
 
   Widget _getStorageImage(Item item) {
-        return FadeInImage(
+    return FadeInImage(
       image: SelectionCard._image.getItemImage(item.type, item.id),
-          placeholder: SelectionCard._placeholder,
-          imageErrorBuilder: (context, error, stackTrace) =>
-              const Image(image: SelectionCard._placeholder, fit: BoxFit.cover),
-          fit: BoxFit.cover,
-        );
+      placeholder: SelectionCard._placeholder,
+      imageErrorBuilder: (context, error, stackTrace) =>
+          const Image(image: SelectionCard._placeholder, fit: BoxFit.cover),
+      fit: BoxFit.cover,
+    );
   }
 
   @override
