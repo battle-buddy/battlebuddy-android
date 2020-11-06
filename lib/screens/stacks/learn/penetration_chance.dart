@@ -285,27 +285,13 @@ class _SelectionCardState extends State<SelectionCard> {
   }
 
   Widget _getStorageImage(Item item) {
-    return FutureBuilder<ImageProvider>(
-      future: SelectionCard._image.getItemImage(item.type, item.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError || !snapshot.hasData) {
-          return const Image(
-              image: SelectionCard._placeholder, fit: BoxFit.cover);
-        }
-
         return FadeInImage(
-          image: snapshot.data,
+      image: SelectionCard._image.getItemImage(item.type, item.id),
           placeholder: SelectionCard._placeholder,
           imageErrorBuilder: (context, error, stackTrace) =>
               const Image(image: SelectionCard._placeholder, fit: BoxFit.cover),
           fit: BoxFit.cover,
         );
-      },
-    );
   }
 
   @override

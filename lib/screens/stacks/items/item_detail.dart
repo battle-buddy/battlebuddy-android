@@ -70,25 +70,12 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
   }
 
   Widget _getStorageImage(Item item) {
-    return FutureBuilder<ImageProvider>(
-      future: ItemDetail._image.getItemImage(item.type, item.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError || !snapshot.hasData) {
-          return const Image(image: ItemDetail._placeholder, fit: BoxFit.cover);
-        }
-
-        return FadeInImage(
-          image: snapshot.data,
-          placeholder: ItemDetail._placeholder,
-          imageErrorBuilder: (context, error, stackTrace) =>
-              const Image(image: ItemDetail._placeholder, fit: BoxFit.cover),
-          fit: BoxFit.cover,
-        );
-      },
+    return FadeInImage(
+      image: ItemDetail._image.getItemImage(item.type, item.id),
+      placeholder: ItemDetail._placeholder,
+      imageErrorBuilder: (context, error, stackTrace) =>
+          const Image(image: ItemDetail._placeholder, fit: BoxFit.cover),
+      fit: BoxFit.cover,
     );
   }
 

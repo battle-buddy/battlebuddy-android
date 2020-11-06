@@ -62,16 +62,14 @@ extension Format on ImageSize {
 class StorageImage {
   final ImageSize size;
 
-  static final StorageReference _storageReference =
-      FirebaseStorage.instance.ref();
+  static final Reference _reference = FirebaseStorage.instance.ref();
 
   const StorageImage({this.size = ImageSize.medium});
 
-  Future<ImageProvider<FirebaseImage>> getItemImage(
-      ItemType type, String id) async {
+  ImageProvider<FirebaseImage> getItemImage(ItemType type, String id) {
     final filename = '${id}_${size.string}.jpg';
 
-    var ref = _storageReference.getRoot();
+    var ref = _reference.root;
     switch (type) {
       case ItemType.ammo:
         ref = ref.child('ammo');
@@ -99,15 +97,12 @@ class StorageImage {
         break;
     }
 
-    try {
-      final path = await ref.child(filename).getPath();
-      final bucket = await ref.getBucket();
-      return FirebaseImage(
-        'gs://$bucket/$path',
-        firebaseApp: Firebase.app(),
-      );
-    } on FirebaseException {
-      rethrow;
-    }
+    final path = ref.child(filename).fullPath;
+    final bucket = ref.bucket;
+    return FirebaseImage(
+      'gs://$bucket/$path',
+      firebaseApp: Firebase.app(),
+    );
+  }
   }
 }

@@ -30,14 +30,14 @@ dependencies:
   firebase_core: ^0.5.0
   firebase_auth: ^0.18.0
   cloud_firestore: ^0.14.0
-  firebase_storage: ^4.0.0
+  firebase_storage: ^5.0.0
   firebase_analytics: ^6.0.0
   firebase_crashlytics: ^0.2.1
 
   package_info: '>=0.4.3 <2.0.0'
   shared_preferences: '>=0.5.8 <2.0.0'
   font_awesome_flutter: ^8.8.1
-  firebase_image: ^0.2.0
+  firebase_image: ^0.3.0
   percent_indicator: ^2.1.5
   url_launcher: ^5.5.2
   in_app_review: ^1.0.2
