@@ -1,5 +1,7 @@
 # Todo List
 
+- [ ] Implement ammo configuration (?)
+- [x] Implement character selection
 - [x] Implement item detail screen
 - [x] Implement Firestore user object managment
 - [ ] Implement metadata
