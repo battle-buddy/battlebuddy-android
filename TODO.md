@@ -13,7 +13,7 @@
 - [x] Implement item comparison feature
 - [x] Implement more screen
 - [x] Implement item tables
-- [ ] Implement item search
+- [x] Implement item search
 - [x] Implement item section comparison
 - [ ] Implement ammo grenade properties
 - [x] Improve item tables
