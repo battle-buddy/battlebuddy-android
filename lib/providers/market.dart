@@ -19,13 +19,28 @@ class MarketProvider {
 
   final HashSet<int> _starred = HashSet();
 
-  final StreamController<List<MarketItem>> _controller = StreamController();
+  StreamController<List<MarketItem>> _controller;
 
   Future<SharedPreferences> _preferences;
 
   static const String _storageKey = 'market_stars';
 
-  MarketProvider({this.tokenLength = 3});
+  factory MarketProvider({int tokenLength = 3}) {
+    final p = MarketProvider._internal(tokenLength: tokenLength);
+
+    p._controller = StreamController(
+      onListen: p._onListen,
+      onPause: p._onPause,
+      onResume: p._onResume,
+      onCancel: p._onCancel,
+    );
+
+    p._preferences = SharedPreferences.getInstance();
+
+    return p;
+  }
+
+  MarketProvider._internal({this.tokenLength = 3});
 
   void _sendData() {
     if (_searchTerm.isNotEmpty) {
@@ -44,9 +59,8 @@ class MarketProvider {
       _controller.add(items);
     } else {
       if (_showStarred) {
-        final items =
-            _starred.map((idx) => _items[idx]).toList(growable: false);
-        items.sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
+        final items = _starred.map((idx) => _items[idx]).toList(growable: false)
+          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
         _controller.add(items);
       } else {
         _controller.add(_items);
@@ -58,9 +72,8 @@ class MarketProvider {
     _items = snapshot.docs
         .expand((doc) =>
             doc.data().values.map((dynamic v) => MarketItem.fromMap(v)))
-        .toList(growable: false);
-
-    _items.sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
+        .toList(growable: false)
+          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
 
     if (_starred.isEmpty) await _getCommittedStars();
 
@@ -74,17 +87,24 @@ class MarketProvider {
     _controller.addError(error);
   }
 
-  void init() {
-    _preferences = SharedPreferences.getInstance();
+  void _onPause() {
+    _firebaseStream?.pause();
+  }
+
+  void _onResume() {
+    _firebaseStream?.resume();
+  }
+
+  void _onListen() {
     _firebaseStream = FirebaseFirestore.instance
         .collection('market')
         .snapshots()
         .listen(_onData, onError: _onError);
   }
 
-  void dispose() {
+  void _onCancel() {
+    _firebaseStream?.cancel();
     _controller.close();
-    _firebaseStream.cancel();
   }
 
   Future<void> _getCommittedStars() async {
@@ -138,7 +158,7 @@ class MarketProvider {
   }
 
   Future<void> setSearchTerm(String term) async {
-    if (term.length < 3) return;
+    if (term.length < tokenLength) return;
     _searchTerm = term;
     _sendData();
   }

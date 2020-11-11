@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/index.dart';
+
 enum ItemType {
   ammo,
   armor,
@@ -229,7 +231,7 @@ extension StringParsing on String {
   }
 }
 
-class Item {
+class Item implements Indexable {
   final String id;
   final String name;
   final String shortName;
@@ -276,6 +278,12 @@ class Item {
     _type ??= itemTypeByReference(reference);
     return _type;
   }
+
+  @override
+  List<String> get indexData => [
+        shortName,
+        name,
+      ];
 }
 
 abstract class SectionView extends Item {

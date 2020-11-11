@@ -11,23 +11,62 @@ import '../models/items/item.dart';
 import '../models/items/medical.dart';
 import '../models/items/melee.dart';
 import '../models/items/throwable.dart';
+import '../utils/index.dart';
 
 class ItemProvider<T extends Item> {
   final Query query;
+  final bool indexing;
+  final int tokenLength;
 
   StreamSubscription<QuerySnapshot> _firebaseStream;
   List<T> _items;
+  InvertedIndex _index;
 
-  final StreamController<List<T>> _controller = StreamController();
+  String _searchTerm = '';
 
-  ItemProvider(this.query);
+  StreamController<List<T>> _controller;
+
+  factory ItemProvider(
+    Query query, {
+    bool indexing = false,
+    int tokenLength = 3,
+  }) {
+    final p = ItemProvider<T>._internal(query,
+        indexing: indexing, tokenLength: tokenLength);
+
+    p._controller = StreamController(
+      onListen: p._onListen,
+      onPause: p._onPause,
+      onResume: p._onResume,
+      onCancel: p._onCancel,
+    );
+
+    return p;
+  }
+
+  ItemProvider._internal(
+    this.query, {
+    this.indexing = false,
+    this.tokenLength = 3,
+  });
 
   void _sendData() {
-    _controller.add(_items);
+    if (_searchTerm.isNotEmpty && _index != null) {
+      final results = _index.search(_searchTerm);
+      final items = results.map((e) => (_items[e[0]])).toList(growable: false);
+      _controller.add(items);
+    } else {
+      _controller.add(_items);
+    }
   }
 
   Future<void> _onData(QuerySnapshot snapshot) async {
     _items = snapshot.docs.map<T>(_serializeSnapshot).toList(growable: false);
+
+    if (indexing) {
+      _index = InvertedIndex.fromList(_items, tokenLength: tokenLength);
+    }
+
     _sendData();
   }
 
@@ -36,14 +75,35 @@ class ItemProvider<T extends Item> {
     _controller.addError(error);
   }
 
-  void init() {
+  void _onPause() {
+    _firebaseStream?.pause();
+  }
+
+  void _onResume() {
+    _firebaseStream?.resume();
+  }
+
+  void _onListen() {
     _firebaseStream = query.snapshots().listen(_onData, onError: _onError);
   }
 
-  void dispose() {
+  void _onCancel() {
+    _firebaseStream?.cancel();
     _controller.close();
-    _firebaseStream.cancel();
   }
+
+  Future<void> setSearchTerm(String term) async {
+    if (term.length < tokenLength) return;
+    _searchTerm = term;
+    _sendData();
+  }
+
+  Future<void> clearSearchTerm() async {
+    _searchTerm = '';
+    _sendData();
+  }
+
+  Future<void> getData() async => _sendData();
 
   Stream<List<T>> get stream => _controller.stream;
 }
@@ -61,23 +121,64 @@ class ItemSection<T extends SectionView> {
 class ItemSectionProvider<T extends SectionView> {
   final Query query;
   final bool sortSections;
+  final bool indexing;
+  final int tokenLength;
 
   StreamSubscription<QuerySnapshot> _firebaseStream;
-  List<ItemSection<T>> _sections;
+  List<T> _items;
+  InvertedIndex _index;
 
-  final StreamController<List<ItemSection<T>>> _controller = StreamController();
+  String _searchTerm = '';
 
-  ItemSectionProvider(
+  StreamController<List<ItemSection<T>>> _controller;
+
+  factory ItemSectionProvider(
+    Query query, {
+    bool sortSections,
+    bool indexing = false,
+    int tokenLength = 3,
+  }) {
+    final p = ItemSectionProvider<T>._internal(
+      query,
+      sortSections: sortSections,
+      indexing: indexing,
+      tokenLength: tokenLength,
+    );
+
+    p._controller = StreamController(
+      onListen: p._onListen,
+      onPause: p._onPause,
+      onResume: p._onResume,
+      onCancel: p._onCancel,
+    );
+
+    return p;
+  }
+
+  ItemSectionProvider._internal(
     this.query, {
     this.sortSections = false,
+    this.indexing = false,
+    this.tokenLength = 3,
   });
 
   void _sendData() {
-    _controller.add(_sections);
+    if (_searchTerm.isNotEmpty && _index != null) {
+      final results = _index.search(_searchTerm);
+      final items = results.map((e) => (_items[e[0]])).toList(growable: false);
+      _controller.add(_buildSections(items));
+    } else {
+      _controller.add(_buildSections(_items));
+    }
   }
 
   Future<void> _onData(QuerySnapshot snapshot) async {
-    _sections = _buildSections(snapshot);
+    _items = snapshot.docs.map<T>(_serializeSnapshot).toList(growable: false);
+
+    if (indexing) {
+      _index = InvertedIndex.fromList(_items, tokenLength: tokenLength);
+    }
+
     _sendData();
   }
 
@@ -86,21 +187,27 @@ class ItemSectionProvider<T extends SectionView> {
     _controller.addError(error);
   }
 
-  void init() {
+  void _onPause() {
+    _firebaseStream?.pause();
+  }
+
+  void _onResume() {
+    _firebaseStream?.resume();
+  }
+
+  void _onListen() {
     _firebaseStream = query.snapshots().listen(_onData, onError: _onError);
   }
 
-  void dispose() {
+  void _onCancel() {
+    _firebaseStream?.cancel();
     _controller.close();
-    _firebaseStream.cancel();
   }
 
-  List<ItemSection<T>> _buildSections(QuerySnapshot snapshot) {
+  List<ItemSection<T>> _buildSections(List<T> items) {
     final sections = <ItemSection<T>>[];
 
-    for (final doc in snapshot.docs) {
-      final item = _serializeSnapshot<T>(doc);
-
+    for (final item in items) {
       final title = item.sectionValue;
       final index = sections.indexWhere((e) => e.title == title);
 
@@ -119,6 +226,17 @@ class ItemSectionProvider<T extends SectionView> {
     }
 
     return sections;
+  }
+
+  Future<void> setSearchTerm(String term) async {
+    if (term.length < tokenLength) return;
+    _searchTerm = term;
+    _sendData();
+  }
+
+  Future<void> clearSearchTerm() async {
+    _searchTerm = '';
+    _sendData();
   }
 
   Stream<List<ItemSection<T>>> get stream => _controller.stream;

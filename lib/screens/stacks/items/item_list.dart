@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +11,8 @@ import '../../../providers/item.dart';
 import 'item_compare.dart';
 import 'item_detail.dart';
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class ItemListScreenArguments {
   final String title;
   final Query query;
@@ -20,10 +23,58 @@ class ItemListScreenArguments {
   });
 }
 
-class ItemListScreen<T extends ExplorableItem> extends StatelessWidget {
+class ItemListScreen<T extends ExplorableItem> extends StatefulWidget {
   static const String routeName = '/items/list';
 
   const ItemListScreen({Key key}) : super(key: key);
+
+  @override
+  _ItemListScreenState<T> createState() => _ItemListScreenState<T>();
+}
+
+class _ItemListScreenState<T extends ExplorableItem>
+    extends State<ItemListScreen<T>> {
+  ItemProvider<T> _provider;
+
+  bool _searchBar = false;
+
+  @override
+  void didChangeDependencies() {
+    final ItemListScreenArguments args =
+        ModalRoute.of(context).settings.arguments;
+    _provider = ItemProvider(args.query, indexing: true, tokenLength: 2);
+    super.didChangeDependencies();
+  }
+
+  void _onSearchPress() {
+    setState(() {
+      _searchBar = !_searchBar;
+    });
+    if (!_searchBar) _provider.clearSearchTerm();
+  }
+
+  void _onSearchInput(String text) {
+    if (text.length >= 2) {
+      _provider.setSearchTerm(text);
+    } else {
+      _provider.clearSearchTerm();
+    }
+  }
+
+  Widget _buildSearchField() {
+    return TextField(
+      maxLines: 1,
+      keyboardAppearance: Brightness.dark,
+      autocorrect: false,
+      autofocus: true,
+      cursorColor: Colors.red,
+      decoration: const InputDecoration.collapsed(
+        // border: InputBorder.none,
+        hintText: 'Search\u{2026}',
+      ),
+      onChanged: _onSearchInput,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +82,27 @@ class ItemListScreen<T extends ExplorableItem> extends StatelessWidget {
         ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(args.title),
+        title: _searchBar ? _buildSearchField() : Text(args.title),
+        actions: <IconButton>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: _onSearchPress,
+          ),
+        ],
       ),
-      body: ItemList<T>(query: args.query),
+      body: ItemList<T>(stream: _provider.stream),
     );
   }
 }
 
 class ItemList<T extends ExplorableItem> extends StatefulWidget {
-  final Query query;
+  final Stream<List<T>> stream;
 
   const ItemList({
     Key key,
-    @required this.query,
+    @required this.stream,
   }) : super(key: key);
 
   @override
@@ -52,7 +110,7 @@ class ItemList<T extends ExplorableItem> extends StatefulWidget {
 }
 
 class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
-  ItemProvider<T> _provider;
+  StreamSubscription<List<T>> _stream;
   List<T> _items;
   FirebaseException _error;
 
@@ -71,14 +129,12 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
   @override
   void initState() {
     super.initState();
-    _provider = ItemProvider(widget.query);
-    _provider.init();
-    _provider.stream.listen(_onData, onError: _onError);
+    _stream = widget.stream.listen(_onData, onError: _onError);
   }
 
   @override
   void dispose() {
-    _provider.dispose();
+    _stream.cancel();
     super.dispose();
   }
 
@@ -124,10 +180,64 @@ class ItemSectionListScreenArguments {
 }
 
 class ItemSectionListScreen<T extends ExplorableSectionItem>
-    extends StatelessWidget {
+    extends StatefulWidget {
   static const String routeName = '/items/sectionList';
 
   const ItemSectionListScreen({Key key}) : super(key: key);
+
+  @override
+  _ItemSectionListScreenState<T> createState() =>
+      _ItemSectionListScreenState<T>();
+}
+
+class _ItemSectionListScreenState<T extends ExplorableSectionItem>
+    extends State<ItemSectionListScreen<T>> {
+  ItemSectionProvider<T> _provider;
+
+  bool _searchBar = false;
+
+  @override
+  void didChangeDependencies() {
+    final ItemSectionListScreenArguments args =
+        ModalRoute.of(context).settings.arguments;
+    _provider = ItemSectionProvider(
+      args.query,
+      sortSections: args.sortSections,
+      indexing: true,
+      tokenLength: 2,
+    );
+    super.didChangeDependencies();
+  }
+
+  void _onSearchPress() {
+    setState(() {
+      _searchBar = !_searchBar;
+    });
+    if (!_searchBar) _provider.clearSearchTerm();
+  }
+
+  void _onSearchInput(String text) {
+    if (text.length >= 2) {
+      _provider.setSearchTerm(text);
+    } else {
+      _provider.clearSearchTerm();
+    }
+  }
+
+  Widget _buildSearchField() {
+    return TextField(
+      maxLines: 1,
+      keyboardAppearance: Brightness.dark,
+      autocorrect: false,
+      autofocus: true,
+      cursorColor: Colors.red,
+      decoration: const InputDecoration.collapsed(
+        // border: InputBorder.none,
+        hintText: 'Search\u{2026}',
+      ),
+      onChanged: _onSearchInput,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,25 +245,27 @@ class ItemSectionListScreen<T extends ExplorableSectionItem>
         ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(args.title),
+        title: _searchBar ? _buildSearchField() : Text(args.title),
+        actions: <IconButton>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: _onSearchPress,
+          ),
+        ],
       ),
-      body: SectionList<T>(
-        args.query,
-        sortSections: args.sortSections,
-      ),
+      body: SectionList<T>(_provider.stream),
     );
   }
 }
 
 class SectionList<T extends ExplorableSectionItem> extends StatefulWidget {
-  final Query query;
-  final bool sortSections;
+  final Stream<List<ItemSection<T>>> stream;
 
   const SectionList(
-    this.query, {
+    this.stream, {
     Key key,
-    this.sortSections,
   }) : super(key: key);
 
   @override
@@ -162,7 +274,7 @@ class SectionList<T extends ExplorableSectionItem> extends StatefulWidget {
 
 class _SectionListState<T extends ExplorableSectionItem>
     extends State<SectionList<T>> {
-  ItemSectionProvider<T> _provider;
+  StreamSubscription<List<ItemSection<T>>> _stream;
   List<ItemSection<T>> _sections;
   FirebaseException _error;
 
@@ -181,17 +293,12 @@ class _SectionListState<T extends ExplorableSectionItem>
   @override
   void initState() {
     super.initState();
-    _provider = ItemSectionProvider(
-      widget.query,
-      sortSections: widget.sortSections,
-    );
-    _provider.init();
-    _provider.stream.listen(_onData, onError: _onError);
+    _stream = widget.stream.listen(_onData, onError: _onError);
   }
 
   @override
   void dispose() {
-    _provider.dispose();
+    _stream.cancel();
     super.dispose();
   }
 
@@ -225,7 +332,7 @@ class _SectionListState<T extends ExplorableSectionItem>
     final section = _sections[index];
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         key: Key(section.title),
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +341,7 @@ class _SectionListState<T extends ExplorableSectionItem>
             padding: const EdgeInsets.only(
               left: 15,
               right: 15,
-              bottom: 15,
+              bottom: 5,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

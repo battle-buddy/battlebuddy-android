@@ -122,20 +122,11 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
   void initState() {
     super.initState();
 
-    _provider = ItemProvider(
-      widget.query,
-    );
-    _provider.init();
+    _provider = ItemProvider(widget.query);
     _provider.stream.listen(_onData, onError: _onError);
 
     _selection = HashSet();
     if (widget.selectedID != null) _selection.add(widget.selectedID);
-  }
-
-  @override
-  void dispose() {
-    _provider.dispose();
-    super.dispose();
   }
 
   void onChange(Item item, {@required bool value}) {
@@ -297,17 +288,10 @@ class _ItemSelectSectionListState<T extends SectionView>
       widget.query,
       sortSections: widget.sortSections,
     );
-    _provider.init();
     _provider.stream.listen(_onData, onError: _onError);
 
     _selection = HashSet();
     if (widget.selectedID != null) _selection.add(widget.selectedID);
-  }
-
-  @override
-  void dispose() {
-    _provider.dispose();
-    super.dispose();
   }
 
   void onChange(Item item, {@required bool value}) {

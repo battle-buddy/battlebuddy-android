@@ -9,6 +9,8 @@ import '../../../common/error.dart';
 import '../../../models/learn/market_item.dart';
 import '../../../providers/market.dart';
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class PriceCheckScreenArguments {}
 
 class PriceCheckScreen extends StatefulWidget {
@@ -26,18 +28,6 @@ class _PriceCheckScreenState extends State<PriceCheckScreen> {
 
   bool _searchBar = false;
   bool _showStarred = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _provider.init();
-  }
-
-  @override
-  void dispose() {
-    _provider.dispose();
-    super.dispose();
-  }
 
   void _onStarPress() {
     setState(() {
@@ -90,6 +80,7 @@ class _PriceCheckScreenState extends State<PriceCheckScreen> {
     //     ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: _searchBar
             ? _buildSearchField()
