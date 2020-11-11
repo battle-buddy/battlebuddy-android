@@ -354,25 +354,16 @@ class _SectionListState<T extends ExplorableSectionItem>
                       ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: section.items.length > 1
+                Container(
+                  child: IconButton(
+                    padding: const EdgeInsets.all(0),
+                    icon: const Icon(Icons.compare_arrows),
+                    iconSize: 34,
+                    splashRadius: 24,
+                    color: Theme.of(context).accentIconTheme.color,
+                    onPressed: section.items.length > 1
                         ? () => _onCompare(index)
                         : null,
-                    child: Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: Text(
-                        'Compare',
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              color: section.items.length > 1
-                                  ? Theme.of(context).accentColor
-                                  : Colors.grey[600],
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17,
-                            ),
-                      ),
-                    ),
                   ),
                 ),
               ],
