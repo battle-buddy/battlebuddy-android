@@ -129,6 +129,8 @@ class _DamageCalculatorState extends State<DamageCalculator> {
       ),
     );
 
+    if (item == null) return;
+
     setState(() {
       _ammo = item;
     });

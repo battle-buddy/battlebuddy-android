@@ -141,6 +141,8 @@ class _PenetrationChanceState extends State<PenetrationChance> {
       ),
     );
 
+    if (item == null) return;
+
     setState(() {
       _ammo = item;
     });
@@ -167,6 +169,8 @@ class _PenetrationChanceState extends State<PenetrationChance> {
         ),
       ),
     );
+
+    if (item == null) return;
 
     setState(() {
       _armor = item;
