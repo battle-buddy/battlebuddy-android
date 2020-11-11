@@ -358,7 +358,7 @@ class _SectionListState<T extends ExplorableSectionItem>
                   child: IconButton(
                     padding: const EdgeInsets.all(0),
                     icon: const Icon(Icons.compare_arrows),
-                    iconSize: 34,
+                    iconSize: 32,
                     splashRadius: 24,
                     color: Theme.of(context).accentIconTheme.color,
                     onPressed: section.items.length > 1
