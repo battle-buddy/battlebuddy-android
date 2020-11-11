@@ -1,5 +1,6 @@
 # Todo List
 
+- [ ] Improve list opening performance
 - [ ] Implement ammo configuration (?)
 - [x] Implement character selection
 - [x] Implement item detail screen
