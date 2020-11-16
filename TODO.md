@@ -2,37 +2,37 @@
 
 ## To fix
 
-- [ ] Fix price check star state
+- [ ] Price Check wrong starred indicator state
 
 ## To implement
 
-- [ ] Implement Combat Simulator
-- [ ] Implement ammo configuration (?)
-- [ ] Implement ammo grenade properties
-- [ ] Implement BLoC pattern (?)
-- [ ] Implement metadata
-- [ ] Implement embedded YouTube player (?)
-- [ ] Implement predefined queries by item type (?)
-- [x] Implement character selection
-- [x] Implement item detail screen
-- [x] Implement Firestore user object managment
-- [x] Implement Firebase Analytics
-- [x] Implement Damage Calculator
-- [x] Implement Penetration Calculator
-- [x] Implement Price Check
-- [x] Implement Ballistics screen
-- [x] Implement item comparison feature
-- [x] Implement more screen
-- [x] Implement item tables
-- [x] Implement item search
-- [x] Implement item section comparison
-- [x] Implement in-app review API
+- [ ] Combat Simulator
+- [ ] Damage Calc. ammo configuration (?)
+- [ ] Ammo grenade properties
+- [ ] BLoC pattern (?)
+- [ ] Metadata
+- [ ] Embedded YouTube player (?)
+- [x] character selection
+- [x] Item detail screen
+- [x] Firestore user object managment
+- [x] Firebase Analytics
+- [x] Damage Calculator
+- [x] Penetration Calculator
+- [x] Price Check
+- [x] Ballistics screen
+- [x] Item comparison feature
+- [x] more screen
+- [x] Item tables
+- [x] Item search
+- [x] Item section comparison
+- [x] in-app review API
 
 ## To improve
 
-- [ ] Improve comparison graph color computation
-- [ ] Improve list opening performance
-- [ ] Improve item detail tile lists
+- [ ] Comparison graph color computation
+- [ ] List opening performance
+- [ ] Item detail tile lists
+- [ ] Predefined queries by item type (?)
 - [x] Add unit types to comparison graph values
 - [x] Improve item tables
 - [ ] Cleanup
