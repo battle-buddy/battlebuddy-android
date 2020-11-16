@@ -149,7 +149,8 @@ class MoreTab extends StatelessWidget {
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://github.com/VeritasDev/BattleBuddy'),
+              onTab: () => openURL(
+                  'https://github.com/battle-buddy/battlebuddy-android'),
             ),
             CustomTile(
               title: const Text('Check Out The Team'),
