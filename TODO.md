@@ -1,11 +1,21 @@
-# Todo List
+# Todo
 
-- [ ] Improve list opening performance
+## To fix
+
+- [ ] Fix price check star state
+
+## To implement
+
+- [ ] Implement Combat Simulator
 - [ ] Implement ammo configuration (?)
+- [ ] Implement ammo grenade properties
+- [ ] Implement BLoC pattern (?)
+- [ ] Implement metadata
+- [ ] Implement embedded YouTube player (?)
+- [ ] Implement predefined queries by item type (?)
 - [x] Implement character selection
 - [x] Implement item detail screen
 - [x] Implement Firestore user object managment
-- [ ] Implement metadata
 - [x] Implement Firebase Analytics
 - [x] Implement Damage Calculator
 - [x] Implement Penetration Calculator
@@ -16,15 +26,15 @@
 - [x] Implement item tables
 - [x] Implement item search
 - [x] Implement item section comparison
-- [ ] Implement ammo grenade properties
-- [x] Improve item tables
-- [ ] Fix price check star state
-- [x] Add unit types to comparison graph values
-- [ ] Improve item detail tile lists
-- [ ] Implement BLoC pattern (?)
 - [x] Implement in-app review API
-- [ ] Implement embedded YouTube player
-- [ ] Implement predefined queries by item type (?)
+
+## To improve
+
+- [ ] Improve comparison graph color computation
+- [ ] Improve list opening performance
+- [ ] Improve item detail tile lists
+- [x] Add unit types to comparison graph values
+- [x] Improve item tables
 - [ ] Cleanup
 - [ ] Polishing
 - [ ] Write tests
