@@ -2,7 +2,7 @@
 
 ## To fix
 
-- [ ] Price Check wrong starred indicator state
+- [ ] Price Check wrong starred indicator state [#2](https://github.com/battle-buddy/battlebuddy-android/issues/2)
 
 ## To implement
 
@@ -12,7 +12,7 @@
 - [ ] BLoC pattern (?)
 - [ ] Metadata
 - [ ] Embedded YouTube player (?)
-- [x] character selection
+- [x] Character selection
 - [x] Item detail screen
 - [x] Firestore user object managment
 - [x] Firebase Analytics
@@ -21,11 +21,11 @@
 - [x] Price Check
 - [x] Ballistics screen
 - [x] Item comparison feature
-- [x] more screen
+- [x] More screen
 - [x] Item tables
 - [x] Item search
 - [x] Item section comparison
-- [x] in-app review API
+- [x] In-app review API
 
 ## To improve
 
