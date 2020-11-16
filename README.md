@@ -5,8 +5,8 @@
 
 The Android version of unofficial Escape from Tarkov reference app
 
-<p align="center">
+<p align="left">
 <a title="Get it on Google Play" target="_blank" href="https://play.google.com/store/apps/details?id=com.veritas.battlebuddy">
-<img src="https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
+<img src="https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="25%">
 </a>
 </p>
