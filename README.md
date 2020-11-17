@@ -23,7 +23,7 @@ The Android version of unofficial Escape from Tarkov reference app
 ### A few rules
 
 - Keep commits atomic and messages as short and concise as possible (ideally it should not exceed 50 characters)
-- Pay attention to the code style and formatting. We use a modified version of the [Pedantic](https://pub.dev/packages/pedantic) style. Write as clean as possible, no unnecessary spaces or trailing spaces.
+- Pay attention to the code style and formatting. We use a modified version of the [Pedantic](https://pub.dev/packages/pedantic) style. Write as clean as possible, no unnecessary blanks or trailing spaces.
 - Write unit tests if possible
 - For complex functions, comments should be added
 
