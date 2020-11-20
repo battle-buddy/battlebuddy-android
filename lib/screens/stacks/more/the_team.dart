@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/error.dart';
 import '../../../common/tiles.dart';
 import '../../../models/more/team_member.dart';
 import '../../../utils/url.dart';
 
-// TODO: implement backend data
 class TheTeamScreen extends StatelessWidget {
   static const String title = 'The Team';
   static const String routeName = '/more/theTeam';
@@ -23,54 +24,37 @@ class TheTeamScreen extends StatelessWidget {
 }
 
 class TeamList extends StatelessWidget {
-  static const List<TeamMember> members = [
-    TeamMember(name: 'GhostFreak66', url: 'https://twitch.tv/GhostFreak66'),
-    TeamMember(name: 'Slushpuppy', url: 'https://twitch.tv/Slushpuppy'),
-    TeamMember(name: 'Pestily', url: 'https://twitch.tv/Pestily'),
-    TeamMember(name: 'Anton', url: 'https://twitch.tv/Anton'),
-    TeamMember(name: 'Veritas', url: 'https://twitch.tv/Veritas'),
-    TeamMember(name: 'Sigma', url: 'https://twitch.tv/sigma'),
-  ];
-
   TeamList({Key key}) : super(key: key);
 
-  // Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  //   if (snapshot.hasError) {
-  //     return const Center(
-  //       child: Icon(
-  //         Icons.error_outline,
-  //         color: Theme.of(context).accentColor,
-  //       ),
-  //     );
-  //   }
+  Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    if (snapshot.hasError) return ErrorScreen();
 
-  //   if (snapshot.connectionState == ConnectionState.waiting) {
-  //     return const Center(child: CircularProgressIndicator());
-  //   }
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
-  //   final docs = snapshot.data.docs
-  //       .map<Attribution>((s) => Attribution.fromSnapshot(s))
-  //       .toList(growable: false);
-  //   docs.sort((a, b) => a.index.compareTo(b.index));
+    final docs = snapshot.data.docs
+        .map<TeamMember>((s) => TeamMember.fromSnapshot(s))
+        .toList(growable: false);
 
-  //   return ListView.separated(
-  //       itemCount: members.length,
-  //       separatorBuilder: (context, index) => SizedBox(height: 10),
-  //       itemBuilder: (context, index) {
-  //         final member = members[index];
-  //         return MemberTile(key: Key(member.name), member: member);
-  //       });
-  // }
+    return ListView.separated(
+        itemCount: snapshot.data.size,
+        separatorBuilder: (context, index) => const Divider(height: 0),
+        itemBuilder: (context, index) {
+          final member = docs[index];
+          return MemberTile(member: member);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemCount: members.length,
-        separatorBuilder: (context, index) => const Divider(height: 0),
-        itemBuilder: (context, index) {
-          final member = members[index];
-          return MemberTile(key: Key(member.name), member: member);
-        });
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('team')
+          .orderBy('index')
+          .snapshots(),
+      builder: _builder,
+    );
   }
 }
 
@@ -97,6 +81,14 @@ class MemberTile extends StatelessWidget {
         ),
       ),
       title: Text(member.name),
+      subtitle: member.live
+          ? Text(
+              'Live',
+              style: Theme.of(context).textTheme.subtitle2.copyWith(
+                    color: Colors.red,
+                  ),
+            )
+          : null,
       trailing: member.url != null ? const Icon(Icons.chevron_right) : null,
       onTab: member.url != null ? () => openURL(member.url) : null,
     );
