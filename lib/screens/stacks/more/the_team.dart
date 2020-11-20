@@ -74,7 +74,7 @@ class MemberTile extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1 / 1,
           child: Image.asset(
-            'assets/images/branding_and_logos/team_${member.name.toLowerCase()}.png',
+            'assets/images/branding_and_logos/team_${member.id}.png',
             fit: BoxFit.contain,
             filterQuality: FilterQuality.medium,
           ),
