@@ -317,7 +317,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                         style: totalStyle,
                       )
                     : Text(
-                        '${_health.total?.floor() ?? '-'}',
+                        '${_health.total?.ceil() ?? '-'}',
                         style: totalStyle,
                       ),
               ),
@@ -340,7 +340,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 width: 58,
                 alignment: Alignment.center,
                 child: Text(
-                  '${_healthInitial?.total?.floor() ?? '-'}',
+                  '${_healthInitial?.total?.ceil() ?? '-'}',
                   style: Theme.of(context).textTheme.bodyText2.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
@@ -477,12 +477,12 @@ class _ZoneBarState extends State<ZoneBar> {
                 children: <Widget>[
                   AnimatedCount(
                     key: widget.key,
-                    count: _value?.floor(),
+                    count: _value?.ceil(),
                     duration: widget.animationDuration,
                     style: textStyle,
                   ),
                   Text(
-                    ' / ${_maxValue.floor()}',
+                    ' / ${_maxValue.ceil()}',
                     style: textStyle,
                   ),
                 ],
