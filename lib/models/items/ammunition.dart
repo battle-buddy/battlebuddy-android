@@ -71,7 +71,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
             ),
             DisplayProperty(
               name: 'Fragmentation',
-              value: '${fragmentation.chance * 100} %',
+              value: '${(fragmentation.chance * 100).toStringAsFixed(1)} %',
             ),
             DisplayProperty(
               name: 'Velocity',
@@ -113,7 +113,8 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         ComparableProperty('Armor Damage', armorDamage,
             displayValue: '$armorDamage %'),
         ComparableProperty('Fragmentation', fragmentation.chance * 100,
-            displayValue: '${fragmentation.chance * 100} %'),
+            displayValue:
+                '${(fragmentation.chance * 100).toStringAsFixed(1)} %'),
         ComparableProperty('Velocity', velocity.metersPerSecond,
             displayValue: velocity.toString()),
       ];
