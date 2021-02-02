@@ -32,11 +32,7 @@ class MoreTab extends StatelessWidget {
 
     final inAppReview = InAppReview.instance;
 
-    if (await inAppReview.isAvailable()) {
-      await inAppReview.requestReview();
-    } else {
-      await inAppReview.openStoreListing();
-    }
+    await inAppReview.openStoreListing();
   }
 
   @override
