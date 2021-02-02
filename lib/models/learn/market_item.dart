@@ -16,14 +16,12 @@ class MarketItem implements Indexable {
       : assert(map['_id'] != null),
         assert(map['name'] != null),
         assert(map['shortName'] != null),
-        assert(map['avgPrice24h'] != null),
-        assert(map['diff24h'] != null),
         assert(map['slots'] != null),
         id = map['_id'],
         name = map['name'],
         shortName = map['shortName'],
-        avgPrice24h = map['avgPrice24h'],
-        diff24h = map['diff24h'].toDouble(),
+        avgPrice24h = (map['avgPrice24h'] ?? 0),
+        diff24h = (map['diff24h']?.toDouble() ?? 0),
         slots = map['slots'],
         _slotPrice = null;
 
