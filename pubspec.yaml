@@ -18,32 +18,29 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.2.3+44
 
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: ">=2.11.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  intl: ^0.16.1
+  intl: ^0.17.0
 
   # Firebase
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.0
-  cloud_firestore: ^0.16.0
-  firebase_storage: ^7.0.0
-  firebase_analytics: ^7.0.1
-  firebase_crashlytics: ^0.4.0
+  firebase_core: ^1.0.0
+  firebase_auth: ^1.0.0
+  cloud_firestore: ^1.0.0
+  firebase_storage: ^8.0.0
+  firebase_analytics: ^7.1.1
+  firebase_crashlytics: ^1.0.0
 
-  package_info: '>=0.4.3 <2.0.0'
-  shared_preferences: '>=0.5.8 <2.0.0'
+  package_info: '^2.0.0'
+  shared_preferences: '2.0.3'
   font_awesome_flutter: ^8.8.1
-  firebase_image:
-    git:
-      url: git@github.com:battle-buddy/firebase_image.git
-      ref: firebase-storage-7
+  firebase_image: ^1.0.0
   percent_indicator: ^2.1.5
-  url_launcher: ^5.5.2
-  in_app_review: ^1.0.2
+  url_launcher: ^6.0.2
+  in_app_review: ^2.0.0
   # youtube_player_flutter: ^7.0.0+7
 
 dev_dependencies:
@@ -51,8 +48,8 @@ dev_dependencies:
     sdk: flutter
 
   # effective_dart: ^1.2.4
-  pedantic: ^1.9.0
-  ffigen: ^1.0.0
+  pedantic: ^1.11.0
+  ffigen: ^2.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
