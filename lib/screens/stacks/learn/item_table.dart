@@ -386,6 +386,7 @@ class _ItemTableItemTableState<T extends TableView>
                 key: Key(item.id),
                 color: Colors.black54,
                 child: InkWell(
+                  onTap: () => _onTab(context, item),
                   child: Row(
                     children: item.tableData
                         .map(
@@ -404,7 +405,6 @@ class _ItemTableItemTableState<T extends TableView>
                         )
                         .toList(growable: false),
                   ),
-                  onTap: () => _onTab(context, item),
                 ),
               );
             },

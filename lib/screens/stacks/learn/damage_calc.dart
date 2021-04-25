@@ -213,11 +213,11 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                       type: MaterialType.circle,
                       color: Colors.transparent,
                       child: InkWell(
+                        onTap: () => _onTabCharacter(context),
                         child: CharacterAvatar(
                           key: Key(_character.id),
                           character: _character,
                         ),
-                        onTap: () => _onTabCharacter(context),
                       ),
                     ),
                     Container(

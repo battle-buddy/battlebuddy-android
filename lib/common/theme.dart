@@ -15,7 +15,7 @@ class AppTheme {
       accentColor: accent,
       scaffoldBackgroundColor: primary,
       dividerColor: Colors.grey[400],
-      cursorColor: accent,
+      textSelectionTheme: const TextSelectionThemeData(cursorColor: accent),
       sliderTheme: SliderThemeData(
         activeTrackColor: accent,
         inactiveTrackColor: secondary,

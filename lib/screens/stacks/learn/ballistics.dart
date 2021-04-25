@@ -45,6 +45,7 @@ class BallisticsArticle extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 16 / 9,
         child: InkWell(
+          onTap: () => openURL('https://youtube.com/watch?v=$videoID'),
           child: const Center(
             child: Icon(
               Icons.ondemand_video,
@@ -52,7 +53,6 @@ class BallisticsArticle extends StatelessWidget {
               size: 34,
             ),
           ),
-          onTap: () => openURL('https://youtube.com/watch?v=$videoID'),
         ),
       ),
     );
@@ -236,18 +236,18 @@ class ArticleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: DefaultTextStyle(
-              child: title,
               style: Theme.of(context).textTheme.headline6,
+              child: title,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: DefaultTextStyle(
-              child: body,
               style: Theme.of(context).textTheme.bodyText2.copyWith(
                     fontSize: 15,
                     color: Colors.white70,
                   ),
+              child: body,
             ),
           ),
         ],
