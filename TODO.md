@@ -6,6 +6,7 @@
 
 ## To implement
 
+- [ ] Dart null safety
 - [ ] Combat Simulator
 - [ ] Damage Calc. ammo configuration (?)
 - [ ] Ammo grenade properties
@@ -29,6 +30,7 @@
 
 ## To improve
 
+- [ ] Display value of ammo damage with more than one projectile
 - [ ] Comparison graph color computation
 - [ ] List opening performance
 - [ ] Item detail tile lists
