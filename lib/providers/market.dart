@@ -68,7 +68,7 @@ class MarketProvider {
     }
   }
 
-  Future<void> _onData(QuerySnapshot snapshot) async {
+  Future<void> _onData(QuerySnapshot<Map<String, dynamic>> snapshot) async {
     _items = snapshot.docs
         .expand((doc) =>
             doc.data().values.map((dynamic v) => MarketItem.fromMap(v)))
