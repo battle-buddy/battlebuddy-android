@@ -15,7 +15,9 @@ jobs:
       
       - uses: actions/setup-java@v2
         with:
-          java-version: '12.x'
+          distribution: 'zulu'
+          java-version: '12'
+          java-package: jdk
 
       - name: Flutter action
         uses: subosito/flutter-action@v1.5.0
@@ -23,11 +25,11 @@ jobs:
       - run: |
               dart --version
               flutter --version
-              
+
       - run: flutter pub get
-        
+
       - name: Run Analyze
         run: flutter analyze --no-fatal-infos
-        
+
       # - name: Run Test
       #   run: flutter test
