@@ -17,24 +17,25 @@ import 'item_select.dart';
 class ItemDetailScreenArguments<T extends ExplorableItem> {
   final T item;
 
-  const ItemDetailScreenArguments({@required this.item});
+  const ItemDetailScreenArguments({required this.item});
 }
 
 class ItemDetailScreen<T extends ExplorableItem> extends StatelessWidget {
   static const String routeName = '/items/detail';
 
-  ItemDetailScreen({Key key}) : super(key: key);
+  ItemDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ItemDetailScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final ItemDetailScreenArguments args = ModalRoute.of(context)!
+        .settings
+        .arguments as ItemDetailScreenArguments<ExplorableItem>;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.item.name),
+        title: Text(args.item.name!),
       ),
-      body: ItemDetail<T>(item: args.item),
+      body: ItemDetail<T>(item: args.item as T),
     );
   }
 }
@@ -46,14 +47,14 @@ class ItemDetail<T extends ExplorableItem> extends StatefulWidget {
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
-  ItemDetail({Key key, @required this.item}) : super(key: key);
+  ItemDetail({Key? key, required this.item}) : super(key: key);
 
   @override
   _ItemDetailState<T> createState() => _ItemDetailState<T>();
 }
 
 class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
-  Widget _image;
+  Widget? _image;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
   }
 
   @override
-  void didUpdateWidget(ItemDetail old) {
+  void didUpdateWidget(old) {
     super.didUpdateWidget(old);
     if (widget.item.id != old.item.id) {
       _image = _getStorageImage(widget.item);
@@ -80,7 +81,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
   }
 
   Future<void> _onCompare() {
-    Function(BuildContext) builder;
+    late Function(BuildContext) builder;
     var arguments = ItemSelectScreenArguments(
       query: widget.item.type.getQuery(null),
       selectedID: widget.item.id,
@@ -125,7 +126,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
     return Navigator.push<void>(
       context,
       MaterialPageRoute(
-        builder: builder,
+        builder: builder as Widget Function(BuildContext),
         settings: RouteSettings(
           name: ItemSectionSelectScreen.routeName,
           arguments: arguments,
@@ -167,8 +168,8 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Text(
-            widget.item.description,
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
+            widget.item.description!,
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
                   fontSize: 16,
                   color: Colors.white70,
                 ),
@@ -228,11 +229,11 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
 }
 
 class PropertyList extends StatelessWidget {
-  final List<PropertySection> sections;
-  final Color dividerColor;
+  final List<PropertySection>? sections;
+  final Color? dividerColor;
 
   const PropertyList({
-    Key key,
+    Key? key,
     this.sections,
     this.dividerColor,
   }) : super(key: key);
@@ -241,7 +242,7 @@ class PropertyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: sections
+      children: sections!
           .expand(
             (e) => [
               Padding(
@@ -261,7 +262,7 @@ class PropertyList extends StatelessWidget {
                   tiles: e.properties.map(
                     (e) => CustomTile(
                       title: Text(e.name),
-                      trailing: Text(e.value),
+                      trailing: Text(e.value!),
                     ),
                   ),
                 ),

@@ -20,9 +20,9 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   bool _initialized = false;
-  FirebaseException _error;
+  FirebaseException? _error;
 
-  ThemeData _theme;
+  ThemeData? _theme;
 
   Future<void> initialize() async {
     try {
@@ -43,7 +43,7 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _theme = AppTheme.themeData;
-    setNavigationBarColor(_theme.bottomAppBarColor);
+    setNavigationBarColor(_theme!.bottomAppBarColor);
     initialize();
   }
 
@@ -52,7 +52,7 @@ class _AppState extends State<App> {
     if (_error != null) {
       return InitScreen(
         title: 'Error',
-        message: '${_error.code}',
+        message: '${_error!.code}',
       );
     }
 
@@ -77,9 +77,9 @@ class _AppState extends State<App> {
 }
 
 class MainNavigatorWidget extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  MainNavigatorWidget({Key key, this.title}) : super(key: key);
+  MainNavigatorWidget({Key? key, this.title}) : super(key: key);
 
   @override
   MainNavigatorWidgetState createState() => MainNavigatorWidgetState();
@@ -121,7 +121,7 @@ class MainNavigatorWidgetState extends State<MainNavigatorWidget> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text(_widgetBottomTabs.elementAt(_selectedIndex).text),
+          title: Text(_widgetBottomTabs.elementAt(_selectedIndex).text!),
         ),
         bottomNavigationBar: BottomAppBar(
           child: TabBar(
@@ -144,13 +144,13 @@ class MainNavigatorWidgetState extends State<MainNavigatorWidget> {
 
 class InitScreen extends StatelessWidget {
   final String title;
-  final String message;
+  final String? message;
 
   static const Color _color = AppTheme.text;
   static const Color _backgroundColor = AppTheme.primary;
 
   const InitScreen({
-    Key key,
+    Key? key,
     this.title = 'Initializing...',
     this.message,
   }) : super(key: key);
@@ -189,7 +189,7 @@ class InitScreen extends StatelessWidget {
                     : Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child: Text(
-                          message,
+                          message!,
                           textDirection: TextDirection.ltr,
                           style: const TextStyle(
                             color: _color,

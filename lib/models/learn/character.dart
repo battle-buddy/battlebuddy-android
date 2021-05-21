@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../modules/ballistics_engine/bindings.dart' as bindings;
 
 class Character {
-  final String id;
-  final String name;
+  final String? id;
+  final String? name;
   final Health health;
-  final int index;
+  final int? index;
 
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   Character.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['_id'] != null),
@@ -21,17 +21,17 @@ class Character {
         index = map['index'].toInt();
 
   Character.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
 }
 
 class Health {
-  final double head;
-  final double thorax;
-  final double stomach;
-  final double armLeft;
-  final double armRight;
-  final double legLeft;
-  final double legRight;
+  final double? head;
+  final double? thorax;
+  final double? stomach;
+  final double? armLeft;
+  final double? armRight;
+  final double? legLeft;
+  final double? legRight;
 
   Health.fromMap(Map<String, dynamic> map)
       : assert(map['head'] != null),
@@ -59,5 +59,5 @@ class Health {
         legRight = health.leg_right;
 
   double get total =>
-      head + thorax + stomach + armLeft + armRight + legLeft + legRight;
+      head! + thorax! + stomach! + armLeft! + armRight! + legLeft! + legRight!;
 }

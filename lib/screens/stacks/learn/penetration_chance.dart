@@ -10,8 +10,8 @@ import '../../../modules/ballistics_engine/penetration.dart';
 import 'item_table.dart';
 
 class PenetrationChanceScreenArguments {
-  final Armored armor;
-  final Ammunition ammo;
+  final Armored? armor;
+  final Ammunition? ammo;
 
   PenetrationChanceScreenArguments({this.armor, this.ammo});
 }
@@ -20,7 +20,7 @@ class PenetrationChanceScreen extends StatelessWidget {
   static const String title = 'Penetration Chance';
   static const String routeName = '/learn/penChance';
 
-  PenetrationChanceScreen({Key key}) : super(key: key);
+  PenetrationChanceScreen({Key? key}) : super(key: key);
 
   Future<void> _onPressHelp(BuildContext context) async {
     return showDialog(
@@ -44,8 +44,8 @@ class PenetrationChanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PenetrationChanceScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final PenetrationChanceScreenArguments? args =
+        ModalRoute.of(context)!.settings.arguments as PenetrationChanceScreenArguments?;
 
     return Scaffold(
       appBar: AppBar(
@@ -66,10 +66,10 @@ class PenetrationChanceScreen extends StatelessWidget {
 }
 
 class PenetrationChance extends StatefulWidget {
-  final Armored armor;
-  final Ammunition ammo;
+  final Armored? armor;
+  final Ammunition? ammo;
 
-  const PenetrationChance({Key key, this.armor, this.ammo}) : super(key: key);
+  const PenetrationChance({Key? key, this.armor, this.ammo}) : super(key: key);
 
   @override
   _PenetrationChanceState createState() => _PenetrationChanceState();
@@ -78,11 +78,11 @@ class PenetrationChance extends StatefulWidget {
 class _PenetrationChanceState extends State<PenetrationChance> {
   final PenetrationCalculator _calculator = PenetrationCalculator();
 
-  Armored _armor;
-  Ammunition _ammo;
+  Armored? _armor;
+  Ammunition? _ammo;
 
-  double _currentDurability;
-  double _penetrationChance;
+  double? _currentDurability;
+  double? _penetrationChance;
 
   @override
   void initState() {
@@ -111,7 +111,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
 
       setState(() {
         _penetrationChance = _calculator.penetrationChance;
-        _currentDurability = _armor.armorProperties.durability;
+        _currentDurability = _armor!.armorProperties!.durability;
       });
     }
   }
@@ -160,7 +160,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
           arguments: ItemDualTableScreenArguments(
             title: 'Armored',
             tabNames: ['Armor', 'Chest Rigs'],
-            query: <Query>[
+            query: <Query?>[
               ItemType.armor.getQuery('armor.class', descending: true),
               ItemType.chestRig.getQuery('armor.class', descending: true),
             ],
@@ -192,11 +192,11 @@ class _PenetrationChanceState extends State<PenetrationChance> {
               alignment: Alignment.center,
               child: Text(
                 '${_penetrationChance?.toStringAsFixed(1) ?? '\u{2500}'} %',
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: _penetrationChance != null
                           ? HSVColor.fromAHSV(
                               1,
-                              _penetrationChance / 100 * 130,
+                              _penetrationChance! / 100 * 130,
                               1,
                               0.8,
                             ).toColor()
@@ -236,14 +236,14 @@ class _PenetrationChanceState extends State<PenetrationChance> {
               children: [
                 Text(
                   'Durability',
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontSize: 18,
                         color: Colors.grey[400],
                       ),
                 ),
                 Text(
                   _currentDurability?.round()?.toString() ?? '-',
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontSize: 18,
                         color: Colors.grey[400],
                       ),
@@ -257,7 +257,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
               value: _currentDurability ?? 0,
               min: 0,
               max: _armor?.armorProperties?.durability ?? 0,
-              label: _currentDurability?.round().toString() ?? 0,
+              label: _currentDurability?.round().toString() ?? 0 as String?,
               onChanged: _penetrationChance != null ? _onValueChange : null,
             ),
           ),
@@ -269,17 +269,17 @@ class _PenetrationChanceState extends State<PenetrationChance> {
 
 class SelectionCard extends StatefulWidget {
   final String title;
-  final Item item;
-  final void Function() onTab;
+  final Item? item;
+  final void Function()? onTab;
 
   static const StorageImage _image = StorageImage(size: ImageSize.large);
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
   const SelectionCard({
-    Key key,
-    @required this.title,
-    @required this.item,
+    Key? key,
+    required this.title,
+    required this.item,
     this.onTab,
   }) : super(key: key);
 
@@ -288,19 +288,19 @@ class SelectionCard extends StatefulWidget {
 }
 
 class _SelectionCardState extends State<SelectionCard> {
-  Widget _image;
+  Widget? _image;
 
   @override
   void initState() {
     super.initState();
-    if (widget.item != null) _image = _getStorageImage(widget.item);
+    if (widget.item != null) _image = _getStorageImage(widget.item!);
   }
 
   @override
   void didUpdateWidget(SelectionCard old) {
     super.didUpdateWidget(old);
     if (widget.item != old.item) {
-      _image = _getStorageImage(widget.item);
+      _image = _getStorageImage(widget.item!);
     }
   }
 
@@ -334,7 +334,7 @@ class _SelectionCardState extends State<SelectionCard> {
           ),
           Text(
             widget.title,
-            style: Theme.of(context).textTheme.button.copyWith(
+            style: Theme.of(context).textTheme.button!.copyWith(
               fontSize: 18,
               shadows: const <Shadow>[
                 Shadow(blurRadius: 5),

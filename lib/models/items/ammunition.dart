@@ -3,19 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'item.dart';
 
 class Ammunition extends Item implements ExplorableSectionItem, TableView {
-  final String caliber;
-  final double penetration;
-  final double damage;
-  final double armorDamage;
+  final String? caliber;
+  final double? penetration;
+  final double? damage;
+  final double? armorDamage;
   final Speed velocity;
   final Fragmentation fragmentation;
-  final int projectiles;
-  final bool isTracer;
-  final bool isSubsonic;
+  final int? projectiles;
+  final bool? isTracer;
+  final bool? isSubsonic;
   final WeaponModifier modifier;
   // final GrenadeProperties grenadeProperties;
 
-  Ammunition.fromMap(Map<String, dynamic> map, {DocumentReference reference})
+  Ammunition.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['caliber'] != null),
         assert(map['penetration'] != null),
         assert(map['damage'] != null),
@@ -40,13 +40,13 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         super.fromMap(map, reference: reference);
 
   Ammunition.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.ammo;
 
   @override
-  String get sectionValue => caliber;
+  String? get sectionValue => caliber;
 
   @override
   List<PropertySection> get propertySections => [
@@ -59,11 +59,11 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
             ),
             DisplayProperty(
               name: 'Penetration',
-              value: '${penetration.toStringAsFixed(0)}',
+              value: '${penetration!.toStringAsFixed(0)}',
             ),
             DisplayProperty(
               name: 'Damage',
-              value: '${damage.toStringAsFixed(0)}',
+              value: '${damage!.toStringAsFixed(0)}',
             ),
             DisplayProperty(
               name: 'Armor Damage',
@@ -71,7 +71,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
             ),
             DisplayProperty(
               name: 'Fragmentation',
-              value: '${(fragmentation.chance * 100).toStringAsFixed(1)} %',
+              value: '${(fragmentation.chance! * 100).toStringAsFixed(1)} %',
             ),
             DisplayProperty(
               name: 'Velocity',
@@ -79,11 +79,11 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
             ),
             DisplayProperty(
               name: 'Tracer',
-              value: isTracer ? 'Yes' : 'No',
+              value: isTracer! ? 'Yes' : 'No',
             ),
             DisplayProperty(
               name: 'Subsonic',
-              value: isSubsonic ? 'Yes' : 'No',
+              value: isSubsonic! ? 'Yes' : 'No',
             ),
           ],
         ),
@@ -112,9 +112,9 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         ComparableProperty('Damage', damage),
         ComparableProperty('Armor Damage', armorDamage,
             displayValue: '$armorDamage %'),
-        ComparableProperty('Fragmentation', fragmentation.chance * 100,
+        ComparableProperty('Fragmentation', fragmentation.chance! * 100,
             displayValue:
-                '${(fragmentation.chance * 100).toStringAsFixed(1)} %'),
+                '${(fragmentation.chance! * 100).toStringAsFixed(1)} %'),
         ComparableProperty('Velocity', velocity.metersPerSecond,
             displayValue: velocity.toString()),
       ];
@@ -137,9 +137,9 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
 }
 
 class Fragmentation {
-  final double chance;
-  final int min;
-  final int max;
+  final double? chance;
+  final int? min;
+  final int? max;
 
   Fragmentation.fromMap(Map<String, dynamic> map)
       : assert(map['chance'] != null),
@@ -151,8 +151,8 @@ class Fragmentation {
 }
 
 class WeaponModifier {
-  final double accuracy;
-  final double recoil;
+  final double? accuracy;
+  final double? recoil;
 
   WeaponModifier.fromMap(Map<String, dynamic> map)
       : assert(map['accuracy'] != null),

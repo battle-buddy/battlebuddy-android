@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Attribution {
-  final String title;
-  final String subtitle;
-  final String url;
-  final int index;
+  final String? title;
+  final String? subtitle;
+  final String? url;
+  final int? index;
 
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   Attribution.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['title'] != null),
@@ -18,5 +18,5 @@ class Attribution {
         index = map['index'].toInt();
 
   Attribution.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
 }

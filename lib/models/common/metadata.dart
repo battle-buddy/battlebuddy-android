@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Metadata {
-  final int totalUserCount;
-  final int totalLoyalty;
-  final Timestamp lastWipe;
+  final int? totalUserCount;
+  final int? totalLoyalty;
+  final Timestamp? lastWipe;
   final CurrencyMetadata currency;
   final List<Loyalty> loyalty;
   final Map<String, AmmoMetadata> ammo;
 
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   Metadata.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['totalUserCount'] != null),
@@ -31,7 +31,8 @@ class Metadata {
         );
 
   Metadata.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 }
 
 class CurrencyMetadata {
@@ -49,8 +50,8 @@ class CurrencyMetadata {
 }
 
 class AmmoMetadata {
-  final String displayName;
-  final int index;
+  final String? displayName;
+  final int? index;
 
   AmmoMetadata.fromMap(Map<String, dynamic> map)
       : assert(map['displayName'] != null),
@@ -60,10 +61,10 @@ class AmmoMetadata {
 }
 
 class Loyalty {
-  final String id;
-  final String name;
-  final int points;
-  final Timestamp lastLogin;
+  final String? id;
+  final String? name;
+  final int? points;
+  final Timestamp? lastLogin;
 
   Loyalty.fromMap(Map<String, dynamic> map)
       : assert(map['id'] != null),

@@ -28,11 +28,11 @@ extension FireModeExt on FireMode {
     FireMode.full: 'Full',
   };
 
-  String get displayName => _displayName[this];
+  String? get displayName => _displayName[this];
 }
 
-extension StringParsing on String {
-  FirearmClass toFirearmClass() {
+extension StringParsing on String? {
+  FirearmClass? toFirearmClass() {
     switch (this) {
       case 'assaultCarbine':
         return FirearmClass.assaultCarbine;
@@ -59,7 +59,7 @@ extension StringParsing on String {
     return null;
   }
 
-  FireMode toFireMode() {
+  FireMode? toFireMode() {
     switch (this) {
       case 'single':
         return FireMode.single;
@@ -73,7 +73,7 @@ extension StringParsing on String {
   }
 }
 
-extension FirearmClassExt on FirearmClass {
+extension FirearmClassExt on FirearmClass? {
   static const Map<FirearmClass, String> _displayName = {
     FirearmClass.assaultCarbine: 'Assault Carbine',
     FirearmClass.assaultRifle: 'Assault Rifle',
@@ -87,23 +87,23 @@ extension FirearmClassExt on FirearmClass {
     FirearmClass.specialWeapon: 'Special Weapon',
   };
 
-  String get displayName => _displayName[this];
+  String? get displayName => _displayName[this!];
 }
 
 class Firearm extends Item implements ExplorableSectionItem {
-  final FirearmClass firearmClass;
-  final String caliber;
-  final int rateOfFire;
-  final String actionType;
+  final FirearmClass? firearmClass;
+  final String? caliber;
+  final int? rateOfFire;
+  final String? actionType;
   final List<FireMode> fireModes;
   final Speed muzzleVelocity;
   final Length effectiveDist;
-  final double ergonomics;
-  final bool foldRectractable;
-  final int recoilHorizontal;
-  final int recoilVertical;
+  final double? ergonomics;
+  final bool? foldRectractable;
+  final int? recoilHorizontal;
+  final int? recoilVertical;
 
-  Firearm.fromMap(Map<String, dynamic> map, {DocumentReference reference})
+  Firearm.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['class'] != null),
         assert(map['caliber'] != null),
         assert(map['rof'] != null),
@@ -116,7 +116,7 @@ class Firearm extends Item implements ExplorableSectionItem {
         assert(map['foldRectractable'] != null),
         assert(map['recoilHorizontal'] != null),
         assert(map['recoilVertical'] != null),
-        firearmClass = (map['class'] as String).toFirearmClass(),
+        firearmClass = (map['class'] as String?).toFirearmClass(),
         caliber = map['caliber'],
         rateOfFire = map['rof'].toInt(),
         actionType = map['action'],
@@ -132,13 +132,13 @@ class Firearm extends Item implements ExplorableSectionItem {
         super.fromMap(map, reference: reference);
 
   Firearm.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.firearm;
 
   @override
-  String get sectionValue => firearmClass.displayName;
+  String? get sectionValue => firearmClass.displayName;
 
   @override
   List<PropertySection> get propertySections => [
@@ -155,7 +155,7 @@ class Firearm extends Item implements ExplorableSectionItem {
             ),
             DisplayProperty(
               name: 'Fold-/Retractable',
-              value: foldRectractable ? 'Yes' : 'No',
+              value: foldRectractable! ? 'Yes' : 'No',
             ),
           ],
         ),

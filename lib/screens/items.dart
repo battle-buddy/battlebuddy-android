@@ -20,7 +20,7 @@ class ItemsTab extends StatelessWidget {
 
   static final Map<String, Widget Function(BuildContext)> routes = {};
 
-  ItemsTab({Key key}) : super(key: key);
+  ItemsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

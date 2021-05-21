@@ -18,12 +18,13 @@ class ItemComparisonScreen<T extends ComparisonView> extends StatelessWidget {
   static const String title = 'Compare';
   static const String routeName = '/items/compare';
 
-  const ItemComparisonScreen({Key key}) : super(key: key);
+  const ItemComparisonScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ItemComparisonScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final ItemComparisonScreenArguments args = ModalRoute.of(context)!
+        .settings
+        .arguments as ItemComparisonScreenArguments<ComparisonView>;
 
     return Scaffold(
       appBar: AppBar(
@@ -42,9 +43,9 @@ class ItemComparisonList<T extends ComparisonView> extends StatefulWidget {
   final HashSet<String> selectedIDs;
 
   const ItemComparisonList({
-    Key key,
-    @required this.items,
-    @required this.selectedIDs,
+    Key? key,
+    required this.items,
+    required this.selectedIDs,
   }) : super(key: key);
 
   @override
@@ -53,8 +54,8 @@ class ItemComparisonList<T extends ComparisonView> extends StatefulWidget {
 
 class _ItemComparisonListState<T extends ComparisonView>
     extends State<ItemComparisonList<T>> {
-  List<GraphSection> _sections;
-  Exception _error;
+  List<GraphSection>? _sections;
+  Exception? _error;
 
   @override
   void initState() {
@@ -76,9 +77,9 @@ class _ItemComparisonListState<T extends ComparisonView>
       var maxValue = value;
 
       for (final item in items) {
-        final value = item.comparableProperties[index].value;
-        minValue = min(value, minValue);
-        maxValue = max(value, maxValue);
+        final value = item.comparableProperties[index].value!;
+        minValue = min(value, minValue!);
+        maxValue = max(value, maxValue!);
 
         if (selected.contains(item.id)) selectedItems.add(item);
       }
@@ -89,8 +90,8 @@ class _ItemComparisonListState<T extends ComparisonView>
 
       for (final item in selectedItems) {
         final currentProp = item.comparableProperties[index];
-        final value = currentProp.value;
-        final percent = (value - minValue) / (maxValue - minValue) * 1.0;
+        final value = currentProp.value!;
+        final percent = (value - minValue!) / (maxValue! - minValue) * 1.0;
 
         final graph = PropertyGraph(
           name: item.shortName,
@@ -132,10 +133,10 @@ class _ItemComparisonListState<T extends ComparisonView>
 
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      itemCount: _sections.length,
+      itemCount: _sections!.length,
       separatorBuilder: (context, index) => const SizedBox(height: 30),
       itemBuilder: (context, index) {
-        final section = _sections[index];
+        final section = _sections![index];
         final colors = _calculateColorRange(context, section.graphs.length);
 
         return Column(
@@ -148,7 +149,7 @@ class _ItemComparisonListState<T extends ComparisonView>
                 section.title.toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(fontSize: 18),
               ),
             ),
@@ -169,15 +170,15 @@ class _ItemComparisonListState<T extends ComparisonView>
 }
 
 class GraphBar extends StatelessWidget {
-  final String name;
+  final String? name;
   final String value;
   final double percent;
-  final Color color;
+  final Color? color;
 
   const GraphBar({
-    Key key,
-    @required this.name,
-    @required this.value,
+    Key? key,
+    required this.name,
+    required this.value,
     this.percent = 0.0,
     this.color,
   }) : super(key: key);
@@ -196,7 +197,7 @@ class GraphBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Text>[
               Text(
-                name,
+                name!,
                 style: Theme.of(context).textTheme.subtitle2,
               ),
               Text(value),
@@ -219,19 +220,19 @@ class GraphSection {
   final List<PropertyGraph> graphs;
 
   const GraphSection({
-    @required this.title,
-    @required this.graphs,
+    required this.title,
+    required this.graphs,
   });
 }
 
 class PropertyGraph {
-  final String name;
+  final String? name;
   final String value;
   final double percent;
 
   const PropertyGraph({
-    @required this.name,
-    @required this.value,
-    @required this.percent,
+    required this.name,
+    required this.value,
+    required this.percent,
   });
 }

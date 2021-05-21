@@ -14,20 +14,20 @@ import '../models/items/throwable.dart';
 import '../utils/index.dart';
 
 class ItemProvider<T extends Item> {
-  final Query query;
+  final Query? query;
   final bool indexing;
   final int tokenLength;
 
-  StreamSubscription<QuerySnapshot> _firebaseStream;
-  List<T> _items;
-  InvertedIndex _index;
+  StreamSubscription<QuerySnapshot>? _firebaseStream;
+  List<T>? _items;
+  InvertedIndex? _index;
 
   String _searchTerm = '';
 
-  StreamController<List<T>> _controller;
+  late StreamController<List<T>?> _controller;
 
   factory ItemProvider(
-    Query query, {
+    Query? query, {
     bool indexing = false,
     int tokenLength = 3,
   }) {
@@ -52,8 +52,8 @@ class ItemProvider<T extends Item> {
 
   void _sendData() {
     if (_searchTerm.isNotEmpty && _index != null) {
-      final results = _index.search(_searchTerm);
-      final items = results.map((e) => (_items[e[0]])).toList(growable: false);
+      final results = _index!.search(_searchTerm);
+      final items = results.map((e) => (_items![e[0]])).toList(growable: false);
       _controller.add(items);
     } else {
       _controller.add(_items);
@@ -64,7 +64,7 @@ class ItemProvider<T extends Item> {
     _items = snapshot.docs.map<T>(_serializeSnapshot).toList(growable: false);
 
     if (indexing) {
-      _index = InvertedIndex.fromList(_items, tokenLength: tokenLength);
+      _index = InvertedIndex.fromList(_items!, tokenLength: tokenLength);
     }
 
     _sendData();
@@ -84,7 +84,7 @@ class ItemProvider<T extends Item> {
   }
 
   void _onListen() {
-    _firebaseStream = query.snapshots().listen(_onData, onError: _onError);
+    _firebaseStream = query!.snapshots().listen(_onData, onError: _onError);
   }
 
   void _onCancel() {
@@ -105,36 +105,36 @@ class ItemProvider<T extends Item> {
 
   Future<void> getData() async => _sendData();
 
-  Stream<List<T>> get stream => _controller.stream;
+  Stream<List<T>?> get stream => _controller.stream;
 }
 
 class ItemSection<T extends SectionView> {
-  final String title;
+  final String? title;
   final List<T> items;
 
   ItemSection({
-    @required this.title,
-    @required this.items,
+    required this.title,
+    required this.items,
   });
 }
 
 class ItemSectionProvider<T extends SectionView> {
-  final Query query;
-  final bool sortSections;
+  final Query? query;
+  final bool? sortSections;
   final bool indexing;
   final int tokenLength;
 
-  StreamSubscription<QuerySnapshot> _firebaseStream;
-  List<T> _items;
-  InvertedIndex _index;
+  StreamSubscription<QuerySnapshot>? _firebaseStream;
+  late List<T> _items;
+  InvertedIndex? _index;
 
   String _searchTerm = '';
 
-  StreamController<List<ItemSection<T>>> _controller;
+  late StreamController<List<ItemSection<T>>> _controller;
 
   factory ItemSectionProvider(
-    Query query, {
-    bool sortSections,
+    Query? query, {
+    bool? sortSections,
     bool indexing = false,
     int tokenLength = 3,
   }) {
@@ -164,7 +164,7 @@ class ItemSectionProvider<T extends SectionView> {
 
   void _sendData() {
     if (_searchTerm.isNotEmpty && _index != null) {
-      final results = _index.search(_searchTerm);
+      final results = _index!.search(_searchTerm);
       final items = results.map((e) => (_items[e[0]])).toList(growable: false);
       _controller.add(_buildSections(items));
     } else {
@@ -196,7 +196,7 @@ class ItemSectionProvider<T extends SectionView> {
   }
 
   void _onListen() {
-    _firebaseStream = query.snapshots().listen(_onData, onError: _onError);
+    _firebaseStream = query!.snapshots().listen(_onData, onError: _onError);
   }
 
   void _onCancel() {
@@ -221,8 +221,8 @@ class ItemSectionProvider<T extends SectionView> {
       }
     }
 
-    if (sortSections) {
-      sections.sort((a, b) => a.title.compareTo(b.title));
+    if (sortSections!) {
+      sections.sort((a, b) => a.title!.compareTo(b.title!));
     }
 
     return sections;

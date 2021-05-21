@@ -25,7 +25,7 @@ class MoreTab extends StatelessWidget {
     TheTeamScreen.routeName: (context) => TheTeamScreen(),
   };
 
-  MoreTab({Key key}) : super(key: key);
+  MoreTab({Key? key}) : super(key: key);
 
   Future<void> _onAppReview() async {
     if (!Platform.isAndroid) return;
@@ -91,7 +91,7 @@ class MoreTab extends StatelessWidget {
             ),
             CustomTile(
               title: Text(DateTime.now()
-                  .difference(globals.metadata.lastWipe.toDate())
+                  .difference(globals.metadata.lastWipe!.toDate())
                   .inDays
                   .toString()),
               subtitle: const Text('days since last wipe...'),

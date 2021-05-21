@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TileSectionList extends StatelessWidget {
-  final String title;
-  final Iterable<CustomTile> tiles;
-  final Color color;
+  final String? title;
+  final Iterable<CustomTile>? tiles;
+  final Color? color;
 
   const TileSectionList({
-    Key key,
+    Key? key,
     this.title,
     this.tiles,
     this.color,
@@ -22,10 +22,10 @@ class TileSectionList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Text(
-              title,
+              title!,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle2
+                  .subtitle2!
                   .copyWith(color: Colors.grey[400]),
             ),
           ),
@@ -37,11 +37,11 @@ class TileSectionList extends StatelessWidget {
 }
 
 class CustomTileList extends StatelessWidget {
-  final Iterable<CustomTile> tiles;
-  final Color color;
+  final Iterable<CustomTile>? tiles;
+  final Color? color;
 
   const CustomTileList({
-    Key key,
+    Key? key,
     this.tiles,
     this.color,
   }) : super(key: key);
@@ -51,7 +51,7 @@ class CustomTileList extends StatelessWidget {
     return Column(
       children: ListTile.divideTiles(
         context: context,
-        tiles: tiles,
+        tiles: tiles!,
         color: color,
       ).toList(growable: false),
     );
@@ -59,15 +59,15 @@ class CustomTileList extends StatelessWidget {
 }
 
 class CustomTile extends StatelessWidget {
-  final Widget title;
-  final Widget subtitle;
-  final Widget leading;
-  final Widget trailing;
+  final Widget? title;
+  final Widget? subtitle;
+  final Widget? leading;
+  final Widget? trailing;
   final Color color;
-  final void Function() onTab;
+  final void Function()? onTab;
 
   const CustomTile({
-    Key key,
+    Key? key,
     this.title,
     this.subtitle,
     this.leading,

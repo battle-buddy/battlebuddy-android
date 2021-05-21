@@ -17,7 +17,7 @@ class PriceCheckScreen extends StatefulWidget {
   static const String title = 'Price Check';
   static const String routeName = '/learn/priceCheck';
 
-  PriceCheckScreen({Key key}) : super(key: key);
+  PriceCheckScreen({Key? key}) : super(key: key);
 
   @override
   _PriceCheckScreenState createState() => _PriceCheckScreenState();
@@ -52,7 +52,7 @@ class _PriceCheckScreenState extends State<PriceCheckScreen> {
   }
 
   void _onItemPress(MarketItem item) {
-    if (item.isStarred) {
+    if (item.isStarred!) {
       _provider.addStar(item.id);
     } else {
       _provider.deleteStar(item.id);
@@ -106,9 +106,9 @@ class _PriceCheckScreenState extends State<PriceCheckScreen> {
 
 class PriceCheckList extends StatefulWidget {
   final Stream<List<MarketItem>> stream;
-  final Function(MarketItem item) onPress;
+  final Function(MarketItem item)? onPress;
 
-  const PriceCheckList({Key key, @required this.stream, this.onPress})
+  const PriceCheckList({Key? key, required this.stream, this.onPress})
       : super(key: key);
 
   @override
@@ -116,9 +116,9 @@ class PriceCheckList extends StatefulWidget {
 }
 
 class _PriceCheckListState extends State<PriceCheckList> {
-  StreamSubscription<List<MarketItem>> _stream;
-  List<MarketItem> _items;
-  FirebaseException _error;
+  late StreamSubscription<List<MarketItem>> _stream;
+  List<MarketItem>? _items;
+  FirebaseException? _error;
 
   void _onData(List<MarketItem> items) {
     setState(() {
@@ -128,7 +128,7 @@ class _PriceCheckListState extends State<PriceCheckList> {
 
   void _onError(Object error) {
     setState(() {
-      _error = error;
+      _error = error as FirebaseException?;
     });
   }
 
@@ -148,10 +148,10 @@ class _PriceCheckListState extends State<PriceCheckList> {
       const Divider(height: 0);
 
   Widget itemBuilder(BuildContext context, int index) {
-    final item = _items[index];
+    final item = _items![index];
 
     return PriceCheckItem(
-        key: Key(item.id), item: item, onPress: widget.onPress);
+        key: Key(item.id!), item: item, onPress: widget.onPress);
   }
 
   @override
@@ -161,7 +161,7 @@ class _PriceCheckListState extends State<PriceCheckList> {
     if (_items == null) return const Center(child: CircularProgressIndicator());
 
     return ListView.separated(
-      itemCount: _items.length,
+      itemCount: _items!.length,
       separatorBuilder: _separatorBuilder,
       itemBuilder: itemBuilder,
     );
@@ -170,15 +170,15 @@ class _PriceCheckListState extends State<PriceCheckList> {
 
 class PriceCheckItem extends StatefulWidget {
   final MarketItem item;
-  final Function(MarketItem item) onPress;
+  final Function(MarketItem item)? onPress;
 
   static final _currencyFormat =
       NumberFormat.currency(name: 'RUB', symbol: '\u{20BD}', decimalDigits: 0);
 
   const PriceCheckItem({
-    Key key,
-    @required this.item,
-    @required this.onPress,
+    Key? key,
+    required this.item,
+    required this.onPress,
   }) : super(key: key);
 
   @override
@@ -186,14 +186,14 @@ class PriceCheckItem extends StatefulWidget {
 }
 
 class _PriceCheckItemState extends State<PriceCheckItem> {
-  bool _isStarred;
+  bool? _isStarred;
 
   void _onPress() {
     setState(() {
-      _isStarred = !_isStarred;
+      _isStarred = !_isStarred!;
     });
     widget.item.isStarred = _isStarred;
-    widget.onPress(widget.item);
+    widget.onPress!(widget.item);
   }
 
   @override
@@ -217,7 +217,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
       children: <Widget>[
         Text(
           PriceCheckItem._currencyFormat.format(widget.item.avgPrice24h),
-          style: Theme.of(context).textTheme.subtitle2.copyWith(
+          style: Theme.of(context).textTheme.subtitle2!.copyWith(
                 color: Theme.of(context).accentColor,
                 fontSize: 21,
               ),
@@ -226,11 +226,11 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
           padding: const EdgeInsets.only(top: 1, bottom: 3),
           child: Text(
             '${PriceCheckItem._currencyFormat.format(widget.item.slotPrice)} / slot',
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText2
-                      .color
+                      .bodyText2!
+                      .color!
                       .withOpacity(0.8),
                   fontSize: 16,
                 ),
@@ -240,7 +240,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
           widget.item.diff24h != 0
               ? '${widget.item.diff24h}% ${(widget.item.diff24h.isNegative ? '\u{25BC}' : '\u{25B2}')}'
               : '\u{2014}',
-          style: Theme.of(context).textTheme.bodyText2.copyWith(
+          style: Theme.of(context).textTheme.bodyText2!.copyWith(
                 color: widget.item.diff24h.isNegative
                     ? Colors.red
                     : (widget.item.diff24h == 0
@@ -267,19 +267,19 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
           children: <Widget>[
             Container(
               child: Icon(
-                _isStarred ? Icons.star : Icons.star_border,
-                color: _isStarred ? iconColor : iconColor.withOpacity(0.9),
+                _isStarred! ? Icons.star : Icons.star_border,
+                color: _isStarred! ? iconColor : iconColor!.withOpacity(0.9),
               ),
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 20),
                 child: Text(
-                  widget.item.name,
+                  widget.item.name!,
                   softWrap: true,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
                         fontSize: 18,
                       ),
                 ),
