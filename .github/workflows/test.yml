@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
-          java-version: '12'
+          java-version: '11'
           java-package: jdk
 
       - name: Flutter action
