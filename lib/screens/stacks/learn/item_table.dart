@@ -140,8 +140,9 @@ class _ItemDualTableScreenState<T1 extends TableView, T2 extends TableView>
 
   @override
   void didChangeDependencies() {
-    final ItemDualTableScreenArguments args =
-        ModalRoute.of(context)!.settings.arguments as ItemDualTableScreenArguments;
+    final ItemDualTableScreenArguments args = ModalRoute.of(context)!
+        .settings
+        .arguments as ItemDualTableScreenArguments;
 
     _provider0 = ItemProvider<T1>(
       args.query[0],
@@ -234,8 +235,9 @@ class _ItemDualTableScreenState<T1 extends TableView, T2 extends TableView>
 
   @override
   Widget build(BuildContext context) {
-    final ItemDualTableScreenArguments args =
-        ModalRoute.of(context)!.settings.arguments as ItemDualTableScreenArguments;
+    final ItemDualTableScreenArguments args = ModalRoute.of(context)!
+        .settings
+        .arguments as ItemDualTableScreenArguments;
 
     return DefaultTabController(
       length: 2,
@@ -383,7 +385,7 @@ class _ItemTableItemTableState<T extends TableView>
               final item = _items![index];
 
               return Material(
-                key: Key(item.id!),
+                key: Key(item.id),
                 color: Colors.black54,
                 child: InkWell(
                   onTap: () => _onTab(context, item),

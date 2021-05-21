@@ -23,20 +23,14 @@ class HealthCalculator {
     }
 
     final healthPtr = _engine.create_person_health(
-      health.head!,
-      health.thorax!,
-      health.stomach!,
-      health.armLeft!,
-      health.armRight!,
-      health.legLeft!,
-      health.legRight!,
+      health.head,
+      health.thorax,
+      health.stomach,
+      health.armLeft,
+      health.armRight,
+      health.legLeft,
+      health.legRight,
     );
-
-    if (healthPtr == null) {
-      throw HealthCalculatorException(
-        'Error while creating health pointer',
-      );
-    }
 
     return healthPtr;
   }
@@ -47,19 +41,11 @@ class HealthCalculator {
     }
 
     final ammoPtr = _engine.create_ammo(
-      ammo.damage!,
-      ammo.armorDamage!,
-      ammo.penetration!,
-      ammo.fragmentation.chance!,
+      ammo.damage,
+      ammo.armorDamage,
+      ammo.penetration,
+      ammo.fragmentation.chance,
     );
-
-    if (ammoPtr != null) {
-      _ammo = ammo;
-    } else {
-      throw HealthCalculatorException(
-        'Error while creating ammo pointer',
-      );
-    }
 
     return ammoPtr;
   }
@@ -77,6 +63,8 @@ class HealthCalculator {
     } on HealthCalculatorException {
       rethrow;
     }
+
+    _ammo = ammo;
   }
 
   set ammo(Ammunition? value) {
@@ -88,6 +76,8 @@ class HealthCalculator {
     if (_calculator == null) {
       throw HealthCalculatorException('Error while setting ammo');
     }
+
+    _ammo = value;
   }
 
   Ammunition? get ammo => _ammo;
@@ -98,9 +88,6 @@ class HealthCalculator {
     }
 
     final statusPtr = _engine.healh_get_person_health(_calculator!);
-    if (statusPtr == null) {
-      throw HealthCalculatorException('Error while getting person status');
-    }
 
     final status = Health.fromReference(statusPtr.ref);
 
@@ -115,9 +102,6 @@ class HealthCalculator {
     }
 
     _calculator = _engine.health_impact_on_zone(_calculator!, zone.index);
-    if (_calculator == null) {
-      throw HealthCalculatorException('Error while processing impact one zone');
-    }
   }
 
   void reset() {
@@ -126,9 +110,6 @@ class HealthCalculator {
     }
 
     _calculator = _engine.health_reset_calc(_calculator!);
-    if (_calculator == null) {
-      throw HealthCalculatorException('Error while resetting calculator');
-    }
   }
 }
 

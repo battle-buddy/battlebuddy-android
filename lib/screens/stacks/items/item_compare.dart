@@ -188,7 +188,7 @@ class GraphBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0.5),
       child: LinearPercentIndicator(
-        percent: max(percent ?? 0.0, 0.01),
+        percent: max(percent, 0.01),
         lineHeight: 28,
         linearStrokeCap: LinearStrokeCap.butt,
         center: Container(

@@ -45,7 +45,7 @@ enum ImageSize {
 }
 
 extension Format on ImageSize {
-  String? get string {
+  String get string {
     switch (this) {
       case ImageSize.full:
         return 'full';
@@ -54,8 +54,6 @@ extension Format on ImageSize {
       case ImageSize.medium:
         return 'medium';
     }
-
-    return null;
   }
 }
 
@@ -95,6 +93,7 @@ class StorageImage {
       case ItemType.throwable:
         ref = ref.child('throwables');
         break;
+      default:
     }
 
     final path = ref.child(filename).fullPath;

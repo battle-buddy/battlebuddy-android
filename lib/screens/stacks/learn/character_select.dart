@@ -35,7 +35,7 @@ class _CharacterSelectionState extends State<CharacterSelection> {
     final characters = snapshot.docs
         .map((doc) => Character.fromSnapshot(doc))
         .toList(growable: false)
-          ..sort((a, b) => a.index!.compareTo(b.index!));
+          ..sort((a, b) => a.index.compareTo(b.index));
 
     setState(() {
       _characters = characters;
@@ -74,8 +74,8 @@ class _CharacterSelectionState extends State<CharacterSelection> {
       itemCount: _characters!.length,
       separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) => ListTile(
-        key: Key(_characters![index].id!),
-        title: Text(_characters![index].name!),
+        key: Key(_characters![index].id),
+        title: Text(_characters![index].name),
         onTap: () => _onTab(context, _characters![index]),
       ),
     );

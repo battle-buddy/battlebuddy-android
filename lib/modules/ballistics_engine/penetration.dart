@@ -19,25 +19,17 @@ class PenetrationCalculator {
   }
 
   Pointer<bindings.Armor> _toArmorPtr(Armored? armor) {
-    if (armor == null) {
-      throw PenetrationCalculatorException('Armor value is null');
+    if (armor == null && armor!.armorProperties != null) {
+      throw PenetrationCalculatorException('Armor value is null or un-armored');
     }
 
     final armorPtr = _engine.create_armor(
-      armor.armorProperties!.armorClass!,
-      armor.armorProperties!.durability!,
-      armor.armorProperties!.durability!,
-      armor.armorProperties!.material!.destructibility!,
-      armor.armorProperties!.bluntThroughput!,
+      armor.armorProperties!.armorClass,
+      armor.armorProperties!.durability,
+      armor.armorProperties!.durability,
+      armor.armorProperties!.material.destructibility,
+      armor.armorProperties!.bluntThroughput,
     );
-
-    if (armorPtr != null) {
-      _armor = armor;
-    } else {
-      throw PenetrationCalculatorException(
-        'Error while creating armor pointer',
-      );
-    }
 
     return armorPtr;
   }
@@ -48,19 +40,11 @@ class PenetrationCalculator {
     }
 
     final ammoPtr = _engine.create_ammo(
-      ammo.damage!,
-      ammo.armorDamage!,
-      ammo.penetration!,
-      ammo.fragmentation.chance!,
+      ammo.damage,
+      ammo.armorDamage,
+      ammo.penetration,
+      ammo.fragmentation.chance,
     );
-
-    if (ammoPtr != null) {
-      _ammo = ammo;
-    } else {
-      throw PenetrationCalculatorException(
-        'Error while creating ammo pointer',
-      );
-    }
 
     return ammoPtr;
   }

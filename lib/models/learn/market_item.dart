@@ -1,12 +1,12 @@
 import '../../utils/index.dart';
 
 class MarketItem implements Indexable {
-  final String? id;
-  final String? name;
-  final String? shortName;
+  final String id;
+  final String name;
+  final String shortName;
   final int avgPrice24h;
   final double diff24h;
-  final int? slots;
+  final int slots;
 
   bool? isStarred = false;
 
@@ -26,7 +26,7 @@ class MarketItem implements Indexable {
         _slotPrice = null;
 
   int? get slotPrice {
-    _slotPrice ??= (avgPrice24h / slots!).round();
+    _slotPrice ??= (avgPrice24h / slots).round();
     return _slotPrice;
   }
 

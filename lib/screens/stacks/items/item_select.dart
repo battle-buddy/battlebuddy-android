@@ -152,7 +152,7 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
     final item = _items![index];
 
     return ItemTile(
-      key: Key(item.id!),
+      key: Key(item.id),
       item: item,
       isSelected: _selection!.contains(item.id),
       onChange: onChange,

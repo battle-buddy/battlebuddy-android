@@ -80,8 +80,8 @@ class MemberTile extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(member.name!),
-      subtitle: member.live!
+      title: Text(member.name),
+      subtitle: member.live
           ? Text(
               'Live',
               style: Theme.of(context).textTheme.subtitle2!.copyWith(
@@ -89,8 +89,8 @@ class MemberTile extends StatelessWidget {
                   ),
             )
           : null,
-      trailing: member.url != null ? const Icon(Icons.chevron_right) : null,
-      onTab: member.url != null ? () => openURL(member.url!) : null,
+      trailing: const Icon(Icons.chevron_right),
+      onTab: () => openURL(member.url),
     );
   }
 }

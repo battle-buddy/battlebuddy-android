@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/error.dart';
 import '../../../common/tiles.dart';
 import '../../../firebase.dart';
 import '../../../models/items/ammunition.dart' show Ammunition;
@@ -33,7 +34,7 @@ class ItemDetailScreen<T extends ExplorableItem> extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.item.name!),
+        title: Text(args.item.name),
       ),
       body: ItemDetail<T>(item: args.item as T),
     );
@@ -121,6 +122,8 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
       case ItemType.attachment:
         builder = (context) => ItemSectionSelectScreen<Armor>();
         break;
+      default:
+        throw ErrorScreen();
     }
 
     return Navigator.push<void>(
@@ -168,7 +171,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Text(
-            widget.item.description!,
+            widget.item.description,
             style: Theme.of(context).textTheme.bodyText2!.copyWith(
                   fontSize: 16,
                   color: Colors.white70,

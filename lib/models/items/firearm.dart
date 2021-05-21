@@ -31,7 +31,7 @@ extension FireModeExt on FireMode {
   String? get displayName => _displayName[this];
 }
 
-extension StringParsing on String? {
+extension StringParsing on String {
   FirearmClass? toFirearmClass() {
     switch (this) {
       case 'assaultCarbine':
@@ -92,16 +92,16 @@ extension FirearmClassExt on FirearmClass? {
 
 class Firearm extends Item implements ExplorableSectionItem {
   final FirearmClass? firearmClass;
-  final String? caliber;
-  final int? rateOfFire;
-  final String? actionType;
+  final String caliber;
+  final int rateOfFire;
+  final String actionType;
   final List<FireMode> fireModes;
   final Speed muzzleVelocity;
   final Length effectiveDist;
-  final double? ergonomics;
-  final bool? foldRectractable;
-  final int? recoilHorizontal;
-  final int? recoilVertical;
+  final double ergonomics;
+  final bool foldRectractable;
+  final int recoilHorizontal;
+  final int recoilVertical;
 
   Firearm.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['class'] != null),
@@ -116,7 +116,7 @@ class Firearm extends Item implements ExplorableSectionItem {
         assert(map['foldRectractable'] != null),
         assert(map['recoilHorizontal'] != null),
         assert(map['recoilVertical'] != null),
-        firearmClass = (map['class'] as String?).toFirearmClass(),
+        firearmClass = (map['class'] as String).toFirearmClass(),
         caliber = map['caliber'],
         rateOfFire = map['rof'].toInt(),
         actionType = map['action'],
@@ -132,7 +132,8 @@ class Firearm extends Item implements ExplorableSectionItem {
         super.fromMap(map, reference: reference);
 
   Firearm.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.firearm;
@@ -155,7 +156,7 @@ class Firearm extends Item implements ExplorableSectionItem {
             ),
             DisplayProperty(
               name: 'Fold-/Retractable',
-              value: foldRectractable! ? 'Yes' : 'No',
+              value: foldRectractable ? 'Yes' : 'No',
             ),
           ],
         ),

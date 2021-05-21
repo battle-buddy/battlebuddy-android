@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 import '../../utils/index.dart';
 
@@ -38,9 +37,9 @@ extension Database on ItemType? {
         return instance.collection('melee');
       case ItemType.throwable:
         return instance.collection('grenade');
+      default:
+        return null;
     }
-
-    return null;
   }
 
   Query? getQuery(String? sortBy, {bool descending = false}) {
@@ -83,6 +82,7 @@ extension Database on ItemType? {
         query ??= ref?.orderBy('armor.class', descending: descending);
         query = query?.where('type', whereIn: <String>['visor', 'attachment']);
         break;
+      default:
     }
 
     return query;
@@ -276,7 +276,9 @@ class Item implements Indexable {
   String toString() => 'Item<$type:$id>';
 
   ItemType? get type {
-    _type ??= itemTypeByReference(reference!);
+    if (reference != null) {
+      _type ??= itemTypeByReference(reference!);
+    }
     return _type;
   }
 
@@ -364,9 +366,9 @@ class Speed {
 }
 
 class Length {
-  final double? meter;
+  final double meter;
 
-  Length({double? meter = 0.0}) : meter = meter;
+  Length({double meter = 0.0}) : meter = meter;
 
   @override
   String toString() => '$meter m';
@@ -376,9 +378,9 @@ class Mass {
   final double kilograms;
   final double grams;
 
-  Mass({double? kg, double? g})
-      : kilograms = kg ?? g! / 1000 ?? 0,
-        grams = g ?? kg! * 1000 ?? 0;
+  Mass({double kg = 0, double g = 0})
+      : kilograms = kg != 0 ? kg : g / 1000,
+        grams = g != 0 ? g : kg * 1000;
 
   @override
   String toString() => '$grams g';

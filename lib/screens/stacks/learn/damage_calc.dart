@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -107,7 +109,9 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   void _onItemChange() {
     if (_ammo != null) {
       if (_calculator.ammo == null) {
+        print(_calculator.ammo.runtimeType);
         _calculator.createCalculation(_health, _ammo);
+        print(_calculator.ammo.runtimeType);
       } else if (_calculator.ammo != _ammo) {
         _calculator.ammo = _ammo;
       }
@@ -140,18 +144,20 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   }
 
   void _onTabCharacter(BuildContext context) async {
-    final character = await Navigator.pushNamed(
+    final character = await Navigator.pushNamed<Character>(
       context,
       CharacterSelectionScreen.routeName,
     );
 
     if (character != null) {
-      _setCharacter(character as Character);
+      _setCharacter(character);
     }
   }
 
   void _onTabReset() {
+    print(_calculator.health.total);
     _calculator.reset();
+    print(_calculator.health.total);
 
     setState(() {
       _health = _calculator.health;
@@ -205,7 +211,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                key: Key(_character!.id!),
+                key: Key(_character!.id),
                 height: 90,
                 width: 90,
                 child: Column(
@@ -216,7 +222,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                       child: InkWell(
                         onTap: () => _onTabCharacter(context),
                         child: CharacterAvatar(
-                          key: Key(_character!.id!),
+                          key: Key(_character!.id),
                           character: _character,
                         ),
                       ),
@@ -224,7 +230,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        _character!.name!,
+                        _character!.name,
                         style: Theme.of(context).textTheme.subtitle2,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -237,7 +243,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 key: const Key('head'),
                 title: 'Head',
                 value: _health!.head,
-                maxValue: _healthInitial?.head,
+                maxValue: _healthInitial!.head,
                 onTab: () => _onTabZone(Zone.head),
               ),
             ],
@@ -251,7 +257,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 key: const Key('throax'),
                 title: 'Thorax',
                 value: _health!.thorax,
-                maxValue: _healthInitial?.thorax,
+                maxValue: _healthInitial!.thorax,
                 onTab: () => _onTabZone(Zone.thorax),
               ),
             ],
@@ -264,21 +270,21 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 key: const Key('armRight'),
                 title: 'Right Arm',
                 value: _health!.armRight,
-                maxValue: _healthInitial?.armRight,
+                maxValue: _healthInitial!.armRight,
                 onTab: () => _onTabZone(Zone.armRight),
               ),
               ZoneBar(
                 key: const Key('stomach'),
                 title: 'Stomach',
                 value: _health!.stomach,
-                maxValue: _healthInitial?.stomach,
+                maxValue: _healthInitial!.stomach,
                 onTab: () => _onTabZone(Zone.stomach),
               ),
               ZoneBar(
                 key: const Key('armLeft'),
                 title: 'Left Arm',
                 value: _health!.armLeft,
-                maxValue: _healthInitial?.armLeft,
+                maxValue: _healthInitial!.armLeft,
                 onTab: () => _onTabZone(Zone.armLeft),
               ),
             ],
@@ -291,14 +297,14 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 key: const Key('legRight'),
                 title: 'Right Leg',
                 value: _health!.legRight,
-                maxValue: _healthInitial?.legRight,
+                maxValue: _healthInitial!.legRight,
                 onTab: () => _onTabZone(Zone.legRight),
               ),
               ZoneBar(
                 key: const Key('legLeft'),
                 title: 'Left Leg',
                 value: _health!.legLeft,
-                maxValue: _healthInitial?.legLeft,
+                maxValue: _healthInitial!.legLeft,
                 onTab: () => _onTabZone(Zone.legLeft),
               ),
             ],
@@ -318,7 +324,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                         style: totalStyle,
                       )
                     : Text(
-                        '${_health!.total?.ceil() ?? '-'}',
+                        _health!.total.ceil().toString(),
                         style: totalStyle,
                       ),
               ),
@@ -341,7 +347,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 width: 58,
                 alignment: Alignment.center,
                 child: Text(
-                  '${_healthInitial?.total?.ceil() ?? '-'}',
+                  _healthInitial!.total.ceil().toString(),
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
@@ -396,8 +402,8 @@ class _DamageCalculatorState extends State<DamageCalculator> {
 
 class ZoneBar extends StatefulWidget {
   final String title;
-  final double? value;
-  final double? maxValue;
+  final double value;
+  final double maxValue;
   final Function? onTab;
   final int animationDuration;
 
@@ -415,8 +421,8 @@ class ZoneBar extends StatefulWidget {
 }
 
 class _ZoneBarState extends State<ZoneBar> {
-  double? _value;
-  double? _maxValue;
+  late double _value;
+  late double _maxValue;
 
   @override
   void initState() {
@@ -452,7 +458,7 @@ class _ZoneBarState extends State<ZoneBar> {
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
-            color: _value! > 0
+            color: _value > 0
                 ? Colors.transparent
                 : Colors.red[800]!.withOpacity(0.8),
           ),
@@ -464,13 +470,13 @@ class _ZoneBarState extends State<ZoneBar> {
             Container(
               padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2),
               child: Text(
-                widget.title ?? 'Body Zone',
+                widget.title,
                 style: textStyle,
               ),
             ),
             LinearPercentIndicator(
               key: widget.key,
-              percent: (_value ?? 1) / (_maxValue ?? 1),
+              percent: _value / _maxValue,
               lineHeight: 22,
               linearStrokeCap: LinearStrokeCap.butt,
               center: Row(
@@ -478,12 +484,12 @@ class _ZoneBarState extends State<ZoneBar> {
                 children: <Widget>[
                   AnimatedCount(
                     key: widget.key,
-                    count: _value?.ceil(),
+                    count: _value.ceil(),
                     duration: widget.animationDuration,
                     style: textStyle,
                   ),
                   Text(
-                    ' / ${_maxValue!.ceil()}',
+                    ' / ${_maxValue.ceil()}',
                     style: textStyle,
                   ),
                 ],
@@ -495,7 +501,7 @@ class _ZoneBarState extends State<ZoneBar> {
               padding: const EdgeInsets.all(0),
               progressColor: HSVColor.fromAHSV(
                 1,
-                (_value ?? 1) / (_maxValue ?? 1) * 130,
+                _value / _maxValue * 130,
                 1,
                 0.5,
               ).toColor(),
@@ -588,12 +594,6 @@ class _AnimatedCountState extends AnimatedWidgetBaseState<AnimatedCount> {
       style: widget.style,
     );
   }
-
-  // @override
-  // void forEachTween(TweenVisitor visitor) {
-  //   _count = visitor(
-  //       _count, widget.count!, (dynamic value) => IntTween(begin: value as int?)) as IntTween?;
-  // }
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {

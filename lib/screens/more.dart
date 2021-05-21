@@ -91,7 +91,7 @@ class MoreTab extends StatelessWidget {
             ),
             CustomTile(
               title: Text(DateTime.now()
-                  .difference(globals.metadata.lastWipe!.toDate())
+                  .difference(globals.metadata.lastWipe.toDate())
                   .inDays
                   .toString()),
               subtitle: const Text('days since last wipe...'),

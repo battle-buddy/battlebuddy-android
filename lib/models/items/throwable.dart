@@ -19,7 +19,7 @@ extension ThrowableTypeExt on ThrowableType? {
 }
 
 extension Format on ThrowableType {
-  String? get string {
+  String get string {
     switch (this) {
       case ThrowableType.fragmentation:
         return 'fragmentation';
@@ -28,8 +28,6 @@ extension Format on ThrowableType {
       case ThrowableType.smoke:
         return 'smoke';
     }
-
-    return null;
   }
 }
 
@@ -51,11 +49,11 @@ extension StringParsing on String {
 class Throwable extends Item implements ExplorableSectionItem {
   final ThrowableType? throwableType;
   final Duration delay;
-  final int? fragCount;
+  final int fragCount;
   final Length minDistance;
   final Length maxDistance;
   final Length contusionDistance;
-  final double? strength;
+  final double strength;
   final Duration emitTime;
 
   Throwable.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
@@ -80,7 +78,8 @@ class Throwable extends Item implements ExplorableSectionItem {
         super.fromMap(map, reference: reference);
 
   Throwable.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.throwable;

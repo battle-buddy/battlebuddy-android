@@ -151,7 +151,7 @@ class _PriceCheckListState extends State<PriceCheckList> {
     final item = _items![index];
 
     return PriceCheckItem(
-        key: Key(item.id!), item: item, onPress: widget.onPress);
+        key: Key(item.id), item: item, onPress: widget.onPress);
   }
 
   @override
@@ -275,7 +275,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 20),
                 child: Text(
-                  widget.item.name!,
+                  widget.item.name,
                   softWrap: true,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

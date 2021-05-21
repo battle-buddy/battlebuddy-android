@@ -77,9 +77,9 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
         return ItemType.helmet;
       case ArmorType.visor:
         return ItemType.attachment;
+      default:
+        return ItemType.armor;
     }
-
-    return ItemType.armor;
   }
 
   @override
@@ -100,11 +100,11 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
             ),
             DisplayProperty(
               name: 'Material',
-              value: '${properties.material!.displayName}',
+              value: '${properties.material.displayName}',
             ),
             DisplayProperty(
               name: 'Zones',
-              value: properties.zones!.join(', ').asTitle,
+              value: properties.zones.join(', ').asTitle,
             ),
             DisplayProperty(
               name: 'Weight',
@@ -140,7 +140,7 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
         ComparableProperty('Weight', weight.kilograms,
             isLowerBetter: true, displayValue: weight.toStringAsKilograms()),
         ComparableProperty('Durability', properties.durability),
-        ComparableProperty('Protected Zones', properties.zones!.length),
+        ComparableProperty('Protected Zones', properties.zones.length),
         ComparableProperty('Speed Penalty', penalties.movementSpeed ?? 0,
             displayValue: '${penalties.movementSpeed ?? 0} %'),
         ComparableProperty('Turn Penalty', penalties.mouseSpeed ?? 0,
@@ -166,18 +166,18 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
 }
 
 class ArmorProperties {
-  final int? armorClass;
-  final double? durability;
-  final ArmorMaterial? material;
-  final double? bluntThroughput;
-  final List<String>? zones;
+  final int armorClass;
+  final double durability;
+  final ArmorMaterial material;
+  final double bluntThroughput;
+  final List<String> zones;
 
   ArmorProperties({
-    this.armorClass,
-    this.durability,
-    this.material,
-    this.bluntThroughput,
-    this.zones,
+    required this.armorClass,
+    required this.durability,
+    required this.material,
+    required this.bluntThroughput,
+    required this.zones,
   });
 
   ArmorProperties.fromMap(Map<String, dynamic> map)
@@ -194,8 +194,8 @@ class ArmorProperties {
 }
 
 class ArmorMaterial {
-  final String? name;
-  final double? destructibility;
+  final String name;
+  final double destructibility;
 
   static const Map<String, String> _displayNames = {
     'aluminium': 'Aluminium',
@@ -219,7 +219,7 @@ class ArmorMaterial {
         name = map['name'],
         destructibility = map['destructibility'].toDouble();
 
-  String? get displayName => _displayNames[name!];
+  String? get displayName => _displayNames[name];
 }
 
 class ArmorPenalties {

@@ -10,7 +10,7 @@ enum MedicalType {
   stimulator,
 }
 
-extension MedicalTypeExt on MedicalType? {
+extension MedicalTypeExt on MedicalType {
   static const Map<MedicalType, String> _displayName = {
     MedicalType.accessory: 'Accessory',
     MedicalType.drug: 'Drug',
@@ -18,11 +18,11 @@ extension MedicalTypeExt on MedicalType? {
     MedicalType.stimulator: 'Stimulator',
   };
 
-  String? get displayName => _displayName[this!];
+  String? get displayName => _displayName[this];
 }
 
 extension Format on MedicalType {
-  String? get string {
+  String get string {
     switch (this) {
       case MedicalType.accessory:
         return 'accessory';
@@ -33,12 +33,10 @@ extension Format on MedicalType {
       case MedicalType.stimulator:
         return 'stimulator';
     }
-
-    return null;
   }
 }
 
-extension StringParsing on String? {
+extension StringParsing on String {
   MedicalType? toMedicalType() {
     switch (this) {
       case 'accessory':
@@ -57,7 +55,7 @@ extension StringParsing on String? {
 
 class Medical extends Item implements ExplorableSectionItem {
   final MedicalType? medicalType;
-  final int? resources;
+  final int resources;
   final Duration useTime;
   final Effects effects;
 
@@ -65,7 +63,7 @@ class Medical extends Item implements ExplorableSectionItem {
       : assert(map['type'] != null),
         assert(map['resources'] != null),
         assert(map['useTime'] != null),
-        medicalType = (map['type'] as String?).toMedicalType(),
+        medicalType = (map['type'] as String).toMedicalType(),
         resources = map['resources'].toInt(),
         useTime =
             Duration(milliseconds: (map['useTime'].toDouble() * 1000).toInt()),
@@ -73,13 +71,14 @@ class Medical extends Item implements ExplorableSectionItem {
         super.fromMap(map, reference: reference);
 
   Medical.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.medical;
 
   @override
-  String? get sectionValue => medicalType.displayName;
+  String? get sectionValue => medicalType!.displayName;
 
   @override
   List<PropertySection> get propertySections => [
@@ -88,9 +87,9 @@ class Medical extends Item implements ExplorableSectionItem {
           properties: <DisplayProperty>[
             DisplayProperty(
               name: 'Type',
-              value: medicalType.displayName,
+              value: medicalType!.displayName,
             ),
-            ...resources! > 0
+            ...resources > 0
                 ? [
                     DisplayProperty(
                       name: 'Resources',

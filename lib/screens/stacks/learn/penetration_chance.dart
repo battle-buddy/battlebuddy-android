@@ -44,8 +44,9 @@ class PenetrationChanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PenetrationChanceScreenArguments? args =
-        ModalRoute.of(context)!.settings.arguments as PenetrationChanceScreenArguments?;
+    final PenetrationChanceScreenArguments? args = ModalRoute.of(context)!
+        .settings
+        .arguments as PenetrationChanceScreenArguments?;
 
     return Scaffold(
       appBar: AppBar(
@@ -242,7 +243,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
                       ),
                 ),
                 Text(
-                  _currentDurability?.round()?.toString() ?? '-',
+                  _currentDurability?.round().toString() ?? '-',
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontSize: 18,
                         color: Colors.grey[400],
@@ -257,7 +258,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
               value: _currentDurability ?? 0,
               min: 0,
               max: _armor?.armorProperties?.durability ?? 0,
-              label: _currentDurability?.round().toString() ?? 0 as String?,
+              label: (_currentDurability?.round() ?? 0).toString(),
               onChanged: _penetrationChance != null ? _onValueChange : null,
             ),
           ),

@@ -55,7 +55,7 @@ class ChestRig extends Item
             DisplayProperty(
               name: 'Total Capacity',
               value:
-                  '${grids.fold<int>(0, (p, n) => p + (n.width! * n.height!))}',
+                  '${grids.fold<int>(0, (p, n) => p + (n.width * n.height))}',
             ),
             ...toGridMap(grids).entries.map(
                   (e) => DisplayProperty(
@@ -80,11 +80,11 @@ class ChestRig extends Item
                     ),
                     DisplayProperty(
                       name: 'Material',
-                      value: '${armor!.material!.displayName}',
+                      value: '${armor!.material.displayName}',
                     ),
                     DisplayProperty(
                       name: 'Zones',
-                      value: armor!.zones!.join(', ').asTitle,
+                      value: armor?.zones.join(', ').asTitle,
                     ),
                     DisplayProperty(
                       name: 'Weight',
@@ -119,12 +119,12 @@ class ChestRig extends Item
   @override
   List<ComparableProperty> get comparableProperties => [
         ComparableProperty('Total Capacity',
-            grids.fold<int>(0, (p, n) => p + (n.width! * n.height!))),
+            grids.fold<int>(0, (p, n) => p + (n.width * n.height))),
         ComparableProperty('Weight', weight.kilograms,
             isLowerBetter: true, displayValue: weight.toStringAsKilograms()),
         ComparableProperty('Class', armor?.armorClass ?? 0),
         ComparableProperty('Durability', armor?.durability ?? 0),
-        ComparableProperty('Protected Zones', armor?.zones?.length ?? 0),
+        ComparableProperty('Protected Zones', armor?.zones.length ?? 0),
         ComparableProperty('Speed Penalty', penalties!.movementSpeed ?? 0,
             displayValue: '${penalties!.movementSpeed ?? 0} %'),
         ComparableProperty('Turn Penalty', penalties!.mouseSpeed ?? 0,
@@ -149,14 +149,14 @@ class ChestRig extends Item
 
 class Grid {
   final String? id;
-  final int? height;
-  final int? width;
+  final int height;
+  final int width;
   final int? maxWeight;
 
   Grid({
     this.id,
-    this.height,
-    this.width,
+    required this.height,
+    required this.width,
     this.maxWeight,
   });
 

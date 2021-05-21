@@ -14,7 +14,8 @@ class Melee extends Item implements ExplorableItem {
         super.fromMap(map, reference: reference);
 
   Melee.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.melee;
@@ -73,10 +74,10 @@ class Melee extends Item implements ExplorableItem {
 }
 
 class MeleeAttack {
-  final double? damage;
-  final double? rate;
-  final double? range;
-  final double? consumption;
+  final double damage;
+  final double rate;
+  final double range;
+  final double consumption;
 
   MeleeAttack.fromMap(Map<String, dynamic> map)
       : assert(map['damage'] != null),

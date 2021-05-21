@@ -146,7 +146,7 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
     final item = _items![index];
 
     return ItemCard(
-      key: Key(item.id!),
+      key: Key(item.id),
       item: item,
       fontSize: Theme.of(context).textTheme.headline4!.fontSize,
     );
@@ -327,7 +327,7 @@ class _SectionListState<T extends ExplorableSectionItem>
   Widget _buildSectionItem(BuildContext context, int section, int index) {
     final item = _sections![section].items[index];
 
-    return ItemCard<T>(key: Key(item.id!), item: item);
+    return ItemCard<T>(key: Key(item.id), item: item);
   }
 
   Widget _buildSection(BuildContext context, int index) {
@@ -487,7 +487,7 @@ class _ItemCardState<T extends ExplorableItem> extends State<ItemCard<T>> {
           Container(
             padding: const EdgeInsets.all(20),
             child: Text(
-              widget.item.shortName!,
+              widget.item.shortName,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontSize: widget.fontSize ??
                     Theme.of(context).textTheme.headline5!.fontSize,
