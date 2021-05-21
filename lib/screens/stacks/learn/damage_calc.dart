@@ -139,10 +139,10 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   }
 
   void _onTabCharacter(BuildContext context) async {
-    final character = await Navigator.pushNamed<Character>(
+    final character = await Navigator.pushNamed(
       context,
       CharacterSelectionScreen.routeName,
-    );
+    ) as Character?;
 
     if (character != null) {
       _setCharacter(character);
