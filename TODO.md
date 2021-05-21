@@ -6,7 +6,7 @@
 
 ## To implement
 
-- [ ] Dart null safety
+- [x] Dart null safety
 - [ ] Combat Simulator
 - [ ] Damage Calc. ammo configuration (?)
 - [ ] Ammo grenade properties
