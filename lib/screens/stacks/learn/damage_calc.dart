@@ -12,7 +12,7 @@ import 'character_select.dart';
 import 'item_table.dart';
 
 class DamageCalculatorScreenArguments {
-  final Ammunition ammo;
+  final Ammunition? ammo;
 
   DamageCalculatorScreenArguments({this.ammo});
 }
@@ -21,12 +21,12 @@ class DamageCalculatorScreen extends StatelessWidget {
   static const String title = 'Damage Calculator';
   static const String routeName = '/learn/damageCalc';
 
-  DamageCalculatorScreen({Key key}) : super(key: key);
+  DamageCalculatorScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final DamageCalculatorScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as DamageCalculatorScreenArguments?;
 
     return Scaffold(
       appBar: AppBar(
@@ -40,9 +40,9 @@ class DamageCalculatorScreen extends StatelessWidget {
 }
 
 class DamageCalculator extends StatefulWidget {
-  final Ammunition ammo;
+  final Ammunition? ammo;
 
-  const DamageCalculator({Key key, this.ammo}) : super(key: key);
+  const DamageCalculator({Key? key, this.ammo}) : super(key: key);
 
   @override
   _DamageCalculatorState createState() => _DamageCalculatorState();
@@ -51,13 +51,13 @@ class DamageCalculator extends StatefulWidget {
 class _DamageCalculatorState extends State<DamageCalculator> {
   final HealthCalculator _calculator = HealthCalculator();
 
-  Character _character;
-  Ammunition _ammo;
+  Character? _character;
+  Ammunition? _ammo;
 
-  Health _health;
-  Health _healthInitial;
+  Health? _health;
+  Health? _healthInitial;
 
-  Exception _error;
+  Exception? _error;
 
   void _onData(DocumentSnapshot snapshot) {
     final character = Character.fromSnapshot(snapshot);
@@ -139,7 +139,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   }
 
   void _onTabCharacter(BuildContext context) async {
-    final character = await Navigator.pushNamed(
+    final character = await Navigator.pushNamed<Character>(
       context,
       CharacterSelectionScreen.routeName,
     );
@@ -175,7 +175,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final totalStyle = Theme.of(context).textTheme.bodyText2.copyWith(
+    final totalStyle = Theme.of(context).textTheme.bodyText2!.copyWith(
       shadows: const <Shadow>[
         Shadow(blurRadius: 5),
       ],
@@ -183,7 +183,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
       fontWeight: FontWeight.w500,
       color: HSVColor.fromAHSV(
         1,
-        _health.total / _healthInitial.total * 130,
+        _health!.total / _healthInitial!.total * 130,
         1,
         0.7,
       ).toColor(),
@@ -204,7 +204,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                key: Key(_character.id),
+                key: Key(_character!.id),
                 height: 90,
                 width: 90,
                 child: Column(
@@ -215,7 +215,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                       child: InkWell(
                         onTap: () => _onTabCharacter(context),
                         child: CharacterAvatar(
-                          key: Key(_character.id),
+                          key: Key(_character!.id),
                           character: _character,
                         ),
                       ),
@@ -223,7 +223,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        _character.name,
+                        _character!.name,
                         style: Theme.of(context).textTheme.subtitle2,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -235,8 +235,8 @@ class _DamageCalculatorState extends State<DamageCalculator> {
               ZoneBar(
                 key: const Key('head'),
                 title: 'Head',
-                value: _health.head,
-                maxValue: _healthInitial?.head,
+                value: _health!.head,
+                maxValue: _healthInitial!.head,
                 onTab: () => _onTabZone(Zone.head),
               ),
             ],
@@ -249,8 +249,8 @@ class _DamageCalculatorState extends State<DamageCalculator> {
               ZoneBar(
                 key: const Key('throax'),
                 title: 'Thorax',
-                value: _health.thorax,
-                maxValue: _healthInitial?.thorax,
+                value: _health!.thorax,
+                maxValue: _healthInitial!.thorax,
                 onTab: () => _onTabZone(Zone.thorax),
               ),
             ],
@@ -262,22 +262,22 @@ class _DamageCalculatorState extends State<DamageCalculator> {
               ZoneBar(
                 key: const Key('armRight'),
                 title: 'Right Arm',
-                value: _health.armRight,
-                maxValue: _healthInitial?.armRight,
+                value: _health!.armRight,
+                maxValue: _healthInitial!.armRight,
                 onTab: () => _onTabZone(Zone.armRight),
               ),
               ZoneBar(
                 key: const Key('stomach'),
                 title: 'Stomach',
-                value: _health.stomach,
-                maxValue: _healthInitial?.stomach,
+                value: _health!.stomach,
+                maxValue: _healthInitial!.stomach,
                 onTab: () => _onTabZone(Zone.stomach),
               ),
               ZoneBar(
                 key: const Key('armLeft'),
                 title: 'Left Arm',
-                value: _health.armLeft,
-                maxValue: _healthInitial?.armLeft,
+                value: _health!.armLeft,
+                maxValue: _healthInitial!.armLeft,
                 onTab: () => _onTabZone(Zone.armLeft),
               ),
             ],
@@ -289,15 +289,15 @@ class _DamageCalculatorState extends State<DamageCalculator> {
               ZoneBar(
                 key: const Key('legRight'),
                 title: 'Right Leg',
-                value: _health.legRight,
-                maxValue: _healthInitial?.legRight,
+                value: _health!.legRight,
+                maxValue: _healthInitial!.legRight,
                 onTab: () => _onTabZone(Zone.legRight),
               ),
               ZoneBar(
                 key: const Key('legLeft'),
                 title: 'Left Leg',
-                value: _health.legLeft,
-                maxValue: _healthInitial?.legLeft,
+                value: _health!.legLeft,
+                maxValue: _healthInitial!.legLeft,
                 onTab: () => _onTabZone(Zone.legLeft),
               ),
             ],
@@ -312,12 +312,12 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 alignment: Alignment.center,
                 child: _health != null
                     ? AnimatedCount(
-                        count: _health.total.floor(),
+                        count: _health!.total.floor(),
                         duration: 250,
                         style: totalStyle,
                       )
                     : Text(
-                        '${_health.total?.ceil() ?? '-'}',
+                        _health!.total.ceil().toString(),
                         style: totalStyle,
                       ),
               ),
@@ -325,7 +325,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 key: const Key('separator'),
                 child: Text(
                   '/',
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[400],
@@ -340,8 +340,8 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 width: 58,
                 alignment: Alignment.center,
                 child: Text(
-                  '${_healthInitial?.total?.ceil() ?? '-'}',
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  _healthInitial!.total.ceil().toString(),
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[400],
@@ -378,10 +378,10 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                     color: Theme.of(context).accentColor,
                     iconSize: 36,
                     icon: const Icon(Icons.refresh),
-                    onPressed:
-                        _health != null && _health.total != _healthInitial.total
-                            ? _onTabReset
-                            : null,
+                    onPressed: _health != null &&
+                            _health!.total != _healthInitial!.total
+                        ? _onTabReset
+                        : null,
                   ),
                 )
               ],
@@ -397,14 +397,14 @@ class ZoneBar extends StatefulWidget {
   final String title;
   final double value;
   final double maxValue;
-  final Function onTab;
+  final Function? onTab;
   final int animationDuration;
 
   const ZoneBar({
-    Key key,
-    @required this.title,
-    @required this.value,
-    @required this.maxValue,
+    Key? key,
+    required this.title,
+    required this.value,
+    required this.maxValue,
     this.onTab,
     this.animationDuration = 250,
   }) : super(key: key);
@@ -414,8 +414,8 @@ class ZoneBar extends StatefulWidget {
 }
 
 class _ZoneBarState extends State<ZoneBar> {
-  double _value;
-  double _maxValue;
+  late double _value;
+  late double _maxValue;
 
   @override
   void initState() {
@@ -437,14 +437,14 @@ class _ZoneBarState extends State<ZoneBar> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2.copyWith(
+    final textStyle = Theme.of(context).textTheme.bodyText2!.copyWith(
           fontSize: 13,
           color: Colors.grey[100],
         );
 
     return GestureDetector(
       key: widget.key,
-      onTap: widget.onTab,
+      onTap: widget.onTab as void Function()?,
       child: Container(
         width: 110,
         padding: const EdgeInsets.all(2),
@@ -453,7 +453,7 @@ class _ZoneBarState extends State<ZoneBar> {
             width: 1,
             color: _value > 0
                 ? Colors.transparent
-                : Colors.red[800].withOpacity(0.8),
+                : Colors.red[800]!.withOpacity(0.8),
           ),
           color: Colors.black54,
         ),
@@ -463,13 +463,13 @@ class _ZoneBarState extends State<ZoneBar> {
             Container(
               padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2),
               child: Text(
-                widget.title ?? 'Body Zone',
+                widget.title,
                 style: textStyle,
               ),
             ),
             LinearPercentIndicator(
               key: widget.key,
-              percent: (_value ?? 1) / (_maxValue ?? 1),
+              percent: _value / _maxValue,
               lineHeight: 22,
               linearStrokeCap: LinearStrokeCap.butt,
               center: Row(
@@ -477,7 +477,7 @@ class _ZoneBarState extends State<ZoneBar> {
                 children: <Widget>[
                   AnimatedCount(
                     key: widget.key,
-                    count: _value?.ceil(),
+                    count: _value.ceil(),
                     duration: widget.animationDuration,
                     style: textStyle,
                   ),
@@ -494,7 +494,7 @@ class _ZoneBarState extends State<ZoneBar> {
               padding: const EdgeInsets.all(0),
               progressColor: HSVColor.fromAHSV(
                 1,
-                (_value ?? 1) / (_maxValue ?? 1) * 130,
+                _value / _maxValue * 130,
                 1,
                 0.5,
               ).toColor(),
@@ -507,36 +507,36 @@ class _ZoneBarState extends State<ZoneBar> {
 }
 
 class CharacterAvatar extends StatefulWidget {
-  final Character character;
+  final Character? character;
 
   static const StorageImage _image = StorageImage();
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
-  const CharacterAvatar({Key key, this.character}) : super(key: key);
+  const CharacterAvatar({Key? key, this.character}) : super(key: key);
 
   @override
   _CharacterAvatarState createState() => _CharacterAvatarState();
 }
 
 class _CharacterAvatarState extends State<CharacterAvatar> {
-  Widget _avatar;
+  Widget? _avatar;
 
   @override
   void initState() {
     super.initState();
-    _avatar = _getAvatar(widget.character.id);
+    _avatar = _getAvatar(widget.character!.id);
   }
 
   @override
   void didUpdateWidget(covariant CharacterAvatar oldWidget) {
-    if (oldWidget.character.id != widget.character.id) {
-      _avatar = _getAvatar(widget.character.id);
+    if (oldWidget.character!.id != widget.character!.id) {
+      _avatar = _getAvatar(widget.character!.id);
     }
     super.didUpdateWidget(oldWidget);
   }
 
-  Widget _getAvatar(String id) {
+  Widget _getAvatar(String? id) {
     return CircleAvatar(
       radius: 30,
       backgroundColor: Colors.black54,
@@ -552,18 +552,18 @@ class _CharacterAvatarState extends State<CharacterAvatar> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return _avatar;
+    return _avatar!;
   }
 }
 
 class AnimatedCount extends ImplicitlyAnimatedWidget {
-  final int count;
-  final TextStyle style;
+  final int? count;
+  final TextStyle? style;
 
   AnimatedCount({
-    Key key,
-    @required this.count,
-    @required int duration,
+    Key? key,
+    required this.count,
+    required int duration,
     Curve curve = Curves.linear,
     this.style,
   }) : super(
@@ -578,19 +578,22 @@ class AnimatedCount extends ImplicitlyAnimatedWidget {
 }
 
 class _AnimatedCountState extends AnimatedWidgetBaseState<AnimatedCount> {
-  IntTween _count;
+  IntTween? _count;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      _count.evaluate(animation).toString(),
+      _count!.evaluate(animation).toString(),
       style: widget.style,
     );
   }
 
   @override
-  void forEachTween(TweenVisitor visitor) {
+  void forEachTween(TweenVisitor<dynamic> visitor) {
     _count = visitor(
-        _count, widget.count, (dynamic value) => IntTween(begin: value));
+      _count,
+      widget.count!,
+      (dynamic value) => IntTween(begin: value as int?),
+    ) as IntTween?;
   }
 }

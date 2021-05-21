@@ -18,7 +18,7 @@ extension MedicalTypeExt on MedicalType {
     MedicalType.stimulator: 'Stimulator',
   };
 
-  String get displayName => _displayName[this];
+  String? get displayName => _displayName[this];
 }
 
 extension Format on MedicalType {
@@ -33,13 +33,11 @@ extension Format on MedicalType {
       case MedicalType.stimulator:
         return 'stimulator';
     }
-
-    return null;
   }
 }
 
 extension StringParsing on String {
-  MedicalType toMedicalType() {
+  MedicalType? toMedicalType() {
     switch (this) {
       case 'accessory':
         return MedicalType.accessory;
@@ -56,12 +54,12 @@ extension StringParsing on String {
 }
 
 class Medical extends Item implements ExplorableSectionItem {
-  final MedicalType medicalType;
+  final MedicalType? medicalType;
   final int resources;
   final Duration useTime;
   final Effects effects;
 
-  Medical.fromMap(Map<String, dynamic> map, {DocumentReference reference})
+  Medical.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['type'] != null),
         assert(map['resources'] != null),
         assert(map['useTime'] != null),
@@ -73,13 +71,14 @@ class Medical extends Item implements ExplorableSectionItem {
         super.fromMap(map, reference: reference);
 
   Medical.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.medical;
 
   @override
-  String get sectionValue => medicalType.displayName;
+  String? get sectionValue => medicalType!.displayName;
 
   @override
   List<PropertySection> get propertySections => [
@@ -88,7 +87,7 @@ class Medical extends Item implements ExplorableSectionItem {
           properties: <DisplayProperty>[
             DisplayProperty(
               name: 'Type',
-              value: medicalType.displayName,
+              value: medicalType!.displayName,
             ),
             ...resources > 0
                 ? [
@@ -110,13 +109,13 @@ class Medical extends Item implements ExplorableSectionItem {
               .map(
                 (e) => DisplayProperty(
                   name: '${e.key.asTitle}',
-                  value: e.value.removes
+                  value: e.value.removes!
                       ? (e.value.duration.inSeconds > 0
                           ? 'Supressed for ${e.value.duration.inMilliseconds / 1000}s'
                           : 'Removed')
                       : (e.value.value != 0
-                          ? (e.value.isPercent
-                              ? (e.value.value * 100).toString() + ' %'
+                          ? (e.value.isPercent!
+                              ? (e.value.value! * 100).toString() + ' %'
                               : '${e.value.value}')
                           : 'Added for ${e.value.duration.inMilliseconds / 1000}s'),
                 ),
@@ -127,12 +126,12 @@ class Medical extends Item implements ExplorableSectionItem {
             ? [
                 PropertySection(
                   title: 'Skills',
-                  properties: effects.skills
+                  properties: effects.skills!
                       .map(
                         (e) => DisplayProperty(
-                          name: '${e.name.asTitle}',
+                          name: '${e.name!.asTitle}',
                           value:
-                              '${e.value.truncate()} lvl. for ${e.duration.inMilliseconds / 1000}s',
+                              '${e.value!.truncate()} lvl. for ${e.duration.inMilliseconds / 1000}s',
                         ),
                       )
                       .toList(growable: false),
@@ -152,7 +151,7 @@ class Medical extends Item implements ExplorableSectionItem {
 
 class Effects {
   final Map<String, Effect> effects;
-  final List<Effect> skills;
+  final List<Effect>? skills;
 
   static const List<String> toMap = <String>[
     'energy',
@@ -195,17 +194,17 @@ class Effects {
 }
 
 class Effect {
-  final String name;
-  final int resourceCosts;
+  final String? name;
+  final int? resourceCosts;
   final Duration fadeIn;
   final Duration fadeOut;
-  final double chance;
+  final double? chance;
   final Duration delay;
   final Duration duration;
-  final double value;
-  final bool isPercent;
-  final bool removes;
-  final EffectPenalties penalties;
+  final double? value;
+  final bool? isPercent;
+  final bool? removes;
+  final EffectPenalties? penalties;
 
   Effect.fromMap(Map<String, dynamic> map)
       : name = map['name'],
@@ -228,8 +227,8 @@ class Effect {
 }
 
 class EffectPenalties {
-  final double healthMin;
-  final double healthMax;
+  final double? healthMin;
+  final double? healthMax;
 
   EffectPenalties.fromMap(Map<String, dynamic> map)
       : healthMin = map['healthMin']?.toDouble(),

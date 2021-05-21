@@ -15,11 +15,11 @@ class ChestRig extends Item
     implements Armored, ExplorableSectionItem, TableView {
   final ChestRigType chestRigType;
   final List<Grid> grids;
-  final ArmorProperties armor;
-  final ArmorPenalties penalties;
-  final List<String> blocking;
+  final ArmorProperties? armor;
+  final ArmorPenalties? penalties;
+  final List<String>? blocking;
 
-  ChestRig.fromMap(Map<String, dynamic> map, {DocumentReference reference})
+  ChestRig.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : chestRigType = map['armor'] != null
             ? ChestRigType.armored
             : ChestRigType.unarmored,
@@ -37,14 +37,15 @@ class ChestRig extends Item
         super.fromMap(map, reference: reference);
 
   ChestRig.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.chestRig;
 
   @override
   String get sectionValue =>
-      armor != null ? 'Class ${armor.armorClass}' : 'Unarmored';
+      armor != null ? 'Class ${armor!.armorClass}' : 'Unarmored';
 
   @override
   List<PropertySection> get propertySections => [
@@ -71,19 +72,19 @@ class ChestRig extends Item
                   properties: <DisplayProperty>[
                     DisplayProperty(
                       name: 'Class',
-                      value: '${armor.armorClass}',
+                      value: '${armor!.armorClass}',
                     ),
                     DisplayProperty(
                       name: 'Durability',
-                      value: '${armor.durability}',
+                      value: '${armor!.durability}',
                     ),
                     DisplayProperty(
                       name: 'Material',
-                      value: '${armor.material.displayName}',
+                      value: '${armor!.material.displayName}',
                     ),
                     DisplayProperty(
                       name: 'Zones',
-                      value: armor.zones.join(', ').asTitle,
+                      value: armor?.zones.join(', ').asTitle,
                     ),
                     DisplayProperty(
                       name: 'Weight',
@@ -96,15 +97,15 @@ class ChestRig extends Item
                   properties: <DisplayProperty>[
                     DisplayProperty(
                       name: 'Movement Speed',
-                      value: '${penalties.movementSpeed ?? 0} %',
+                      value: '${penalties!.movementSpeed ?? 0} %',
                     ),
                     DisplayProperty(
                       name: 'Turn Speed',
-                      value: '${penalties.mouseSpeed ?? 0} %',
+                      value: '${penalties!.mouseSpeed ?? 0} %',
                     ),
                     DisplayProperty(
                       name: 'Ergonomics',
-                      value: '${penalties.ergonomics ?? 0}',
+                      value: '${penalties!.ergonomics ?? 0}',
                     ),
                   ],
                 ),
@@ -113,7 +114,7 @@ class ChestRig extends Item
       ];
 
   @override
-  ArmorProperties get armorProperties => armor;
+  ArmorProperties? get armorProperties => armor;
 
   @override
   List<ComparableProperty> get comparableProperties => [
@@ -123,11 +124,11 @@ class ChestRig extends Item
             isLowerBetter: true, displayValue: weight.toStringAsKilograms()),
         ComparableProperty('Class', armor?.armorClass ?? 0),
         ComparableProperty('Durability', armor?.durability ?? 0),
-        ComparableProperty('Protected Zones', armor?.zones?.length ?? 0),
-        ComparableProperty('Speed Penalty', penalties.movementSpeed ?? 0,
-            displayValue: '${penalties.movementSpeed ?? 0} %'),
-        ComparableProperty('Turn Penalty', penalties.mouseSpeed ?? 0,
-            displayValue: '${penalties.mouseSpeed ?? 0} %'),
+        ComparableProperty('Protected Zones', armor?.zones.length ?? 0),
+        ComparableProperty('Speed Penalty', penalties!.movementSpeed ?? 0,
+            displayValue: '${penalties!.movementSpeed ?? 0} %'),
+        ComparableProperty('Turn Penalty', penalties!.mouseSpeed ?? 0,
+            displayValue: '${penalties!.mouseSpeed ?? 0} %'),
         ComparableProperty('Ergonomics Penalty', penalties?.ergonomics ?? 0),
       ];
 
@@ -141,21 +142,21 @@ class ChestRig extends Item
   @override
   List get tableData => <dynamic>[
         shortName,
-        armor.armorClass,
-        armor.durability,
+        armor!.armorClass,
+        armor!.durability,
       ];
 }
 
 class Grid {
-  final String id;
+  final String? id;
   final int height;
   final int width;
-  final int maxWeight;
+  final int? maxWeight;
 
   Grid({
     this.id,
-    this.height,
-    this.width,
+    required this.height,
+    required this.width,
     this.maxWeight,
   });
 
@@ -173,7 +174,8 @@ SplayTreeMap<String, int> toGridMap(List<Grid> grids) {
 
   for (final grid in grids) {
     final key = '${grid.width}x${grid.height}';
-    map.containsKey(key) ? map[key]++ : map[key] = 1;
+    var g = map[key] ?? 0;
+    map[key] = g++;
   }
 
   return map;

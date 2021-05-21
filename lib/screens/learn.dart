@@ -30,7 +30,7 @@ class LearnTab extends StatelessWidget {
     CharacterSelectionScreen.routeName: (context) => CharacterSelectionScreen(),
   };
 
-  LearnTab({Key key}) : super(key: key);
+  LearnTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

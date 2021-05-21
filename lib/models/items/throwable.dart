@@ -8,14 +8,14 @@ enum ThrowableType {
   smoke,
 }
 
-extension ThrowableTypeExt on ThrowableType {
+extension ThrowableTypeExt on ThrowableType? {
   static const Map<ThrowableType, String> _displayName = {
     ThrowableType.fragmentation: 'Fragmentation',
     ThrowableType.flash: 'Flash',
     ThrowableType.smoke: 'Smoke',
   };
 
-  String get displayName => _displayName[this];
+  String? get displayName => _displayName[this!];
 }
 
 extension Format on ThrowableType {
@@ -28,13 +28,11 @@ extension Format on ThrowableType {
       case ThrowableType.smoke:
         return 'smoke';
     }
-
-    return null;
   }
 }
 
 extension StringParsing on String {
-  ThrowableType get parseThrowableType {
+  ThrowableType? get parseThrowableType {
     switch (this) {
       case 'frag':
         return ThrowableType.fragmentation;
@@ -49,7 +47,7 @@ extension StringParsing on String {
 }
 
 class Throwable extends Item implements ExplorableSectionItem {
-  final ThrowableType throwableType;
+  final ThrowableType? throwableType;
   final Duration delay;
   final int fragCount;
   final Length minDistance;
@@ -58,7 +56,7 @@ class Throwable extends Item implements ExplorableSectionItem {
   final double strength;
   final Duration emitTime;
 
-  Throwable.fromMap(Map<String, dynamic> map, {DocumentReference reference})
+  Throwable.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['type'] != null),
         assert(map['delay'] != null),
         assert(map['fragCount'] != null),
@@ -80,13 +78,14 @@ class Throwable extends Item implements ExplorableSectionItem {
         super.fromMap(map, reference: reference);
 
   Throwable.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type => ItemType.throwable;
 
   @override
-  String get sectionValue => throwableType.displayName;
+  String? get sectionValue => throwableType.displayName;
 
   @override
   List<PropertySection> get propertySections => [

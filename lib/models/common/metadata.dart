@@ -8,7 +8,7 @@ class Metadata {
   final List<Loyalty> loyalty;
   final Map<String, AmmoMetadata> ammo;
 
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   Metadata.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['totalUserCount'] != null),
@@ -31,7 +31,8 @@ class Metadata {
         );
 
   Metadata.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 }
 
 class CurrencyMetadata {

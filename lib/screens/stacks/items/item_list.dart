@@ -15,18 +15,18 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class ItemListScreenArguments {
   final String title;
-  final Query query;
+  final Query? query;
 
   const ItemListScreenArguments({
-    @required this.title,
-    @required this.query,
+    required this.title,
+    required this.query,
   });
 }
 
 class ItemListScreen<T extends ExplorableItem> extends StatefulWidget {
   static const String routeName = '/items/list';
 
-  const ItemListScreen({Key key}) : super(key: key);
+  const ItemListScreen({Key? key}) : super(key: key);
 
   @override
   _ItemListScreenState<T> createState() => _ItemListScreenState<T>();
@@ -34,14 +34,14 @@ class ItemListScreen<T extends ExplorableItem> extends StatefulWidget {
 
 class _ItemListScreenState<T extends ExplorableItem>
     extends State<ItemListScreen<T>> {
-  ItemProvider<T> _provider;
+  late ItemProvider<T> _provider;
 
   bool _searchBar = false;
 
   @override
   void didChangeDependencies() {
-    final ItemListScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ItemListScreenArguments;
     _provider = ItemProvider(args.query, indexing: true, tokenLength: 2);
     super.didChangeDependencies();
   }
@@ -78,13 +78,13 @@ class _ItemListScreenState<T extends ExplorableItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemListScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ItemListScreenArguments?;
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: _searchBar ? _buildSearchField() : Text(args.title),
+        title: _searchBar ? _buildSearchField() : Text(args!.title),
         actions: <IconButton>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -98,11 +98,11 @@ class _ItemListScreenState<T extends ExplorableItem>
 }
 
 class ItemList<T extends ExplorableItem> extends StatefulWidget {
-  final Stream<List<T>> stream;
+  final Stream<List<T>?> stream;
 
   const ItemList({
-    Key key,
-    @required this.stream,
+    Key? key,
+    required this.stream,
   }) : super(key: key);
 
   @override
@@ -110,11 +110,11 @@ class ItemList<T extends ExplorableItem> extends StatefulWidget {
 }
 
 class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
-  StreamSubscription<List<T>> _stream;
-  List<T> _items;
-  FirebaseException _error;
+  late StreamSubscription<List<T>?> _stream;
+  List<T>? _items;
+  FirebaseException? _error;
 
-  void _onData(List<T> sections) {
+  void _onData(List<T>? sections) {
     setState(() {
       _items = sections;
     });
@@ -122,7 +122,7 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
 
   void _onError(Object error) {
     setState(() {
-      _error = error;
+      _error = error as FirebaseException?;
     });
   }
 
@@ -143,12 +143,12 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    final item = _items[index];
+    final item = _items![index];
 
     return ItemCard(
       key: Key(item.id),
       item: item,
-      fontSize: Theme.of(context).textTheme.headline4.fontSize,
+      fontSize: Theme.of(context).textTheme.headline4!.fontSize,
     );
   }
 
@@ -159,7 +159,7 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
     if (_items == null) return const Center(child: CircularProgressIndicator());
 
     return ListView.separated(
-      itemCount: _items.length,
+      itemCount: _items!.length,
       padding: const EdgeInsets.all(15),
       separatorBuilder: _buildSeparator,
       itemBuilder: _buildListItem,
@@ -169,12 +169,12 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
 
 class ItemSectionListScreenArguments {
   final String title;
-  final Query query;
+  final Query? query;
   final bool sortSections;
 
   const ItemSectionListScreenArguments({
-    @required this.title,
-    @required this.query,
+    required this.title,
+    required this.query,
     this.sortSections = false,
   });
 }
@@ -183,7 +183,7 @@ class ItemSectionListScreen<T extends ExplorableSectionItem>
     extends StatefulWidget {
   static const String routeName = '/items/sectionList';
 
-  const ItemSectionListScreen({Key key}) : super(key: key);
+  const ItemSectionListScreen({Key? key}) : super(key: key);
 
   @override
   _ItemSectionListScreenState<T> createState() =>
@@ -192,14 +192,14 @@ class ItemSectionListScreen<T extends ExplorableSectionItem>
 
 class _ItemSectionListScreenState<T extends ExplorableSectionItem>
     extends State<ItemSectionListScreen<T>> {
-  ItemSectionProvider<T> _provider;
+  late ItemSectionProvider<T> _provider;
 
   bool _searchBar = false;
 
   @override
   void didChangeDependencies() {
-    final ItemSectionListScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as ItemSectionListScreenArguments;
     _provider = ItemSectionProvider(
       args.query,
       sortSections: args.sortSections,
@@ -241,13 +241,13 @@ class _ItemSectionListScreenState<T extends ExplorableSectionItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemSectionListScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as ItemSectionListScreenArguments?;
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: _searchBar ? _buildSearchField() : Text(args.title),
+        title: _searchBar ? _buildSearchField() : Text(args!.title),
         actions: <IconButton>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -265,7 +265,7 @@ class SectionList<T extends ExplorableSectionItem> extends StatefulWidget {
 
   const SectionList(
     this.stream, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -274,9 +274,9 @@ class SectionList<T extends ExplorableSectionItem> extends StatefulWidget {
 
 class _SectionListState<T extends ExplorableSectionItem>
     extends State<SectionList<T>> {
-  StreamSubscription<List<ItemSection<T>>> _stream;
-  List<ItemSection<T>> _sections;
-  FirebaseException _error;
+  late StreamSubscription<List<ItemSection<T>>> _stream;
+  List<ItemSection<T>>? _sections;
+  FirebaseException? _error;
 
   void _onData(List<ItemSection<T>> sections) {
     setState(() {
@@ -286,7 +286,7 @@ class _SectionListState<T extends ExplorableSectionItem>
 
   void _onError(Object error) {
     setState(() {
-      _error = error;
+      _error = error as FirebaseException?;
     });
   }
 
@@ -310,8 +310,8 @@ class _SectionListState<T extends ExplorableSectionItem>
         settings: RouteSettings(
           name: ItemComparisonScreen.routeName,
           arguments: ItemComparisonScreenArguments(
-            _sections.expand((e) => e.items).toList(growable: false),
-            HashSet.from(_sections[index].items.map<String>((e) => e.id)),
+            _sections!.expand((e) => e.items).toList(growable: false),
+            HashSet.from(_sections![index].items.map<String?>((e) => e.id)),
           ),
         ),
       ),
@@ -323,18 +323,18 @@ class _SectionListState<T extends ExplorableSectionItem>
   }
 
   Widget _buildSectionItem(BuildContext context, int section, int index) {
-    final item = _sections[section].items[index];
+    final item = _sections![section].items[index];
 
     return ItemCard<T>(key: Key(item.id), item: item);
   }
 
   Widget _buildSection(BuildContext context, int index) {
-    final section = _sections[index];
+    final section = _sections![index];
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
-        key: Key(section.title),
+        key: Key(section.title!),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
@@ -347,9 +347,9 @@ class _SectionListState<T extends ExplorableSectionItem>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  section.title,
-                  style: Theme.of(context).textTheme.headline5.copyWith(
-                        color: Theme.of(context).textTheme.bodyText2.color,
+                  section.title!,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                        color: Theme.of(context).textTheme.bodyText2!.color,
                         fontWeight: FontWeight.w600,
                       ),
                   overflow: TextOverflow.ellipsis,
@@ -396,7 +396,7 @@ class _SectionListState<T extends ExplorableSectionItem>
 
     return ListView.separated(
       shrinkWrap: false,
-      itemCount: _sections.length,
+      itemCount: _sections!.length,
       separatorBuilder: _buildSeparator,
       itemBuilder: _buildSection,
     );
@@ -405,7 +405,7 @@ class _SectionListState<T extends ExplorableSectionItem>
 
 class ItemCard<T extends ExplorableItem> extends StatefulWidget {
   final T item;
-  final double fontSize;
+  final double? fontSize;
   final double shape;
 
   static const StorageImage _image = StorageImage();
@@ -413,8 +413,8 @@ class ItemCard<T extends ExplorableItem> extends StatefulWidget {
       AssetImage('assets/images/placeholders/generic.png');
 
   const ItemCard({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
     this.fontSize,
     this.shape = 8,
   }) : super(key: key);
@@ -424,16 +424,16 @@ class ItemCard<T extends ExplorableItem> extends StatefulWidget {
 }
 
 class _ItemCardState<T extends ExplorableItem> extends State<ItemCard<T>> {
-  Widget _image;
+  Widget? _image;
 
   @override
   void initState() {
     super.initState();
-    if (widget.item != null) _image = _getStorageImage(widget.item);
+    _image = _getStorageImage(widget.item);
   }
 
   @override
-  void didUpdateWidget(ItemCard old) {
+  void didUpdateWidget(old) {
     super.didUpdateWidget(old);
     if (widget.item.id != old.item.id) {
       _image = _getStorageImage(widget.item);
@@ -486,10 +486,10 @@ class _ItemCardState<T extends ExplorableItem> extends State<ItemCard<T>> {
             padding: const EdgeInsets.all(20),
             child: Text(
               widget.item.shortName,
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontSize: widget.fontSize ??
-                    Theme.of(context).textTheme.headline5.fontSize,
-                color: Theme.of(context).textTheme.bodyText2.color,
+                    Theme.of(context).textTheme.headline5!.fontSize,
+                color: Theme.of(context).textTheme.bodyText2!.color,
                 fontWeight: FontWeight.w600,
                 shadows: const <Shadow>[
                   Shadow(blurRadius: 5),

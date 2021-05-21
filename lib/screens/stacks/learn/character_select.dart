@@ -8,7 +8,7 @@ class CharacterSelectionScreen extends StatelessWidget {
   static const String title = 'Select Character\u{2026}';
   static const String routeName = '/learn/charSelect';
 
-  CharacterSelectionScreen({Key key}) : super(key: key);
+  CharacterSelectionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class CharacterSelection extends StatefulWidget {
 }
 
 class _CharacterSelectionState extends State<CharacterSelection> {
-  List<Character> _characters;
+  List<Character>? _characters;
 
-  FirebaseException _error;
+  FirebaseException? _error;
 
   void _onData(QuerySnapshot snapshot) {
     final characters = snapshot.docs
@@ -71,12 +71,12 @@ class _CharacterSelectionState extends State<CharacterSelection> {
     }
 
     return ListView.separated(
-      itemCount: _characters.length,
+      itemCount: _characters!.length,
       separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) => ListTile(
-        key: Key(_characters[index].id),
-        title: Text(_characters[index].name),
-        onTap: () => _onTab(context, _characters[index]),
+        key: Key(_characters![index].id),
+        title: Text(_characters![index].name),
+        onTap: () => _onTab(context, _characters![index]),
       ),
     );
   }

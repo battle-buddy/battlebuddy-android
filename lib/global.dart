@@ -3,7 +3,7 @@ import 'package:package_info/package_info.dart';
 
 import 'models/common/metadata.dart';
 
-Metadata metadata;
+late Metadata metadata;
 
 Future<void> loadMetadata() async {
   try {
@@ -19,7 +19,7 @@ Future<void> loadMetadata() async {
   }
 }
 
-AppInfo appInfo;
+late AppInfo appInfo;
 
 class AppInfo {
   final String appName;

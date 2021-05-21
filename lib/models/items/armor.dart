@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 import '../../utils/string.dart';
 import 'item.dart';
@@ -12,7 +11,7 @@ enum ArmorType {
   visor,
 }
 
-extension Format on ArmorType {
+extension Format on ArmorType? {
   static const Map<ArmorType, String> _string = {
     ArmorType.attachment: 'attachment',
     ArmorType.body: 'body',
@@ -21,11 +20,11 @@ extension Format on ArmorType {
     ArmorType.visor: 'visor',
   };
 
-  String get string => _string[this];
+  String? get string => _string[this!];
 }
 
-extension StringParsing on String {
-  ArmorType toArmorType() {
+extension StringParsing on String? {
+  ArmorType? toArmorType() {
     switch (this) {
       case 'attachment':
         return ArmorType.attachment;
@@ -44,24 +43,25 @@ extension StringParsing on String {
 }
 
 class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
-  final ArmorType armorType;
+  final ArmorType? armorType;
   final ArmorProperties properties;
   final ArmorPenalties penalties;
   final List<String> blocking;
 
-  Armor.fromMap(Map<String, dynamic> map, {DocumentReference reference})
+  Armor.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['type'] != null),
         assert(map['armor'] != null),
         assert(map['penalties'] != null),
         assert(map['blocking'] != null),
-        armorType = (map['type'] as String).toArmorType(),
+        armorType = (map['type'] as String?).toArmorType(),
         properties = ArmorProperties.fromMap(map['armor']),
         penalties = ArmorPenalties.fromMap(map['penalties']),
         blocking = List<String>.from(map['blocking'], growable: false),
         super.fromMap(map, reference: reference);
 
   Armor.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   ItemType get type {
@@ -76,9 +76,9 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
         return ItemType.helmet;
       case ArmorType.visor:
         return ItemType.attachment;
+      default:
+        return ItemType.armor;
     }
-
-    return ItemType.armor;
   }
 
   @override
@@ -158,7 +158,7 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
   @override
   List get tableData => <dynamic>[
         shortName,
-        armorType.string.asTitle,
+        armorType.string!.asTitle,
         properties.armorClass,
         properties.durability,
       ];
@@ -172,11 +172,11 @@ class ArmorProperties {
   final List<String> zones;
 
   ArmorProperties({
-    this.armorClass,
-    this.durability,
-    this.material,
-    this.bluntThroughput,
-    this.zones,
+    required this.armorClass,
+    required this.durability,
+    required this.material,
+    required this.bluntThroughput,
+    required this.zones,
   });
 
   ArmorProperties.fromMap(Map<String, dynamic> map)
@@ -208,8 +208,8 @@ class ArmorMaterial {
   };
 
   ArmorMaterial({
-    @required this.name,
-    @required this.destructibility,
+    required this.name,
+    required this.destructibility,
   });
 
   ArmorMaterial.fromMap(Map<String, dynamic> map)
@@ -218,14 +218,14 @@ class ArmorMaterial {
         name = map['name'],
         destructibility = map['destructibility'].toDouble();
 
-  String get displayName => _displayNames[name];
+  String? get displayName => _displayNames[name];
 }
 
 class ArmorPenalties {
-  final double mouseSpeed;
-  final double movementSpeed;
-  final double ergonomics;
-  final String deafness;
+  final double? mouseSpeed;
+  final double? movementSpeed;
+  final double? ergonomics;
+  final String? deafness;
 
   ArmorPenalties({
     this.mouseSpeed,
@@ -242,5 +242,8 @@ class ArmorPenalties {
 }
 
 abstract class Armored extends Item {
-  ArmorProperties get armorProperties;
+  Armored.fromSnapshot(DocumentSnapshot<Object?> snapshot)
+      : super.fromSnapshot(snapshot);
+
+  ArmorProperties? get armorProperties;
 }

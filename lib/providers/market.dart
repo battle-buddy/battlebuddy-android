@@ -10,18 +10,18 @@ import '../utils/index.dart';
 class MarketProvider {
   final int tokenLength;
 
-  StreamSubscription<QuerySnapshot> _firebaseStream;
+  StreamSubscription<QuerySnapshot>? _firebaseStream;
   List<MarketItem> _items = [];
-  InvertedIndex _index;
+  late InvertedIndex _index;
 
-  bool _showStarred = false;
+  bool? _showStarred = false;
   String _searchTerm = '';
 
   final HashSet<int> _starred = HashSet();
 
-  StreamController<List<MarketItem>> _controller;
+  late StreamController<List<MarketItem>> _controller;
 
-  Future<SharedPreferences> _preferences;
+  Future<SharedPreferences>? _preferences;
 
   static const String _storageKey = 'market_stars';
 
@@ -47,7 +47,7 @@ class MarketProvider {
       final results = _index.search(_searchTerm);
 
       List<MarketItem> items;
-      if (_showStarred) {
+      if (_showStarred!) {
         items = results
             .where((e) => _starred.contains(e[0]))
             .map((e) => (_items[e[0]]))
@@ -58,9 +58,9 @@ class MarketProvider {
 
       _controller.add(items);
     } else {
-      if (_showStarred) {
+      if (_showStarred!) {
         final items = _starred.map((idx) => _items[idx]).toList(growable: false)
-          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
+          ..sort((a, b) => b.slotPrice!.compareTo(a.slotPrice!));
         _controller.add(items);
       } else {
         _controller.add(_items);
@@ -68,12 +68,12 @@ class MarketProvider {
     }
   }
 
-  Future<void> _onData(QuerySnapshot snapshot) async {
+  Future<void> _onData(QuerySnapshot<Map<String, dynamic>> snapshot) async {
     _items = snapshot.docs
         .expand((doc) =>
             doc.data().values.map((dynamic v) => MarketItem.fromMap(v)))
         .toList(growable: false)
-          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
+          ..sort((a, b) => b.slotPrice!.compareTo(a.slotPrice!));
 
     if (_starred.isEmpty) await _getCommittedStars();
 
@@ -109,10 +109,10 @@ class MarketProvider {
 
   Future<void> _getCommittedStars() async {
     try {
-      final prefs = await _preferences;
+      final prefs = await _preferences!;
       if (!prefs.containsKey(_storageKey)) return;
 
-      final ids = prefs.getStringList(_storageKey);
+      final ids = prefs.getStringList(_storageKey)!;
       _starred.addAll(
         ids.map((id) => _items.indexWhere((item) => item.id == id)),
       );
@@ -127,7 +127,7 @@ class MarketProvider {
 
   Future<void> _setCommittedStars() async {
     try {
-      final prefs = await _preferences;
+      final prefs = await _preferences!;
       final ids = _starred.map((idx) => _items[idx].id).toList(growable: false);
       await prefs.setStringList(_storageKey, ids);
     } on Exception catch (e) {
@@ -135,7 +135,7 @@ class MarketProvider {
     }
   }
 
-  Future<void> addStar(String id) async {
+  Future<void> addStar(String? id) async {
     final index = _items.indexWhere((item) => item.id == id);
     if (_starred.add(index)) {
       _items[index].isStarred = true;
@@ -143,7 +143,7 @@ class MarketProvider {
     }
   }
 
-  Future<void> deleteStar(String id) async {
+  Future<void> deleteStar(String? id) async {
     final index = _items.indexWhere((item) => item.id == id);
     if (_starred.remove(index)) {
       _items[index].isStarred = false;
@@ -151,8 +151,8 @@ class MarketProvider {
     }
   }
 
-  Future<void> filterByStars({bool filter}) async {
-    if (_showStarred == filter || _starred == null || _starred.isEmpty) return;
+  Future<void> filterByStars({bool? filter}) async {
+    if (_showStarred == filter || _starred.isEmpty) return;
     _showStarred = filter;
     _sendData();
   }

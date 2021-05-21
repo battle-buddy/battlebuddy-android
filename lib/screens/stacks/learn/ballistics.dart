@@ -13,7 +13,7 @@ class BallisticsScreen extends StatelessWidget {
   static const String title = 'Ballistics';
   static const String routeName = '/learn/ballistics';
 
-  BallisticsScreen({Key key}) : super(key: key);
+  BallisticsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class BallisticsArticle extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final data = snapshot.data;
+    final data = snapshot.data!;
 
     return Container(
       child: ListView(
@@ -75,7 +75,7 @@ class BallisticsArticle extends StatelessWidget {
             headerImage:
                 Image.asset('assets/images/card_heroes/ballistics.png'),
             title: Text(
-              data['headline'],
+              data['headline']!,
               style: Theme.of(context).textTheme.headline5,
             ),
             body: Column(
@@ -87,42 +87,42 @@ class BallisticsArticle extends StatelessWidget {
                     'Veritas - 13/07/2019',
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(color: Theme.of(context).accentColor),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_1']),
+                  child: Text(data['body_1']!),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2']),
+                  child: Text(data['body_2']!),
                 ),
               ],
             ),
           ),
           ArticleSection(
             headerImage: Image.asset('assets/images/card_heroes/armor.jpg'),
-            title: Text(data['body_2_1_title']),
+            title: Text(data['body_2_1_title']!),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_1']),
+                  child: Text(data['body_2_1']!),
                 ),
               ],
             ),
           ),
           ArticleSection(
-            title: Text(data['body_2_2_title']),
+            title: Text(data['body_2_2_title']!),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_2_1']),
+                  child: Text(data['body_2_2_1']!),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -130,48 +130,48 @@ class BallisticsArticle extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_2_2']),
+                  child: Text(data['body_2_2_2']!),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_2_3']),
+                  child: Text(data['body_2_2_3']!),
                 ),
               ],
             ),
           ),
           ArticleSection(
             headerImage: Image.asset('assets/images/card_heroes/gen4.png'),
-            title: Text(data['body_2_3_title']),
+            title: Text(data['body_2_3_title']!),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_3']),
+                  child: Text(data['body_2_3']!),
                 ),
               ],
             ),
           ),
           ArticleSection(
-            title: Text(data['body_2_4_title']),
+            title: Text(data['body_2_4_title']!),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_4']),
+                  child: Text(data['body_2_4']!),
                 ),
               ],
             ),
           ),
           ArticleSection(
-            title: Text(data['body_2_5_title']),
+            title: Text(data['body_2_5_title']!),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_2_5']),
+                  child: Text(data['body_2_5']!),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -181,13 +181,13 @@ class BallisticsArticle extends StatelessWidget {
             ),
           ),
           ArticleSection(
-            title: Text(data['body_3_title']),
+            title: Text(data['body_3_title']!),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(data['body_3']),
+                  child: Text(data['body_3']!),
                 ),
               ],
             ),
@@ -209,12 +209,12 @@ class BallisticsArticle extends StatelessWidget {
 class ArticleSection extends StatelessWidget {
   final Widget title;
   final Widget body;
-  final Widget headerImage;
+  final Widget? headerImage;
 
   const ArticleSection({
-    Key key,
-    @required this.title,
-    @required this.body,
+    Key? key,
+    required this.title,
+    required this.body,
     this.headerImage,
   }) : super(key: key);
 
@@ -236,14 +236,14 @@ class ArticleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: DefaultTextStyle(
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headline6!,
               child: title,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: DefaultTextStyle(
-              style: Theme.of(context).textTheme.bodyText2.copyWith(
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     fontSize: 15,
                     color: Colors.white70,
                   ),

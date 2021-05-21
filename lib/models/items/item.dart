@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 import '../../utils/index.dart';
 
@@ -16,8 +15,8 @@ enum ItemType {
   attachment,
 }
 
-extension Database on ItemType {
-  CollectionReference get collection {
+extension Database on ItemType? {
+  CollectionReference? get collection {
     final instance = FirebaseFirestore.instance;
 
     switch (this) {
@@ -38,12 +37,12 @@ extension Database on ItemType {
         return instance.collection('melee');
       case ItemType.throwable:
         return instance.collection('grenade');
+      default:
+        return null;
     }
-
-    return null;
   }
 
-  Query getQuery(String sortBy, {bool descending = false}) {
+  Query? getQuery(String? sortBy, {bool descending = false}) {
     final ref = collection;
 
     var query =
@@ -83,13 +82,14 @@ extension Database on ItemType {
         query ??= ref?.orderBy('armor.class', descending: descending);
         query = query?.where('type', whereIn: <String>['visor', 'attachment']);
         break;
+      default:
     }
 
     return query;
   }
 }
 
-ItemType itemTypeByReference(DocumentReference reference) {
+ItemType? itemTypeByReference(DocumentReference reference) {
   switch (reference.path.split('/')[0]) {
     case 'ammunition':
       return ItemType.ammo;
@@ -152,8 +152,8 @@ enum ItemKind {
   tacticalrig,
 }
 
-extension StringParsing on String {
-  ItemKind toItemKind() {
+extension StringParsing on String? {
+  ItemKind? toItemKind() {
     switch (this) {
       case 'ammunition':
         return ItemKind.ammunition;
@@ -237,19 +237,19 @@ class Item implements Indexable {
   final String shortName;
   final String description;
   final Mass weight;
-  final ItemKind kind;
+  final ItemKind? kind;
 
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
-  ItemType _type;
+  ItemType? _type;
 
   Item({
-    @required this.id,
-    @required this.name,
-    @required this.shortName,
-    @required this.description,
-    @required this.weight,
-    @required this.kind,
+    required this.id,
+    required this.name,
+    required this.shortName,
+    required this.description,
+    required this.weight,
+    required this.kind,
     this.reference,
   });
 
@@ -265,32 +265,41 @@ class Item implements Indexable {
         shortName = map['shortName'],
         description = map['description'],
         weight = Mass(kg: map['weight'].toDouble()),
-        kind = (map['_kind'] as String).toItemKind(),
+        kind = (map['_kind'] as String?).toItemKind(),
         _type = null;
 
   Item.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 
   @override
   String toString() => 'Item<$type:$id>';
 
-  ItemType get type {
-    _type ??= itemTypeByReference(reference);
+  ItemType? get type {
+    if (reference != null) {
+      _type ??= itemTypeByReference(reference!);
+    }
     return _type;
   }
 
   @override
-  List<String> get indexData => [
+  List<String?> get indexData => [
         shortName,
         name,
       ];
 }
 
 abstract class SectionView extends Item {
-  String get sectionValue;
+  SectionView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
+      : super.fromSnapshot(snapshot);
+
+  String? get sectionValue;
 }
 
 abstract class DetailView extends Item {
+  DetailView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
+      : super.fromSnapshot(snapshot);
+
   List<PropertySection> get propertySections;
 }
 
@@ -299,49 +308,58 @@ class PropertySection {
   final List<DisplayProperty> properties;
 
   PropertySection({
-    @required this.title,
-    @required this.properties,
+    required this.title,
+    required this.properties,
   });
 }
 
 class DisplayProperty {
   final String name;
-  final String value;
+  final String? value;
 
   DisplayProperty({
-    @required this.name,
-    @required this.value,
+    required this.name,
+    required this.value,
   });
 }
 
 abstract class ComparisonView extends Item {
+  ComparisonView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
+      : super.fromSnapshot(snapshot);
+
   List<ComparableProperty> get comparableProperties;
 }
 
 class ComparableProperty {
   final String name;
-  final num value;
+  final num? value;
   final bool isLowerBetter;
-  final String displayValue;
+  final String? displayValue;
 
   ComparableProperty(this.name, this.value,
       {this.isLowerBetter = false, this.displayValue});
 }
 
 abstract class TableView extends Item {
+  TableView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
+      : super.fromSnapshot(snapshot);
+
   List<String> get tableHeaders;
   List<dynamic> get tableData;
 }
 
 abstract class ExplorableItem extends Item
-    implements DetailView, ComparisonView {}
+    implements DetailView, ComparisonView {
+  ExplorableItem.fromSnapshot(DocumentSnapshot<Object?> snapshot)
+      : super.fromSnapshot(snapshot);
+}
 
 abstract class ExplorableSectionItem implements ExplorableItem, SectionView {}
 
 class Speed {
-  final double metersPerSecond;
+  final double? metersPerSecond;
 
-  Speed({double metersPerSecond = 0.0}) : metersPerSecond = metersPerSecond;
+  Speed({double? metersPerSecond = 0.0}) : metersPerSecond = metersPerSecond;
 
   @override
   String toString() => '$metersPerSecond m/s';
@@ -360,9 +378,9 @@ class Mass {
   final double kilograms;
   final double grams;
 
-  Mass({double kg, double g})
-      : kilograms = kg ?? g / 1000 ?? 0,
-        grams = g ?? kg * 1000 ?? 0;
+  Mass({double kg = 0, double g = 0})
+      : kilograms = kg != 0 ? kg : g / 1000,
+        grams = g != 0 ? g : kg * 1000;
 
   @override
   String toString() => '$grams g';

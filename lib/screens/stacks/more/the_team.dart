@@ -10,7 +10,7 @@ class TheTeamScreen extends StatelessWidget {
   static const String title = 'The Team';
   static const String routeName = '/more/theTeam';
 
-  TheTeamScreen({Key key}) : super(key: key);
+  TheTeamScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class TheTeamScreen extends StatelessWidget {
 }
 
 class TeamList extends StatelessWidget {
-  TeamList({Key key}) : super(key: key);
+  TeamList({Key? key}) : super(key: key);
 
   Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.hasError) return ErrorScreen();
@@ -33,12 +33,12 @@ class TeamList extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final docs = snapshot.data.docs
+    final docs = snapshot.data!.docs
         .map<TeamMember>((s) => TeamMember.fromSnapshot(s))
         .toList(growable: false);
 
     return ListView.separated(
-        itemCount: snapshot.data.size,
+        itemCount: snapshot.data!.size,
         separatorBuilder: (context, index) => const Divider(height: 0),
         itemBuilder: (context, index) {
           final member = docs[index];
@@ -62,8 +62,8 @@ class MemberTile extends StatelessWidget {
   final TeamMember member;
 
   const MemberTile({
-    Key key,
-    @required this.member,
+    Key? key,
+    required this.member,
   }) : super(key: key);
 
   @override
@@ -84,13 +84,13 @@ class MemberTile extends StatelessWidget {
       subtitle: member.live
           ? Text(
               'Live',
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     color: Colors.red,
                   ),
             )
           : null,
-      trailing: member.url != null ? const Icon(Icons.chevron_right) : null,
-      onTab: member.url != null ? () => openURL(member.url) : null,
+      trailing: const Icon(Icons.chevron_right),
+      onTab: () => openURL(member.url),
     );
   }
 }

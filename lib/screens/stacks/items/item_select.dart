@@ -9,12 +9,12 @@ import '../../../providers/item.dart';
 import 'item_compare.dart';
 
 class ItemSelectScreenArguments {
-  final Query query;
-  final String selectedID;
+  final Query? query;
+  final String? selectedID;
   final bool sortSections;
 
   const ItemSelectScreenArguments({
-    @required this.query,
+    required this.query,
     this.selectedID,
     this.sortSections = false,
   });
@@ -24,7 +24,7 @@ class ItemSelectScreen<T extends ExplorableItem> extends StatefulWidget {
   static const String title = 'Compare to\u{2026}';
   static const String routeName = '/items/select';
 
-  ItemSelectScreen({Key key}) : super(key: key);
+  ItemSelectScreen({Key? key}) : super(key: key);
 
   @override
   _ItemSelectScreenState<T> createState() => _ItemSelectScreenState<T>();
@@ -32,7 +32,7 @@ class ItemSelectScreen<T extends ExplorableItem> extends StatefulWidget {
 
 class _ItemSelectScreenState<T extends ExplorableItem>
     extends State<ItemSelectScreen<T>> {
-  ItemComparisonScreenArguments<T> _compareArgs;
+  ItemComparisonScreenArguments<T>? _compareArgs;
 
   void _onNext() {
     Navigator.push<void>(
@@ -55,8 +55,8 @@ class _ItemSelectScreenState<T extends ExplorableItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemSelectScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ItemSelectScreenArguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -68,9 +68,10 @@ class _ItemSelectScreenState<T extends ExplorableItem>
           label: const Text('Compare'),
           color: Theme.of(context).accentColor,
           icon: const Icon(Icons.navigate_next),
-          onPressed: _compareArgs != null && _compareArgs.selectedIDs.length > 1
-              ? _onNext
-              : null,
+          onPressed:
+              _compareArgs != null && _compareArgs!.selectedIDs.length > 1
+                  ? _onNext
+                  : null,
           shape: Border.all(style: BorderStyle.none),
         ),
       ),
@@ -84,13 +85,13 @@ class _ItemSelectScreenState<T extends ExplorableItem>
 }
 
 class ItemSelectList<T extends Item> extends StatefulWidget {
-  final Query query;
-  final String selectedID;
-  final void Function(List<T>, HashSet<String>) onChange;
+  final Query? query;
+  final String? selectedID;
+  final void Function(List<T>, HashSet<String>)? onChange;
 
   ItemSelectList(
     this.query, {
-    Key key,
+    Key? key,
     this.selectedID,
     this.onChange,
   }) : super(key: key);
@@ -100,13 +101,13 @@ class ItemSelectList<T extends Item> extends StatefulWidget {
 }
 
 class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
-  ItemProvider<T> _provider;
-  List<T> _items;
-  FirebaseException _error;
+  late ItemProvider<T> _provider;
+  List<T>? _items;
+  FirebaseException? _error;
 
-  HashSet<String> _selection;
+  HashSet<String>? _selection;
 
-  void _onData(List<T> items) {
+  void _onData(List<T>? items) {
     setState(() {
       _items = items;
     });
@@ -114,7 +115,7 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
 
   void _onError(Object error) {
     setState(() {
-      _error = error;
+      _error = error as FirebaseException?;
     });
   }
 
@@ -126,21 +127,21 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
     _provider.stream.listen(_onData, onError: _onError);
 
     _selection = HashSet();
-    if (widget.selectedID != null) _selection.add(widget.selectedID);
+    if (widget.selectedID != null) _selection!.add(widget.selectedID!);
   }
 
-  void onChange(Item item, {@required bool value}) {
-    if (value) {
-      _selection.add(item.id);
+  void onChange(Item item, {bool? value}) {
+    if (value!) {
+      _selection!.add(item.id);
     } else {
-      _selection.remove(item.id);
+      _selection!.remove(item.id);
     }
 
     setState(() {
       _selection = _selection;
     });
 
-    widget.onChange(_items, _selection);
+    widget.onChange!(_items!, _selection!);
   }
 
   Widget _buildSeparator(BuildContext context, int index) {
@@ -148,12 +149,12 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
   }
 
   Widget _buildSection(BuildContext context, int index) {
-    final item = _items[index];
+    final item = _items![index];
 
     return ItemTile(
       key: Key(item.id),
       item: item,
-      isSelected: _selection.contains(item.id),
+      isSelected: _selection!.contains(item.id),
       onChange: onChange,
     );
   }
@@ -168,7 +169,7 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
 
     return ListView.separated(
       shrinkWrap: false,
-      itemCount: _items.length,
+      itemCount: _items!.length,
       separatorBuilder: _buildSeparator,
       itemBuilder: _buildSection,
     );
@@ -180,7 +181,7 @@ class ItemSectionSelectScreen<T extends ExplorableSectionItem>
   static const String title = 'Compare to\u{2026}';
   static const String routeName = '/items/sectionSelect';
 
-  ItemSectionSelectScreen({Key key}) : super(key: key);
+  ItemSectionSelectScreen({Key? key}) : super(key: key);
 
   @override
   _ItemSectionSelectScreenState<T> createState() =>
@@ -189,7 +190,7 @@ class ItemSectionSelectScreen<T extends ExplorableSectionItem>
 
 class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
     extends State<ItemSectionSelectScreen<T>> {
-  ItemComparisonScreenArguments<T> _compareArgs;
+  ItemComparisonScreenArguments<T>? _compareArgs;
 
   void _onNext() {
     Navigator.push<void>(
@@ -212,8 +213,8 @@ class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemSelectScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ItemSelectScreenArguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -225,9 +226,10 @@ class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
           label: const Text('Compare'),
           color: Theme.of(context).accentColor,
           icon: const Icon(Icons.navigate_next),
-          onPressed: _compareArgs != null && _compareArgs.selectedIDs.length > 1
-              ? _onNext
-              : null,
+          onPressed:
+              _compareArgs != null && _compareArgs!.selectedIDs.length > 1
+                  ? _onNext
+                  : null,
           shape: Border.all(style: BorderStyle.none),
         ),
       ),
@@ -242,14 +244,14 @@ class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
 }
 
 class ItemSelectSectionList<T extends SectionView> extends StatefulWidget {
-  final Query query;
+  final Query? query;
   final bool sortSections;
-  final String selectedID;
-  final void Function(List<T>, HashSet<String>) onChange;
+  final String? selectedID;
+  final void Function(List<T>, HashSet<String>)? onChange;
 
   ItemSelectSectionList(
     this.query, {
-    Key key,
+    Key? key,
     this.sortSections = false,
     this.selectedID,
     this.onChange,
@@ -262,11 +264,11 @@ class ItemSelectSectionList<T extends SectionView> extends StatefulWidget {
 
 class _ItemSelectSectionListState<T extends SectionView>
     extends State<ItemSelectSectionList<T>> {
-  ItemSectionProvider<T> _provider;
-  List<ItemSection<T>> _sections;
-  FirebaseException _error;
+  late ItemSectionProvider<T> _provider;
+  List<ItemSection<T>>? _sections;
+  FirebaseException? _error;
 
-  HashSet<String> _selection;
+  HashSet<String>? _selection;
 
   void _onData(List<ItemSection<T>> sections) {
     setState(() {
@@ -276,7 +278,7 @@ class _ItemSelectSectionListState<T extends SectionView>
 
   void _onError(Object error) {
     setState(() {
-      _error = error;
+      _error = error as FirebaseException?;
     });
   }
 
@@ -291,22 +293,22 @@ class _ItemSelectSectionListState<T extends SectionView>
     _provider.stream.listen(_onData, onError: _onError);
 
     _selection = HashSet();
-    if (widget.selectedID != null) _selection.add(widget.selectedID);
+    if (widget.selectedID != null) _selection!.add(widget.selectedID!);
   }
 
-  void onChange(Item item, {@required bool value}) {
-    if (value) {
-      _selection.add(item.id);
+  void onChange(Item item, {bool? value}) {
+    if (value!) {
+      _selection!.add(item.id);
     } else {
-      _selection.remove(item.id);
+      _selection!.remove(item.id);
     }
 
     setState(() {
       _selection = _selection;
     });
 
-    widget.onChange(
-        _sections.expand((e) => e.items).toList(growable: false), _selection);
+    widget.onChange!(
+        _sections!.expand((e) => e.items).toList(growable: false), _selection!);
   }
 
   Widget _buildSeparator(BuildContext context, int index) {
@@ -314,19 +316,19 @@ class _ItemSelectSectionListState<T extends SectionView>
   }
 
   Widget _buildSection(BuildContext context, int index) {
-    final section = _sections[index];
+    final section = _sections![index];
 
     return Column(
-      key: Key(section.title),
+      key: Key(section.title!),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Text(
-            section.title,
+            section.title!,
             style: Theme.of(context)
                 .textTheme
-                .subtitle2
+                .subtitle2!
                 .copyWith(color: Colors.grey[400]),
           ),
         ),
@@ -337,7 +339,7 @@ class _ItemSelectSectionListState<T extends SectionView>
               (item) => ItemTile(
                 key: Key(item.id),
                 item: item,
-                isSelected: _selection.contains(item.id),
+                isSelected: _selection!.contains(item.id),
                 onChange: onChange,
               ),
             ),
@@ -357,7 +359,7 @@ class _ItemSelectSectionListState<T extends SectionView>
 
     return ListView.separated(
       shrinkWrap: false,
-      itemCount: _sections.length,
+      itemCount: _sections!.length,
       separatorBuilder: _buildSeparator,
       itemBuilder: _buildSection,
     );
@@ -370,10 +372,10 @@ class ItemTile extends StatefulWidget {
   final void Function(Item, {bool value}) onChange;
 
   const ItemTile({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
     this.isSelected = false,
-    @required this.onChange,
+    required this.onChange,
   }) : super(key: key);
 
   @override
@@ -381,7 +383,7 @@ class ItemTile extends StatefulWidget {
 }
 
 class _ItemTileState extends State<ItemTile> {
-  bool _isSelected;
+  bool? _isSelected;
 
   @override
   void initState() {
@@ -398,8 +400,8 @@ class _ItemTileState extends State<ItemTile> {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  void onChanged(bool value) {
-    widget.onChange(widget.item, value: value);
+  void onChanged(bool? value) {
+    widget.onChange(widget.item, value: value!);
     setState(() {
       _isSelected = value;
     });

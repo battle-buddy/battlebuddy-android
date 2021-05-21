@@ -5,11 +5,19 @@ import 'dart:ffi' as ffi;
 
 /// Bindings to Ballistics Engine RS
 class BallisticsEngine {
-  /// Holds the Dynamic library.
-  final ffi.DynamicLibrary _dylib;
+  /// Holds the symbol lookup function.
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+      _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  BallisticsEngine(ffi.DynamicLibrary dynamicLibrary) : _dylib = dynamicLibrary;
+  BallisticsEngine(ffi.DynamicLibrary dynamicLibrary)
+      : _lookup = dynamicLibrary.lookup;
+
+  /// The symbols are looked up with [lookup].
+  BallisticsEngine.fromLookup(
+      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+          lookup)
+      : _lookup = lookup;
 
   /// Creates a new `Ammo` instance
   ffi.Pointer<Ammo> create_ammo(
@@ -18,8 +26,6 @@ class BallisticsEngine {
     double penetration,
     double frag_chance,
   ) {
-    _create_ammo ??=
-        _dylib.lookupFunction<_c_create_ammo, _dart_create_ammo>('create_ammo');
     return _create_ammo(
       damage,
       armor_damage,
@@ -28,7 +34,10 @@ class BallisticsEngine {
     );
   }
 
-  _dart_create_ammo _create_ammo;
+  late final _create_ammo_ptr =
+      _lookup<ffi.NativeFunction<_c_create_ammo>>('create_ammo');
+  late final _dart_create_ammo _create_ammo =
+      _create_ammo_ptr.asFunction<_dart_create_ammo>();
 
   /// Creates a new `Armor` instance
   ffi.Pointer<Armor> create_armor(
@@ -38,8 +47,6 @@ class BallisticsEngine {
     double destructibility,
     double blunt_throughput,
   ) {
-    _create_armor ??= _dylib
-        .lookupFunction<_c_create_armor, _dart_create_armor>('create_armor');
     return _create_armor(
       class_,
       durability,
@@ -49,7 +56,10 @@ class BallisticsEngine {
     );
   }
 
-  _dart_create_armor _create_armor;
+  late final _create_armor_ptr =
+      _lookup<ffi.NativeFunction<_c_create_armor>>('create_armor');
+  late final _dart_create_armor _create_armor =
+      _create_armor_ptr.asFunction<_dart_create_armor>();
 
   /// Creates a new `PersonHealth` instance
   ffi.Pointer<PersonHealth> create_person_health(
@@ -61,8 +71,6 @@ class BallisticsEngine {
     double leg_left,
     double leg_right,
   ) {
-    _create_person_health ??= _dylib.lookupFunction<_c_create_person_health,
-        _dart_create_person_health>('create_person_health');
     return _create_person_health(
       head,
       thorax,
@@ -74,272 +82,299 @@ class BallisticsEngine {
     );
   }
 
-  _dart_create_person_health _create_person_health;
+  late final _create_person_health_ptr =
+      _lookup<ffi.NativeFunction<_c_create_person_health>>(
+          'create_person_health');
+  late final _dart_create_person_health _create_person_health =
+      _create_person_health_ptr.asFunction<_dart_create_person_health>();
 
   /// Destroys and frees the memory of a `PersonHealth` instance
   void destroy_person_health(
     ffi.Pointer<PersonHealth> health,
   ) {
-    _destroy_person_health ??= _dylib.lookupFunction<_c_destroy_person_health,
-        _dart_destroy_person_health>('destroy_person_health');
     return _destroy_person_health(
       health,
     );
   }
 
-  _dart_destroy_person_health _destroy_person_health;
+  late final _destroy_person_health_ptr =
+      _lookup<ffi.NativeFunction<_c_destroy_person_health>>(
+          'destroy_person_health');
+  late final _dart_destroy_person_health _destroy_person_health =
+      _destroy_person_health_ptr.asFunction<_dart_destroy_person_health>();
 
   /// Returns the current health status of a `HealthCalculator` instance
   ffi.Pointer<PersonHealth> healh_get_person_health(
     ffi.Pointer<HealthCalculator> calculator,
   ) {
-    _healh_get_person_health ??= _dylib.lookupFunction<
-        _c_healh_get_person_health,
-        _dart_healh_get_person_health>('healh_get_person_health');
     return _healh_get_person_health(
       calculator,
     );
   }
 
-  _dart_healh_get_person_health _healh_get_person_health;
+  late final _healh_get_person_health_ptr =
+      _lookup<ffi.NativeFunction<_c_healh_get_person_health>>(
+          'healh_get_person_health');
+  late final _dart_healh_get_person_health _healh_get_person_health =
+      _healh_get_person_health_ptr.asFunction<_dart_healh_get_person_health>();
 
   /// Creates a new `HealthCalculator` instance
   ffi.Pointer<HealthCalculator> health_create_calc(
     ffi.Pointer<PersonHealth> person,
     ffi.Pointer<Ammo> ammo,
   ) {
-    _health_create_calc ??=
-        _dylib.lookupFunction<_c_health_create_calc, _dart_health_create_calc>(
-            'health_create_calc');
     return _health_create_calc(
       person,
       ammo,
     );
   }
 
-  _dart_health_create_calc _health_create_calc;
+  late final _health_create_calc_ptr =
+      _lookup<ffi.NativeFunction<_c_health_create_calc>>('health_create_calc');
+  late final _dart_health_create_calc _health_create_calc =
+      _health_create_calc_ptr.asFunction<_dart_health_create_calc>();
 
   /// Destroys and frees the memory of a `HealthCalculator` instance
   void health_destroy_calc(
     ffi.Pointer<HealthCalculator> calculator,
   ) {
-    _health_destroy_calc ??= _dylib.lookupFunction<_c_health_destroy_calc,
-        _dart_health_destroy_calc>('health_destroy_calc');
     return _health_destroy_calc(
       calculator,
     );
   }
 
-  _dart_health_destroy_calc _health_destroy_calc;
+  late final _health_destroy_calc_ptr =
+      _lookup<ffi.NativeFunction<_c_health_destroy_calc>>(
+          'health_destroy_calc');
+  late final _dart_health_destroy_calc _health_destroy_calc =
+      _health_destroy_calc_ptr.asFunction<_dart_health_destroy_calc>();
 
   /// Returns the alive status of a `HealthCalculator` instance
   int health_get_person_alive(
     ffi.Pointer<HealthCalculator> calculator,
   ) {
-    _health_get_person_alive ??= _dylib.lookupFunction<
-        _c_health_get_person_alive,
-        _dart_health_get_person_alive>('health_get_person_alive');
     return _health_get_person_alive(
       calculator,
     );
   }
 
-  _dart_health_get_person_alive _health_get_person_alive;
+  late final _health_get_person_alive_ptr =
+      _lookup<ffi.NativeFunction<_c_health_get_person_alive>>(
+          'health_get_person_alive');
+  late final _dart_health_get_person_alive _health_get_person_alive =
+      _health_get_person_alive_ptr.asFunction<_dart_health_get_person_alive>();
 
   /// Processes the impact of ammo on a body zone within a `HealthCalculator` instance
   ffi.Pointer<HealthCalculator> health_impact_on_zone(
     ffi.Pointer<HealthCalculator> calculator,
     int zone,
   ) {
-    _health_impact_on_zone ??= _dylib.lookupFunction<_c_health_impact_on_zone,
-        _dart_health_impact_on_zone>('health_impact_on_zone');
     return _health_impact_on_zone(
       calculator,
       zone,
     );
   }
 
-  _dart_health_impact_on_zone _health_impact_on_zone;
+  late final _health_impact_on_zone_ptr =
+      _lookup<ffi.NativeFunction<_c_health_impact_on_zone>>(
+          'health_impact_on_zone');
+  late final _dart_health_impact_on_zone _health_impact_on_zone =
+      _health_impact_on_zone_ptr.asFunction<_dart_health_impact_on_zone>();
 
   /// Resets the calculation of a `HealthCalculator` instance
   ffi.Pointer<HealthCalculator> health_reset_calc(
     ffi.Pointer<HealthCalculator> calculator,
   ) {
-    _health_reset_calc ??=
-        _dylib.lookupFunction<_c_health_reset_calc, _dart_health_reset_calc>(
-            'health_reset_calc');
     return _health_reset_calc(
       calculator,
     );
   }
 
-  _dart_health_reset_calc _health_reset_calc;
+  late final _health_reset_calc_ptr =
+      _lookup<ffi.NativeFunction<_c_health_reset_calc>>('health_reset_calc');
+  late final _dart_health_reset_calc _health_reset_calc =
+      _health_reset_calc_ptr.asFunction<_dart_health_reset_calc>();
 
   /// Sets new ammo to a existing `HealthCalculator` instance
   ffi.Pointer<HealthCalculator> health_set_ammo(
     ffi.Pointer<HealthCalculator> calculator,
     ffi.Pointer<Ammo> ammo,
   ) {
-    _health_set_ammo ??=
-        _dylib.lookupFunction<_c_health_set_ammo, _dart_health_set_ammo>(
-            'health_set_ammo');
     return _health_set_ammo(
       calculator,
       ammo,
     );
   }
 
-  _dart_health_set_ammo _health_set_ammo;
+  late final _health_set_ammo_ptr =
+      _lookup<ffi.NativeFunction<_c_health_set_ammo>>('health_set_ammo');
+  late final _dart_health_set_ammo _health_set_ammo =
+      _health_set_ammo_ptr.asFunction<_dart_health_set_ammo>();
 
   /// Creates a new `PenetrationCalculator` instance
   ffi.Pointer<PenetrationCalculator> penetration_create_calc(
     ffi.Pointer<Armor> armor,
     ffi.Pointer<Ammo> ammo,
   ) {
-    _penetration_create_calc ??= _dylib.lookupFunction<
-        _c_penetration_create_calc,
-        _dart_penetration_create_calc>('penetration_create_calc');
     return _penetration_create_calc(
       armor,
       ammo,
     );
   }
 
-  _dart_penetration_create_calc _penetration_create_calc;
+  late final _penetration_create_calc_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_create_calc>>(
+          'penetration_create_calc');
+  late final _dart_penetration_create_calc _penetration_create_calc =
+      _penetration_create_calc_ptr.asFunction<_dart_penetration_create_calc>();
 
   /// Destroys and frees the memory of a `PenetrationCalculator` instance
   void penetration_destroy_calc(
     ffi.Pointer<PenetrationCalculator> calculator,
   ) {
-    _penetration_destroy_calc ??= _dylib.lookupFunction<
-        _c_penetration_destroy_calc,
-        _dart_penetration_destroy_calc>('penetration_destroy_calc');
     return _penetration_destroy_calc(
       calculator,
     );
   }
 
-  _dart_penetration_destroy_calc _penetration_destroy_calc;
+  late final _penetration_destroy_calc_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_destroy_calc>>(
+          'penetration_destroy_calc');
+  late final _dart_penetration_destroy_calc _penetration_destroy_calc =
+      _penetration_destroy_calc_ptr
+          .asFunction<_dart_penetration_destroy_calc>();
 
   /// Returns the current penetration chance of a `PenetrationCalculator` instance
   double penetration_get_chance(
     ffi.Pointer<PenetrationCalculator> calculator,
   ) {
-    _penetration_get_chance ??= _dylib.lookupFunction<_c_penetration_get_chance,
-        _dart_penetration_get_chance>('penetration_get_chance');
     return _penetration_get_chance(
       calculator,
     );
   }
 
-  _dart_penetration_get_chance _penetration_get_chance;
+  late final _penetration_get_chance_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_get_chance>>(
+          'penetration_get_chance');
+  late final _dart_penetration_get_chance _penetration_get_chance =
+      _penetration_get_chance_ptr.asFunction<_dart_penetration_get_chance>();
 
   /// Returns the current armor durability of a `PenetrationCalculator` instance
   double penetration_get_durability(
     ffi.Pointer<PenetrationCalculator> calculator,
   ) {
-    _penetration_get_durability ??= _dylib.lookupFunction<
-        _c_penetration_get_durability,
-        _dart_penetration_get_durability>('penetration_get_durability');
     return _penetration_get_durability(
       calculator,
     );
   }
 
-  _dart_penetration_get_durability _penetration_get_durability;
+  late final _penetration_get_durability_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_get_durability>>(
+          'penetration_get_durability');
+  late final _dart_penetration_get_durability _penetration_get_durability =
+      _penetration_get_durability_ptr
+          .asFunction<_dart_penetration_get_durability>();
 
   /// Returns the maximum armor durability of a `PenetrationCalculator` instance
   double penetration_get_durability_max(
     ffi.Pointer<PenetrationCalculator> calculator,
   ) {
-    _penetration_get_durability_max ??= _dylib.lookupFunction<
-        _c_penetration_get_durability_max,
-        _dart_penetration_get_durability_max>('penetration_get_durability_max');
     return _penetration_get_durability_max(
       calculator,
     );
   }
 
-  _dart_penetration_get_durability_max _penetration_get_durability_max;
+  late final _penetration_get_durability_max_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_get_durability_max>>(
+          'penetration_get_durability_max');
+  late final _dart_penetration_get_durability_max
+      _penetration_get_durability_max = _penetration_get_durability_max_ptr
+          .asFunction<_dart_penetration_get_durability_max>();
 
   /// Sets new ammo to a existing `PenetrationCalculator` instance
   ffi.Pointer<PenetrationCalculator> penetration_set_ammo(
     ffi.Pointer<PenetrationCalculator> calculator,
     ffi.Pointer<Ammo> ammo,
   ) {
-    _penetration_set_ammo ??= _dylib.lookupFunction<_c_penetration_set_ammo,
-        _dart_penetration_set_ammo>('penetration_set_ammo');
     return _penetration_set_ammo(
       calculator,
       ammo,
     );
   }
 
-  _dart_penetration_set_ammo _penetration_set_ammo;
+  late final _penetration_set_ammo_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_set_ammo>>(
+          'penetration_set_ammo');
+  late final _dart_penetration_set_ammo _penetration_set_ammo =
+      _penetration_set_ammo_ptr.asFunction<_dart_penetration_set_ammo>();
 
   /// Sets new armor to a existing `PenetrationCalculator` instance
   ffi.Pointer<PenetrationCalculator> penetration_set_armor(
     ffi.Pointer<PenetrationCalculator> calculator,
     ffi.Pointer<Armor> armor,
   ) {
-    _penetration_set_armor ??= _dylib.lookupFunction<_c_penetration_set_armor,
-        _dart_penetration_set_armor>('penetration_set_armor');
     return _penetration_set_armor(
       calculator,
       armor,
     );
   }
 
-  _dart_penetration_set_armor _penetration_set_armor;
+  late final _penetration_set_armor_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_set_armor>>(
+          'penetration_set_armor');
+  late final _dart_penetration_set_armor _penetration_set_armor =
+      _penetration_set_armor_ptr.asFunction<_dart_penetration_set_armor>();
 
   /// Sets armor durability of a `PenetrationCalculator` instance
   ffi.Pointer<PenetrationCalculator> penetration_set_durability(
     ffi.Pointer<PenetrationCalculator> calculator,
     double durability,
   ) {
-    _penetration_set_durability ??= _dylib.lookupFunction<
-        _c_penetration_set_durability,
-        _dart_penetration_set_durability>('penetration_set_durability');
     return _penetration_set_durability(
       calculator,
       durability,
     );
   }
 
-  _dart_penetration_set_durability _penetration_set_durability;
+  late final _penetration_set_durability_ptr =
+      _lookup<ffi.NativeFunction<_c_penetration_set_durability>>(
+          'penetration_set_durability');
+  late final _dart_penetration_set_durability _penetration_set_durability =
+      _penetration_set_durability_ptr
+          .asFunction<_dart_penetration_set_durability>();
 }
 
-class Ammo extends ffi.Struct {}
+class Ammo extends ffi.Opaque {}
 
-class Armor extends ffi.Struct {}
+class Armor extends ffi.Opaque {}
 
 /// Calculator for calculating the impact of ammunition on a body
-class HealthCalculator extends ffi.Struct {}
+class HealthCalculator extends ffi.Opaque {}
 
 /// Calculator for calculating the impact of ammunition on armor
-class PenetrationCalculator extends ffi.Struct {}
+class PenetrationCalculator extends ffi.Opaque {}
 
 class PersonHealth extends ffi.Struct {
   @ffi.Double()
-  double head;
+  external double head;
 
   @ffi.Double()
-  double thorax;
+  external double thorax;
 
   @ffi.Double()
-  double stomach;
+  external double stomach;
 
   @ffi.Double()
-  double arm_left;
+  external double arm_left;
 
   @ffi.Double()
-  double arm_right;
+  external double arm_right;
 
   @ffi.Double()
-  double leg_left;
+  external double leg_left;
 
   @ffi.Double()
-  double leg_right;
+  external double leg_right;
 }
 
 typedef _c_create_ammo = ffi.Pointer<Ammo> Function(

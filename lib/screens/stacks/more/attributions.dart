@@ -9,7 +9,7 @@ class AttributionScreen extends StatelessWidget {
   static const String title = 'Attributions';
   static const String routeName = '/more/attributions';
 
-  AttributionScreen({Key key}) : super(key: key);
+  AttributionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AttributionScreen extends StatelessWidget {
 }
 
 class AttributionList extends StatelessWidget {
-  AttributionList({Key key}) : super(key: key);
+  AttributionList({Key? key}) : super(key: key);
 
   Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.hasError) return ErrorScreen();
@@ -32,12 +32,12 @@ class AttributionList extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final docs = snapshot.data.docs
+    final docs = snapshot.data!.docs
         .map<Attribution>((s) => Attribution.fromSnapshot(s))
         .toList(growable: false);
 
     return ListView.separated(
-        itemCount: snapshot.data.size,
+        itemCount: snapshot.data!.size,
         separatorBuilder: (context, index) => const SizedBox(height: 10),
         itemBuilder: (context, index) {
           final doc = docs[index];
@@ -61,8 +61,8 @@ class AttributionCard extends StatelessWidget {
   final Attribution doc;
 
   const AttributionCard({
-    Key key,
-    @required this.doc,
+    Key? key,
+    required this.doc,
   }) : super(key: key);
 
   @override
@@ -70,7 +70,7 @@ class AttributionCard extends StatelessWidget {
     return Material(
       color: Colors.black54,
       child: InkWell(
-        onTap: doc.url != null ? () => openURL(doc.url) : null,
+        onTap: doc.url != null ? () => openURL(doc.url!) : null,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Row(
@@ -83,7 +83,7 @@ class AttributionCard extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
                         doc.title,
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
                               fontWeight: FontWeight.w500,
                             ),
                       ),
@@ -91,7 +91,7 @@ class AttributionCard extends StatelessWidget {
                     Container(
                       child: Text(
                         doc.subtitle,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               fontSize: 14,
                             ),
                       ),

@@ -8,7 +8,7 @@ class Character {
   final Health health;
   final int index;
 
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   Character.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['_id'] != null),
@@ -21,7 +21,8 @@ class Character {
         index = map['index'].toInt();
 
   Character.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
+            reference: snapshot.reference);
 }
 
 class Health {

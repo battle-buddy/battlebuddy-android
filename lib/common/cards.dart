@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class NavigationCard extends StatelessWidget {
   final String title;
   final String image;
-  final String routeName;
-  final Object arguments;
-  final MaterialPageRoute Function() pageRoute;
+  final String? routeName;
+  final Object? arguments;
+  final MaterialPageRoute Function()? pageRoute;
 
   static const double _shape = 8;
 
   const NavigationCard({
-    Key key,
-    @required this.title,
-    @required this.image,
+    Key? key,
+    required this.title,
+    required this.image,
     this.routeName,
     this.arguments,
     this.pageRoute,
@@ -20,9 +20,9 @@ class NavigationCard extends StatelessWidget {
 
   void _onTab(BuildContext context) {
     if (pageRoute == null) {
-      Navigator.pushNamed(context, routeName, arguments: arguments);
+      Navigator.pushNamed(context, routeName!, arguments: arguments);
     } else {
-      Navigator.push<void>(context, pageRoute());
+      Navigator.push<void>(context, pageRoute!());
     }
   }
 
@@ -53,8 +53,8 @@ class NavigationCard extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.headline4.copyWith(
-                color: Theme.of(context).textTheme.bodyText2.color,
+              style: Theme.of(context).textTheme.headline4!.copyWith(
+                color: Theme.of(context).textTheme.bodyText2!.color,
                 fontWeight: FontWeight.bold,
                 shadows: const <Shadow>[
                   Shadow(blurRadius: 5),
@@ -79,7 +79,7 @@ class NavigationCard extends StatelessWidget {
 class NavigationCardList extends StatelessWidget {
   final List<NavigationCard> cards;
 
-  const NavigationCardList({Key key, @required this.cards}) : super(key: key);
+  const NavigationCardList({Key? key, required this.cards}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -21,15 +21,15 @@ Future<void> initializeSession() async {
     final creds = await FirebaseAuth.instance.signInAnonymously();
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(creds.user.uid)
+        .doc(creds.user!.uid)
         .set(<String, dynamic>{'lastLogin': Timestamp.now()},
             SetOptions(merge: true));
 
-    print('Anonymous session initialized ${creds.user.uid}');
+    print('Anonymous session initialized ${creds.user!.uid}');
 
     if (!kDebugMode) {
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-      await FirebaseCrashlytics.instance.setUserIdentifier(creds.user.uid);
+      await FirebaseCrashlytics.instance.setUserIdentifier(creds.user!.uid);
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     }
   } on FirebaseException catch (e) {
@@ -54,8 +54,6 @@ extension Format on ImageSize {
       case ImageSize.medium:
         return 'medium';
     }
-
-    return null;
   }
 }
 
@@ -66,7 +64,7 @@ class StorageImage {
 
   const StorageImage({this.size = ImageSize.medium});
 
-  ImageProvider<FirebaseImage> getItemImage(ItemType type, String id) {
+  ImageProvider<FirebaseImage> getItemImage(ItemType? type, String? id) {
     final filename = '${id}_${size.string}.jpg';
 
     var ref = _reference.root;
@@ -95,6 +93,7 @@ class StorageImage {
       case ItemType.throwable:
         ref = ref.child('throwables');
         break;
+      default:
     }
 
     final path = ref.child(filename).fullPath;
@@ -105,7 +104,7 @@ class StorageImage {
     );
   }
 
-  ImageProvider<FirebaseImage> getCharacterImage(String id) {
+  ImageProvider<FirebaseImage> getCharacterImage(String? id) {
     final filename = '${id}_avatar.png';
     final ref = _reference.root.child('character');
 

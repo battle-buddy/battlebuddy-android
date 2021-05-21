@@ -8,16 +8,16 @@ import 'utils.dart';
 class HealthCalculator {
   final bindings.BallisticsEngine _engine =
       bindings.BallisticsEngine(loadLibrary());
-  Pointer<bindings.HealthCalculator> _calculator;
+  Pointer<bindings.HealthCalculator>? _calculator;
 
-  Ammunition _ammo;
+  Ammunition? _ammo;
 
   void dispose() {
     if (_calculator == null) return;
-    _engine.health_destroy_calc(_calculator);
+    _engine.health_destroy_calc(_calculator!);
   }
 
-  Pointer<bindings.PersonHealth> _toPersonHealthPtr(Health health) {
+  Pointer<bindings.PersonHealth> _toPersonHealthPtr(Health? health) {
     if (health == null) {
       throw HealthCalculatorException('Health value is null');
     }
@@ -32,16 +32,10 @@ class HealthCalculator {
       health.legRight,
     );
 
-    if (healthPtr == null) {
-      throw HealthCalculatorException(
-        'Error while creating health pointer',
-      );
-    }
-
     return healthPtr;
   }
 
-  Pointer<bindings.Ammo> _toAmmoPtr(Ammunition ammo) {
+  Pointer<bindings.Ammo> _toAmmoPtr(Ammunition? ammo) {
     if (ammo == null) {
       throw HealthCalculatorException('Ammo value is null');
     }
@@ -53,18 +47,10 @@ class HealthCalculator {
       ammo.fragmentation.chance,
     );
 
-    if (ammoPtr != null) {
-      _ammo = ammo;
-    } else {
-      throw HealthCalculatorException(
-        'Error while creating ammo pointer',
-      );
-    }
-
     return ammoPtr;
   }
 
-  void createCalculation(Health health, Ammunition ammo) {
+  void createCalculation(Health? health, Ammunition? ammo) {
     try {
       final healthPtr = _toPersonHealthPtr(health);
       final ammoPtr = _toAmmoPtr(ammo);
@@ -77,30 +63,31 @@ class HealthCalculator {
     } on HealthCalculatorException {
       rethrow;
     }
+
+    _ammo = ammo;
   }
 
-  set ammo(Ammunition value) {
+  set ammo(Ammunition? value) {
     if (_calculator == null) {
       throw HealthCalculatorException(HealthCalculatorException.noCalculator);
     }
 
-    _calculator = _engine.health_set_ammo(_calculator, _toAmmoPtr(value));
+    _calculator = _engine.health_set_ammo(_calculator!, _toAmmoPtr(value));
     if (_calculator == null) {
       throw HealthCalculatorException('Error while setting ammo');
     }
+
+    _ammo = value;
   }
 
-  Ammunition get ammo => _ammo;
+  Ammunition? get ammo => _ammo;
 
   Health get health {
     if (_calculator == null) {
       throw HealthCalculatorException(HealthCalculatorException.noCalculator);
     }
 
-    final statusPtr = _engine.healh_get_person_health(_calculator);
-    if (statusPtr == null) {
-      throw HealthCalculatorException('Error while getting person status');
-    }
+    final statusPtr = _engine.healh_get_person_health(_calculator!);
 
     final status = Health.fromReference(statusPtr.ref);
 
@@ -114,10 +101,7 @@ class HealthCalculator {
       throw HealthCalculatorException(HealthCalculatorException.noCalculator);
     }
 
-    _calculator = _engine.health_impact_on_zone(_calculator, zone.index);
-    if (_calculator == null) {
-      throw HealthCalculatorException('Error while processing impact one zone');
-    }
+    _calculator = _engine.health_impact_on_zone(_calculator!, zone.index);
   }
 
   void reset() {
@@ -125,10 +109,7 @@ class HealthCalculator {
       throw HealthCalculatorException(HealthCalculatorException.noCalculator);
     }
 
-    _calculator = _engine.health_reset_calc(_calculator);
-    if (_calculator == null) {
-      throw HealthCalculatorException('Error while resetting calculator');
-    }
+    _calculator = _engine.health_reset_calc(_calculator!);
   }
 }
 
