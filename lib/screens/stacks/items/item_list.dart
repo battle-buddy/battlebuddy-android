@@ -40,7 +40,7 @@ class _ItemListScreenState<T extends ExplorableItem>
 
   @override
   void didChangeDependencies() {
-    final ItemListScreenArguments args =
+    final args =
         ModalRoute.of(context)!.settings.arguments as ItemListScreenArguments;
     _provider = ItemProvider(args.query, indexing: true, tokenLength: 2);
     super.didChangeDependencies();
@@ -78,7 +78,7 @@ class _ItemListScreenState<T extends ExplorableItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemListScreenArguments? args =
+    final args =
         ModalRoute.of(context)!.settings.arguments as ItemListScreenArguments?;
 
     return Scaffold(
@@ -198,9 +198,8 @@ class _ItemSectionListScreenState<T extends ExplorableSectionItem>
 
   @override
   void didChangeDependencies() {
-    final ItemSectionListScreenArguments args = ModalRoute.of(context)!
-        .settings
-        .arguments as ItemSectionListScreenArguments;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as ItemSectionListScreenArguments;
     _provider = ItemSectionProvider(
       args.query,
       sortSections: args.sortSections,
@@ -242,9 +241,8 @@ class _ItemSectionListScreenState<T extends ExplorableSectionItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemSectionListScreenArguments? args = ModalRoute.of(context)!
-        .settings
-        .arguments as ItemSectionListScreenArguments?;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as ItemSectionListScreenArguments?;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -431,7 +429,7 @@ class _ItemCardState<T extends ExplorableItem> extends State<ItemCard<T>> {
   @override
   void initState() {
     super.initState();
-    if (widget.item != null) _image = _getStorageImage(widget.item);
+    _image = _getStorageImage(widget.item);
   }
 
   @override

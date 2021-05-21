@@ -22,9 +22,8 @@ class ItemComparisonScreen<T extends ComparisonView> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ItemComparisonScreenArguments args = ModalRoute.of(context)!
-        .settings
-        .arguments as ItemComparisonScreenArguments<ComparisonView>;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as ItemComparisonScreenArguments<ComparisonView>;
 
     return Scaffold(
       appBar: AppBar(

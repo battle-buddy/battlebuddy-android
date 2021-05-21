@@ -28,9 +28,8 @@ class ItemDetailScreen<T extends ExplorableItem> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ItemDetailScreenArguments args = ModalRoute.of(context)!
-        .settings
-        .arguments as ItemDetailScreenArguments<ExplorableItem>;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as ItemDetailScreenArguments<ExplorableItem>;
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +59,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
   @override
   void initState() {
     super.initState();
-    if (widget.item != null) _image = _getStorageImage(widget.item);
+    _image = _getStorageImage(widget.item);
   }
 
   @override

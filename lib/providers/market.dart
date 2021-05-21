@@ -129,7 +129,7 @@ class MarketProvider {
     try {
       final prefs = await _preferences!;
       final ids = _starred.map((idx) => _items[idx].id).toList(growable: false);
-      await prefs.setStringList(_storageKey, ids as List<String>);
+      await prefs.setStringList(_storageKey, ids);
     } on Exception catch (e) {
       print('Error while committing starred IDs: $e');
     }
@@ -152,7 +152,7 @@ class MarketProvider {
   }
 
   Future<void> filterByStars({bool? filter}) async {
-    if (_showStarred == filter || _starred == null || _starred.isEmpty) return;
+    if (_showStarred == filter || _starred.isEmpty) return;
     _showStarred = filter;
     _sendData();
   }

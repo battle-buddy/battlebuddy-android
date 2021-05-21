@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -27,9 +25,8 @@ class DamageCalculatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DamageCalculatorScreenArguments? args = ModalRoute.of(context)!
-        .settings
-        .arguments as DamageCalculatorScreenArguments?;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as DamageCalculatorScreenArguments?;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,9 +106,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   void _onItemChange() {
     if (_ammo != null) {
       if (_calculator.ammo == null) {
-        print(_calculator.ammo.runtimeType);
         _calculator.createCalculation(_health, _ammo);
-        print(_calculator.ammo.runtimeType);
       } else if (_calculator.ammo != _ammo) {
         _calculator.ammo = _ammo;
       }
@@ -155,9 +150,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
   }
 
   void _onTabReset() {
-    print(_calculator.health.total);
     _calculator.reset();
-    print(_calculator.health.total);
 
     setState(() {
       _health = _calculator.health;

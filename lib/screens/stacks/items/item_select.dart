@@ -213,7 +213,7 @@ class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
 
   @override
   Widget build(BuildContext context) {
-    final ItemSelectScreenArguments args =
+    final args =
         ModalRoute.of(context)!.settings.arguments as ItemSelectScreenArguments;
 
     return Scaffold(

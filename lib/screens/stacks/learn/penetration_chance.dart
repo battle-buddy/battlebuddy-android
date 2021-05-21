@@ -44,9 +44,8 @@ class PenetrationChanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PenetrationChanceScreenArguments? args = ModalRoute.of(context)!
-        .settings
-        .arguments as PenetrationChanceScreenArguments?;
+    final args = ModalRoute.of(context)!.settings.arguments
+        as PenetrationChanceScreenArguments?;
 
     return Scaffold(
       appBar: AppBar(
