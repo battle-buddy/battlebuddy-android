@@ -193,10 +193,12 @@ packages:
   firebase_image:
     dependency: "direct main"
     description:
-      name: firebase_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
+      path: "."
+      ref: type-fixes
+      resolved-ref: "6ffba46597fdb26ae814e8efdb234dcf1efc3d1f"
+      url: "git@github.com:battle-buddy/firebase_image.git"
+    source: git
+    version: "1.0.1+1"
   firebase_storage:
     dependency: "direct main"
     description:

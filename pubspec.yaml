@@ -37,7 +37,11 @@ dependencies:
   package_info: '^2.0.0'
   shared_preferences: ^2.0.5
   font_awesome_flutter: ^9.0.0
-  firebase_image: ^1.0.1
+  # firebase_image: ^1.0.1
+  firebase_image:
+    git:
+      url: git@github.com:battle-buddy/firebase_image.git
+      ref: type-fixes
   percent_indicator: ^3.0.1
   url_launcher: ^6.0.2
   in_app_review: ^2.0.0
