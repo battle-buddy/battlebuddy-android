@@ -19,10 +19,11 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  bool _initialized = false;
-  FirebaseException? _error;
+  late final ThemeData _theme;
 
-  ThemeData? _theme;
+  bool _initialized = false;
+
+  FirebaseException? _error;
 
   Future<void> initialize() async {
     try {
@@ -43,7 +44,7 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _theme = AppTheme.themeData;
-    setNavigationBarColor(_theme!.bottomAppBarColor);
+    setNavigationBarColor(_theme.bottomAppBarColor);
     initialize();
   }
 

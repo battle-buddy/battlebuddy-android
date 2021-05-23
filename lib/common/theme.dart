@@ -10,13 +10,14 @@ class AppTheme {
 
   static ThemeData get themeData {
     return ThemeData(
-      brightness: Brightness.dark,
+      colorScheme: const ColorScheme.dark(
+        primary: accent,
+        secondary: accent,
+      ),
       primaryColor: primary,
       accentColor: accent,
-      indicatorColor: accent,
       scaffoldBackgroundColor: primary,
       dividerColor: Colors.grey[400],
-      textSelectionTheme: const TextSelectionThemeData(cursorColor: accent),
       sliderTheme: SliderThemeData(
         activeTrackColor: accent,
         inactiveTrackColor: secondary,
