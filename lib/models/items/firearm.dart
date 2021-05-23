@@ -13,6 +13,7 @@ enum FirearmClass {
   smg,
   sniperRifle,
   specialWeapon,
+  undefined,
 }
 
 enum FireMode {
@@ -32,7 +33,7 @@ extension FireModeExt on FireMode {
 }
 
 extension StringParsing on String {
-  FirearmClass? toFirearmClass() {
+  FirearmClass toFirearmClass() {
     switch (this) {
       case 'assaultCarbine':
         return FirearmClass.assaultCarbine;
@@ -54,9 +55,9 @@ extension StringParsing on String {
         return FirearmClass.sniperRifle;
       case 'specialWeapon':
         return FirearmClass.specialWeapon;
+      default:
+        return FirearmClass.undefined;
     }
-
-    return null;
   }
 
   FireMode? toFireMode() {
@@ -73,7 +74,7 @@ extension StringParsing on String {
   }
 }
 
-extension FirearmClassExt on FirearmClass? {
+extension FirearmClassExt on FirearmClass {
   static const Map<FirearmClass, String> _displayName = {
     FirearmClass.assaultCarbine: 'Assault Carbine',
     FirearmClass.assaultRifle: 'Assault Rifle',
@@ -85,13 +86,14 @@ extension FirearmClassExt on FirearmClass? {
     FirearmClass.smg: 'SMG',
     FirearmClass.sniperRifle: 'Sniper Rifle',
     FirearmClass.specialWeapon: 'Special Weapon',
+    FirearmClass.undefined: 'unknown',
   };
 
-  String? get displayName => _displayName[this!];
+  String get displayName => _displayName[this]!;
 }
 
 class Firearm extends Item implements ExplorableSectionItem {
-  final FirearmClass? firearmClass;
+  final FirearmClass firearmClass;
   final String caliber;
   final int rateOfFire;
   final String actionType;
@@ -139,7 +141,7 @@ class Firearm extends Item implements ExplorableSectionItem {
   ItemType get type => ItemType.firearm;
 
   @override
-  String? get sectionValue => firearmClass.displayName;
+  String get sectionValue => firearmClass.displayName;
 
   @override
   List<PropertySection> get propertySections => [

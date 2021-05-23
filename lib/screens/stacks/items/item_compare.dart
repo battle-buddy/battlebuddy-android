@@ -76,9 +76,9 @@ class _ItemComparisonListState<T extends ComparisonView>
       var maxValue = value;
 
       for (final item in items) {
-        final value = item.comparableProperties[index].value!;
-        minValue = min(value, minValue!);
-        maxValue = max(value, maxValue!);
+        final value = item.comparableProperties[index].value;
+        minValue = min(value, minValue);
+        maxValue = max(value, maxValue);
 
         if (selected.contains(item.id)) selectedItems.add(item);
       }
@@ -89,8 +89,8 @@ class _ItemComparisonListState<T extends ComparisonView>
 
       for (final item in selectedItems) {
         final currentProp = item.comparableProperties[index];
-        final value = currentProp.value!;
-        final percent = (value - minValue!) / (maxValue! - minValue) * 1.0;
+        final value = currentProp.value;
+        final percent = (value - minValue) / (maxValue - minValue) * 1.0;
 
         final graph = PropertyGraph(
           name: item.shortName,

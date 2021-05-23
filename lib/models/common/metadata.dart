@@ -8,9 +8,9 @@ class Metadata {
   final List<Loyalty> loyalty;
   final Map<String, AmmoMetadata> ammo;
 
-  final DocumentReference? reference;
+  final DocumentReference reference;
 
-  Metadata.fromMap(Map<String, dynamic> map, {this.reference})
+  Metadata.fromMap(Map<String, dynamic> map, {required this.reference})
       : assert(map['totalUserCount'] != null),
         assert(map['totalLoyalty'] != null),
         assert(map['lastWipe'] != null),

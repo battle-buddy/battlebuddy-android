@@ -264,7 +264,7 @@ class PropertyList extends StatelessWidget {
                   tiles: e.properties.map(
                     (e) => CustomTile(
                       title: Text(e.name),
-                      trailing: Text(e.value!),
+                      trailing: Text(e.value),
                     ),
                   ),
                 ),

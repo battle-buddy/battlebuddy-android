@@ -21,7 +21,7 @@ class NavigationCard extends StatelessWidget {
   void _onTab(BuildContext context) {
     if (pageRoute == null) {
       Navigator.pushNamed(context, routeName!, arguments: arguments);
-    } else {
+    } else if (pageRoute != null) {
       Navigator.push<void>(context, pageRoute!());
     }
   }

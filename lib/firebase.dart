@@ -11,7 +11,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 
 import 'models/items/item.dart';
 
-FirebaseAnalytics analytics = FirebaseAnalytics();
+final FirebaseAnalytics analytics = FirebaseAnalytics();
 
 Future<void> initializeSession() async {
   print('Initializing anonymous session...');
@@ -60,14 +60,14 @@ extension Format on ImageSize {
 class StorageImage {
   final ImageSize size;
 
-  static final Reference _reference = FirebaseStorage.instance.ref();
+  static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   const StorageImage({this.size = ImageSize.medium});
 
   ImageProvider<FirebaseImage> getItemImage(ItemType? type, String? id) {
     final filename = '${id}_${size.string}.jpg';
 
-    var ref = _reference.root;
+    var ref = _storage.ref();
     switch (type) {
       case ItemType.ammo:
         ref = ref.child('ammo');
@@ -106,7 +106,7 @@ class StorageImage {
 
   ImageProvider<FirebaseImage> getCharacterImage(String? id) {
     final filename = '${id}_avatar.png';
-    final ref = _reference.root.child('character');
+    final ref = _storage.ref().child('character');
 
     final path = ref.child(filename).fullPath;
     final bucket = ref.bucket;

@@ -15,7 +15,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class ItemListScreenArguments {
   final String title;
-  final Query? query;
+  final Query query;
 
   const ItemListScreenArguments({
     required this.title,
@@ -169,7 +169,7 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
 
 class ItemSectionListScreenArguments {
   final String title;
-  final Query? query;
+  final Query query;
   final bool sortSections;
 
   const ItemSectionListScreenArguments({

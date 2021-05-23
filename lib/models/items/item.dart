@@ -15,8 +15,8 @@ enum ItemType {
   attachment,
 }
 
-extension Database on ItemType? {
-  CollectionReference? get collection {
+extension Database on ItemType {
+  CollectionReference get collection {
     final instance = FirebaseFirestore.instance;
 
     switch (this) {
@@ -37,52 +37,49 @@ extension Database on ItemType? {
         return instance.collection('melee');
       case ItemType.throwable:
         return instance.collection('grenade');
-      default:
-        return null;
     }
   }
 
-  Query? getQuery(String? sortBy, {bool descending = false}) {
+  Query getQuery(String? sortBy, {bool descending = false}) {
     final ref = collection;
 
     var query =
-        sortBy != null ? ref?.orderBy(sortBy, descending: descending) : null;
+        sortBy != null ? ref.orderBy(sortBy, descending: descending) : null;
 
     switch (this) {
       case ItemType.ammo:
-        query ??= ref?.orderBy('caliber', descending: descending);
+        query ??= ref.orderBy('caliber', descending: descending);
         break;
       case ItemType.armor:
-        query ??= ref?.orderBy('armor.class', descending: descending);
+        query ??= ref.orderBy('armor.class', descending: descending);
         break;
       case ItemType.bodyArmor:
-        query ??= ref?.orderBy('armor.class', descending: descending);
-        query = query?.where('type', isEqualTo: 'body');
+        query ??= ref.orderBy('armor.class', descending: descending);
+        query = query.where('type', isEqualTo: 'body');
         break;
       case ItemType.chestRig:
-        query ??= ref?.orderBy('shortName', descending: descending);
+        query ??= ref.orderBy('shortName', descending: descending);
         break;
       case ItemType.firearm:
-        query ??= ref?.orderBy('class', descending: descending);
+        query ??= ref.orderBy('class', descending: descending);
         break;
       case ItemType.helmet:
-        query ??= ref?.orderBy('armor.class', descending: descending);
-        query = query?.where('type', isEqualTo: 'helmet');
+        query ??= ref.orderBy('armor.class', descending: descending);
+        query = query.where('type', isEqualTo: 'helmet');
         break;
       case ItemType.medical:
-        query ??= ref?.orderBy('type', descending: descending);
+        query ??= ref.orderBy('type', descending: descending);
         break;
       case ItemType.melee:
-        query ??= ref?.orderBy('shortName', descending: descending);
+        query ??= ref.orderBy('shortName', descending: descending);
         break;
       case ItemType.throwable:
-        query ??= ref?.orderBy('type', descending: descending);
+        query ??= ref.orderBy('type', descending: descending);
         break;
       case ItemType.attachment:
-        query ??= ref?.orderBy('armor.class', descending: descending);
-        query = query?.where('type', whereIn: <String>['visor', 'attachment']);
+        query ??= ref.orderBy('armor.class', descending: descending);
+        query = query.where('type', whereIn: <String>['visor', 'attachment']);
         break;
-      default:
     }
 
     return query;
@@ -112,6 +109,12 @@ ItemType? itemTypeByReference(DocumentReference reference) {
   }
 
   return null;
+}
+
+class ItemTypeException implements Exception {
+  ItemTypeException(this.cause);
+
+  String cause;
 }
 
 enum ItemKind {
@@ -152,8 +155,8 @@ enum ItemKind {
   tacticalrig,
 }
 
-extension StringParsing on String? {
-  ItemKind? toItemKind() {
+extension StringParsing on String {
+  ItemKind toItemKind() {
     switch (this) {
       case 'ammunition':
         return ItemKind.ammunition;
@@ -165,8 +168,6 @@ extension StringParsing on String? {
         return ItemKind.barter;
       case 'clothing':
         return ItemKind.clothing;
-      case 'common':
-        return ItemKind.common;
       case 'container':
         return ItemKind.container;
       case 'firearm':
@@ -225,9 +226,9 @@ extension StringParsing on String? {
         return ItemKind.money;
       case 'tacticalrig':
         return ItemKind.tacticalrig;
+      default:
+        return ItemKind.common;
     }
-
-    return null;
   }
 }
 
@@ -237,7 +238,7 @@ class Item implements Indexable {
   final String shortName;
   final String description;
   final Mass weight;
-  final ItemKind? kind;
+  final ItemKind kind;
 
   final DocumentReference? reference;
 
@@ -265,7 +266,7 @@ class Item implements Indexable {
         shortName = map['shortName'],
         description = map['description'],
         weight = Mass(kg: map['weight'].toDouble()),
-        kind = (map['_kind'] as String?).toItemKind(),
+        kind = (map['_kind'] as String).toItemKind(),
         _type = null;
 
   Item.fromSnapshot(DocumentSnapshot snapshot)
@@ -275,15 +276,20 @@ class Item implements Indexable {
   @override
   String toString() => 'Item<$type:$id>';
 
-  ItemType? get type {
+  ItemType get type {
     if (reference != null) {
       _type ??= itemTypeByReference(reference!);
     }
-    return _type;
+
+    if (_type == null) {
+      throw ItemTypeException('unknown item type');
+    }
+
+    return _type!;
   }
 
   @override
-  List<String?> get indexData => [
+  List<String> get indexData => [
         shortName,
         name,
       ];
@@ -315,7 +321,7 @@ class PropertySection {
 
 class DisplayProperty {
   final String name;
-  final String? value;
+  final String value;
 
   DisplayProperty({
     required this.name,
@@ -332,7 +338,7 @@ abstract class ComparisonView extends Item {
 
 class ComparableProperty {
   final String name;
-  final num? value;
+  final num value;
   final bool isLowerBetter;
   final String? displayValue;
 
@@ -357,9 +363,9 @@ abstract class ExplorableItem extends Item
 abstract class ExplorableSectionItem implements ExplorableItem, SectionView {}
 
 class Speed {
-  final double? metersPerSecond;
+  final double metersPerSecond;
 
-  Speed({double? metersPerSecond = 0.0}) : metersPerSecond = metersPerSecond;
+  Speed({double metersPerSecond = 0.0}) : metersPerSecond = metersPerSecond;
 
   @override
   String toString() => '$metersPerSecond m/s';

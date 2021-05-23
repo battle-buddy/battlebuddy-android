@@ -11,7 +11,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class ItemTableScreenArguments {
   final String title;
-  final Query? query;
+  final Query query;
   final String? sortedBy;
 
   ItemTableScreenArguments({
@@ -102,7 +102,7 @@ class _ItemTableScreenState<T extends TableView>
 class ItemDualTableScreenArguments {
   final String title;
   final List<String> tabNames;
-  final List<Query?> query;
+  final List<Query> query;
   final List<String>? sortedBy;
 
   ItemDualTableScreenArguments({

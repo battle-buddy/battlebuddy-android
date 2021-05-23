@@ -47,7 +47,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
   ItemType get type => ItemType.ammo;
 
   @override
-  String? get sectionValue => caliber;
+  String get sectionValue => caliber;
 
   @override
   List<PropertySection> get propertySections => [

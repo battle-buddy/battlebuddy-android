@@ -13,6 +13,7 @@ class AppTheme {
       brightness: Brightness.dark,
       primaryColor: primary,
       accentColor: accent,
+      indicatorColor: accent,
       scaffoldBackgroundColor: primary,
       dividerColor: Colors.grey[400],
       textSelectionTheme: const TextSelectionThemeData(cursorColor: accent),

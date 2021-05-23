@@ -84,7 +84,7 @@ class ChestRig extends Item
                     ),
                     DisplayProperty(
                       name: 'Zones',
-                      value: armor?.zones.join(', ').asTitle,
+                      value: armor!.zones.join(', ').asTitle,
                     ),
                     DisplayProperty(
                       name: 'Weight',
@@ -142,8 +142,8 @@ class ChestRig extends Item
   @override
   List get tableData => <dynamic>[
         shortName,
-        armor!.armorClass,
-        armor!.durability,
+        armor?.armorClass,
+        armor?.durability,
       ];
 }
 

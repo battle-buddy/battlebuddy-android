@@ -160,7 +160,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
           arguments: ItemDualTableScreenArguments(
             title: 'Armored',
             tabNames: ['Armor', 'Chest Rigs'],
-            query: <Query?>[
+            query: <Query>[
               ItemType.armor.getQuery('armor.class', descending: true),
               ItemType.chestRig.getQuery('armor.class', descending: true),
             ],

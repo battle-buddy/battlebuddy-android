@@ -52,7 +52,7 @@ class _PriceCheckScreenState extends State<PriceCheckScreen> {
   }
 
   void _onItemPress(MarketItem item) {
-    if (item.isStarred!) {
+    if (item.isStarred) {
       _provider.addStar(item.id);
     } else {
       _provider.deleteStar(item.id);
@@ -186,11 +186,11 @@ class PriceCheckItem extends StatefulWidget {
 }
 
 class _PriceCheckItemState extends State<PriceCheckItem> {
-  bool? _isStarred;
+  bool _isStarred = false;
 
   void _onPress() {
     setState(() {
-      _isStarred = !_isStarred!;
+      _isStarred = !_isStarred;
     });
     widget.item.isStarred = _isStarred;
     widget.onPress!(widget.item);
@@ -267,8 +267,8 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
           children: <Widget>[
             Container(
               child: Icon(
-                _isStarred! ? Icons.star : Icons.star_border,
-                color: _isStarred! ? iconColor : iconColor!.withOpacity(0.9),
+                _isStarred ? Icons.star : Icons.star_border,
+                color: _isStarred ? iconColor : iconColor!.withOpacity(0.9),
               ),
             ),
             Expanded(

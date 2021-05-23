@@ -8,6 +8,7 @@ enum MedicalType {
   drug,
   medkit,
   stimulator,
+  unknown,
 }
 
 extension MedicalTypeExt on MedicalType {
@@ -16,9 +17,10 @@ extension MedicalTypeExt on MedicalType {
     MedicalType.drug: 'Drug',
     MedicalType.medkit: 'Medkit',
     MedicalType.stimulator: 'Stimulator',
+    MedicalType.unknown: 'Unknown',
   };
 
-  String? get displayName => _displayName[this];
+  String get displayName => _displayName[this]!;
 }
 
 extension Format on MedicalType {
@@ -32,12 +34,14 @@ extension Format on MedicalType {
         return 'medkit';
       case MedicalType.stimulator:
         return 'stimulator';
+      case MedicalType.unknown:
+        return 'unknown';
     }
   }
 }
 
 extension StringParsing on String {
-  MedicalType? toMedicalType() {
+  MedicalType toMedicalType() {
     switch (this) {
       case 'accessory':
         return MedicalType.accessory;
@@ -47,14 +51,14 @@ extension StringParsing on String {
         return MedicalType.medkit;
       case 'stimulator':
         return MedicalType.stimulator;
+      default:
+        return MedicalType.unknown;
     }
-
-    return null;
   }
 }
 
 class Medical extends Item implements ExplorableSectionItem {
-  final MedicalType? medicalType;
+  final MedicalType medicalType;
   final int resources;
   final Duration useTime;
   final Effects effects;
@@ -78,7 +82,7 @@ class Medical extends Item implements ExplorableSectionItem {
   ItemType get type => ItemType.medical;
 
   @override
-  String? get sectionValue => medicalType!.displayName;
+  String get sectionValue => medicalType.displayName;
 
   @override
   List<PropertySection> get propertySections => [
@@ -87,7 +91,7 @@ class Medical extends Item implements ExplorableSectionItem {
           properties: <DisplayProperty>[
             DisplayProperty(
               name: 'Type',
-              value: medicalType!.displayName,
+              value: medicalType.displayName,
             ),
             ...resources > 0
                 ? [

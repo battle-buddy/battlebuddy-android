@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 abstract class Indexable {
-  List<String?> get indexData;
+  List<String> get indexData;
 }
 
 class InvertedIndex {
@@ -27,7 +27,7 @@ class InvertedIndex {
 
     for (final doc in items.asMap().entries) {
       for (final field in doc.value.indexData) {
-        final tokens = _tokenizer(field!, tokenLength)
+        final tokens = _tokenizer(field, tokenLength)
             .expand<String>((token) => ngram(token, tokenLength)!);
         for (final token in tokens) {
           final match = index[token];

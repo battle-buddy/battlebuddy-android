@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TileSectionList extends StatelessWidget {
-  final String? title;
-  final Iterable<CustomTile>? tiles;
+  final String title;
+  final Iterable<CustomTile> tiles;
   final Color? color;
 
   const TileSectionList({
     Key? key,
-    this.title,
-    this.tiles,
+    required this.title,
+    required this.tiles,
     this.color,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class TileSectionList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Text(
-              title!,
+              title,
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
@@ -37,12 +37,12 @@ class TileSectionList extends StatelessWidget {
 }
 
 class CustomTileList extends StatelessWidget {
-  final Iterable<CustomTile>? tiles;
+  final Iterable<CustomTile> tiles;
   final Color? color;
 
   const CustomTileList({
     Key? key,
-    this.tiles,
+    required this.tiles,
     this.color,
   }) : super(key: key);
 
@@ -51,7 +51,7 @@ class CustomTileList extends StatelessWidget {
     return Column(
       children: ListTile.divideTiles(
         context: context,
-        tiles: tiles!,
+        tiles: tiles,
         color: color,
       ).toList(growable: false),
     );
@@ -59,7 +59,7 @@ class CustomTileList extends StatelessWidget {
 }
 
 class CustomTile extends StatelessWidget {
-  final Widget? title;
+  final Widget title;
   final Widget? subtitle;
   final Widget? leading;
   final Widget? trailing;
@@ -68,7 +68,7 @@ class CustomTile extends StatelessWidget {
 
   const CustomTile({
     Key? key,
-    this.title,
+    required this.title,
     this.subtitle,
     this.leading,
     this.trailing,

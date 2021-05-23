@@ -8,7 +8,7 @@ class MarketItem implements Indexable {
   final double diff24h;
   final int slots;
 
-  bool? isStarred = false;
+  bool isStarred = false;
 
   int? _slotPrice;
 
@@ -25,13 +25,13 @@ class MarketItem implements Indexable {
         slots = map['slots'],
         _slotPrice = null;
 
-  int? get slotPrice {
+  int get slotPrice {
     _slotPrice ??= (avgPrice24h / slots).round();
-    return _slotPrice;
+    return _slotPrice!;
   }
 
   @override
-  List<String?> get indexData => [
+  List<String> get indexData => [
         shortName,
         name,
       ];

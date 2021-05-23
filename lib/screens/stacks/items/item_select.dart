@@ -9,7 +9,7 @@ import '../../../providers/item.dart';
 import 'item_compare.dart';
 
 class ItemSelectScreenArguments {
-  final Query? query;
+  final Query query;
   final String? selectedID;
   final bool sortSections;
 
@@ -85,7 +85,7 @@ class _ItemSelectScreenState<T extends ExplorableItem>
 }
 
 class ItemSelectList<T extends Item> extends StatefulWidget {
-  final Query? query;
+  final Query query;
   final String? selectedID;
   final void Function(List<T>, HashSet<String>)? onChange;
 

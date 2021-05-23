@@ -13,7 +13,7 @@ import '../models/items/throwable.dart';
 import '../utils/index.dart';
 
 class ItemProvider<T extends Item> {
-  final Query? query;
+  final Query query;
   final bool indexing;
   final int tokenLength;
 
@@ -26,7 +26,7 @@ class ItemProvider<T extends Item> {
   late StreamController<List<T>?> _controller;
 
   factory ItemProvider(
-    Query? query, {
+    Query query, {
     bool indexing = false,
     int tokenLength = 3,
   }) {
@@ -83,7 +83,7 @@ class ItemProvider<T extends Item> {
   }
 
   void _onListen() {
-    _firebaseStream = query!.snapshots().listen(_onData, onError: _onError);
+    _firebaseStream = query.snapshots().listen(_onData, onError: _onError);
   }
 
   void _onCancel() {

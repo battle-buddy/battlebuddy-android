@@ -14,7 +14,7 @@ class MarketProvider {
   List<MarketItem> _items = [];
   late InvertedIndex _index;
 
-  bool? _showStarred = false;
+  bool _showStarred = false;
   String _searchTerm = '';
 
   final HashSet<int> _starred = HashSet();
@@ -47,7 +47,7 @@ class MarketProvider {
       final results = _index.search(_searchTerm);
 
       List<MarketItem> items;
-      if (_showStarred!) {
+      if (_showStarred) {
         items = results
             .where((e) => _starred.contains(e[0]))
             .map((e) => (_items[e[0]]))
@@ -58,9 +58,9 @@ class MarketProvider {
 
       _controller.add(items);
     } else {
-      if (_showStarred!) {
+      if (_showStarred) {
         final items = _starred.map((idx) => _items[idx]).toList(growable: false)
-          ..sort((a, b) => b.slotPrice!.compareTo(a.slotPrice!));
+          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
         _controller.add(items);
       } else {
         _controller.add(_items);
@@ -73,7 +73,7 @@ class MarketProvider {
         .expand((doc) =>
             doc.data().values.map((dynamic v) => MarketItem.fromMap(v)))
         .toList(growable: false)
-          ..sort((a, b) => b.slotPrice!.compareTo(a.slotPrice!));
+          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
 
     if (_starred.isEmpty) await _getCommittedStars();
 
@@ -151,7 +151,7 @@ class MarketProvider {
     }
   }
 
-  Future<void> filterByStars({bool? filter}) async {
+  Future<void> filterByStars({bool filter = false}) async {
     if (_showStarred == filter || _starred.isEmpty) return;
     _showStarred = filter;
     _sendData();

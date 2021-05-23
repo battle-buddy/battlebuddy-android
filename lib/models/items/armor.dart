@@ -9,22 +9,24 @@ enum ArmorType {
   faceCover,
   helmet,
   visor,
+  undefined,
 }
 
-extension Format on ArmorType? {
+extension Format on ArmorType {
   static const Map<ArmorType, String> _string = {
     ArmorType.attachment: 'attachment',
     ArmorType.body: 'body',
     ArmorType.faceCover: 'faceCover',
     ArmorType.helmet: 'helmet',
     ArmorType.visor: 'visor',
+    ArmorType.undefined: 'undefined',
   };
 
-  String? get string => _string[this!];
+  String get string => _string[this]!;
 }
 
-extension StringParsing on String? {
-  ArmorType? toArmorType() {
+extension StringParsing on String {
+  ArmorType toArmorType() {
     switch (this) {
       case 'attachment':
         return ArmorType.attachment;
@@ -36,14 +38,14 @@ extension StringParsing on String? {
         return ArmorType.helmet;
       case 'visor':
         return ArmorType.visor;
+      default:
+        return ArmorType.undefined;
     }
-
-    return null;
   }
 }
 
 class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
-  final ArmorType? armorType;
+  final ArmorType armorType;
   final ArmorProperties properties;
   final ArmorPenalties penalties;
   final List<String> blocking;
@@ -53,7 +55,7 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
         assert(map['armor'] != null),
         assert(map['penalties'] != null),
         assert(map['blocking'] != null),
-        armorType = (map['type'] as String?).toArmorType(),
+        armorType = (map['type'] as String).toArmorType(),
         properties = ArmorProperties.fromMap(map['armor']),
         penalties = ArmorPenalties.fromMap(map['penalties']),
         blocking = List<String>.from(map['blocking'], growable: false),
@@ -158,7 +160,7 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
   @override
   List get tableData => <dynamic>[
         shortName,
-        armorType.string!.asTitle,
+        armorType.string.asTitle,
         properties.armorClass,
         properties.durability,
       ];
