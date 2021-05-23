@@ -175,7 +175,7 @@ SplayTreeMap<String, int> toGridMap(List<Grid> grids) {
   for (final grid in grids) {
     final key = '${grid.width}x${grid.height}';
     var g = map[key] ?? 0;
-    map[key] = g++;
+    map[key] = g += 1;
   }
 
   return map;
