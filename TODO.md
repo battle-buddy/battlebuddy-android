@@ -2,7 +2,7 @@
 
 ## To fix
 
-- [ ] Price Check wrong starred indicator state [#2](https://github.com/battle-buddy/battlebuddy-android/issues/2)
+- [x] Price Check wrong starred indicator state [#2](https://github.com/battle-buddy/battlebuddy-android/issues/2)
 
 ## To implement
 
@@ -30,7 +30,7 @@
 
 ## To improve
 
-- [ ] Display value of ammo damage with more than one projectile
+- [x] Display value of ammo damage with more than one projectile
 - [ ] Comparison graph color computation
 - [ ] List opening performance
 - [ ] Item detail tile lists
