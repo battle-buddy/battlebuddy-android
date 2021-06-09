@@ -40,7 +40,7 @@ dependencies:
   # firebase_image: ^1.0.1
   firebase_image:
     git:
-      url: git@github.com:battle-buddy/firebase_image.git
+      url: https://github.com/battle-buddy/firebase_image.git
       ref: type-fixes
   percent_indicator: ^3.0.1
   url_launcher: ^6.0.2
