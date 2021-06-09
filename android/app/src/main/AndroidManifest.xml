@@ -1,6 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veritas.battlebuddy">
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
     
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
