@@ -27,12 +27,12 @@ dependencies:
   intl: ^0.17.0
 
   # Firebase
-  firebase_core: ^1.0.0
-  firebase_auth: ^1.0.0
-  cloud_firestore: ^2.2.0
-  firebase_storage: ^8.0.0
-  firebase_analytics: ^8.0.1
-  firebase_crashlytics: ^2.0.1
+  firebase_core: ^1.4.0
+  firebase_auth: ^3.0.1
+  cloud_firestore: ^2.4.0
+  firebase_storage: ^10.0.1
+  firebase_analytics: ^8.2.0
+  firebase_crashlytics: ^2.1.1
 
   package_info: '^2.0.0'
   shared_preferences: ^2.0.5
@@ -43,7 +43,7 @@ dependencies:
       url: https://github.com/battle-buddy/firebase_image.git
       ref: type-fixes
   percent_indicator: ^3.0.1
-  url_launcher: ^6.0.2
+  url_launcher: ^6.0.9
   in_app_review: ^2.0.0
   # youtube_player_flutter: ^7.0.0+7
 
@@ -52,7 +52,7 @@ dev_dependencies:
     sdk: flutter
 
   # effective_dart: ^1.2.4
-  pedantic: ^1.11.0
+  pedantic: ^1.11.1
   ffigen: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
