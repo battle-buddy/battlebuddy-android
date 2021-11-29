@@ -1,5 +1,4 @@
 ![Test](https://github.com/battle-buddy/battlebuddy-android/workflows/Test/badge.svg)
-[![style: pedantic](https://dart-lang.github.io/linter/lints/style-pedantic.svg)](https://pub.dev/packages/pedantic)
 
 # Battle Buddy Android
 
