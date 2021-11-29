@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.2.5+48
 
 environment:
-  sdk: '>=2.13.0 <3.0.0'
+  sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -29,10 +29,11 @@ dependencies:
   # Firebase
   firebase_core: ^1.4.0
   firebase_auth: ^3.0.1
-  cloud_firestore: ^2.4.0
+  cloud_firestore: ^3.1.0
   firebase_storage: ^10.0.1
   firebase_analytics: ^8.2.0
   firebase_crashlytics: ^2.1.1
+  firebase_app_check: ^0.0.3
 
   package_info: '^2.0.0'
   shared_preferences: ^2.0.5
@@ -51,9 +52,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # effective_dart: ^1.2.4
-  pedantic: ^1.11.1
-  ffigen: ^3.0.0
+  flutter_lints: ^1.0.4
+  ffigen: ^4.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
