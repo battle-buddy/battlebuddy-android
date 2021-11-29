@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -17,7 +16,6 @@ final FirebaseAnalytics analytics = FirebaseAnalytics();
 Future<void> initializeSession() async {
   try {
     await Firebase.initializeApp();
-    await FirebaseAppCheck.instance.activate();
     final creds = await FirebaseAuth.instance.signInAnonymously();
     await FirebaseFirestore.instance
         .collection('users')
