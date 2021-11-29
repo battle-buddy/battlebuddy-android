@@ -13,8 +13,7 @@ Future<void> loadMetadata() async {
         .get()
         .then((snapshot) => snapshot);
     metadata = Metadata.fromSnapshot(snapshot);
-  } on FirebaseException catch (e) {
-    print('Error while getting metadata: $e');
+  } on FirebaseException catch (_) {
     rethrow;
   }
 }
@@ -38,8 +37,7 @@ Future<void> loadAppInfo() async {
   try {
     final packageInfo = await PackageInfo.fromPlatform();
     appInfo = AppInfo.fromPackage(packageInfo);
-  } on Exception catch (e) {
-    print('Error while getting package info: $e');
+  } on Exception catch (_) {
     rethrow;
   }
 }

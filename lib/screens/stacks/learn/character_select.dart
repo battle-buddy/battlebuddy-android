@@ -8,7 +8,7 @@ class CharacterSelectionScreen extends StatelessWidget {
   static const String title = 'Select Character\u{2026}';
   static const String routeName = '/learn/charSelect';
 
-  CharacterSelectionScreen({Key? key}) : super(key: key);
+  const CharacterSelectionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,14 @@ class CharacterSelectionScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(title),
       ),
-      body: CharacterSelection(),
+      body: const CharacterSelection(),
     );
   }
 }
 
 class CharacterSelection extends StatefulWidget {
+  const CharacterSelection({Key? key}) : super(key: key);
+
   @override
   _CharacterSelectionState createState() => _CharacterSelectionState();
 }
@@ -35,7 +37,7 @@ class _CharacterSelectionState extends State<CharacterSelection> {
     final characters = snapshot.docs
         .map((doc) => Character.fromSnapshot(doc))
         .toList(growable: false)
-          ..sort((a, b) => a.index.compareTo(b.index));
+      ..sort((a, b) => a.index.compareTo(b.index));
 
     setState(() {
       _characters = characters;
@@ -64,7 +66,7 @@ class _CharacterSelectionState extends State<CharacterSelection> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_characters == null) {
       return const Center(child: CircularProgressIndicator());

@@ -60,11 +60,11 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
             ),
             DisplayProperty(
               name: 'Penetration',
-              value: '${penetration.toStringAsFixed(0)}',
+              value: penetration.toStringAsFixed(0),
             ),
             DisplayProperty(
               name: 'Damage',
-              value: '${(damage * projectiles).toStringAsFixed(0)}' +
+              value: (damage * projectiles).toStringAsFixed(0) +
                   (projectiles > 1
                       ? ' (${projectiles}x${damage.toStringAsFixed(0)})'
                       : ''),

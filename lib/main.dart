@@ -10,10 +10,12 @@ import 'screens/learn.dart';
 import 'screens/more.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   _AppState createState() => _AppState();
 }
@@ -53,7 +55,7 @@ class _AppState extends State<App> {
     if (_error != null) {
       return InitScreen(
         title: 'Error',
-        message: '${_error!.code}',
+        message: _error!.code,
       );
     }
 
@@ -70,7 +72,7 @@ class _AppState extends State<App> {
         ...LearnTab.routes,
         ...MoreTab.routes,
       },
-      home: MainNavigatorWidget(),
+      home: const MainNavigatorWidget(),
     );
 
     return app;
@@ -80,7 +82,7 @@ class _AppState extends State<App> {
 class MainNavigatorWidget extends StatefulWidget {
   final String? title;
 
-  MainNavigatorWidget({Key? key, this.title}) : super(key: key);
+  const MainNavigatorWidget({Key? key, this.title}) : super(key: key);
 
   @override
   MainNavigatorWidgetState createState() => MainNavigatorWidgetState();
@@ -131,7 +133,7 @@ class MainNavigatorWidgetState extends State<MainNavigatorWidget> {
             tabs: _widgetBottomTabs,
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: <Widget>[
             ItemsTab(),
             LearnTab(),

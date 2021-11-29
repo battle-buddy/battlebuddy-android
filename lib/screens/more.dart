@@ -20,12 +20,12 @@ class MoreTab extends StatelessWidget {
   );
 
   static final Map<String, Widget Function(BuildContext)> routes = {
-    VeritasScreen.routeName: (context) => VeritasScreen(),
-    AttributionScreen.routeName: (context) => AttributionScreen(),
-    TheTeamScreen.routeName: (context) => TheTeamScreen(),
+    VeritasScreen.routeName: (context) => const VeritasScreen(),
+    AttributionScreen.routeName: (context) => const AttributionScreen(),
+    TheTeamScreen.routeName: (context) => const TheTeamScreen(),
   };
 
-  MoreTab({Key? key}) : super(key: key);
+  const MoreTab({Key? key}) : super(key: key);
 
   Future<void> _onAppReview() async {
     if (!Platform.isAndroid) return;

@@ -154,7 +154,7 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_items == null) return const Center(child: CircularProgressIndicator());
 
@@ -388,7 +388,7 @@ class _SectionListState<T extends ExplorableSectionItem>
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_sections == null) {
       return const Center(child: CircularProgressIndicator());

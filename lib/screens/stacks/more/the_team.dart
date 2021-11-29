@@ -10,7 +10,7 @@ class TheTeamScreen extends StatelessWidget {
   static const String title = 'The Team';
   static const String routeName = '/more/theTeam';
 
-  TheTeamScreen({Key? key}) : super(key: key);
+  const TheTeamScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,16 @@ class TheTeamScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(title),
       ),
-      body: TeamList(),
+      body: const TeamList(),
     );
   }
 }
 
 class TeamList extends StatelessWidget {
-  TeamList({Key? key}) : super(key: key);
+  const TeamList({Key? key}) : super(key: key);
 
   Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    if (snapshot.hasError) return ErrorScreen();
+    if (snapshot.hasError) return const ErrorScreen();
 
     if (snapshot.connectionState == ConnectionState.waiting) {
       return const Center(child: CircularProgressIndicator());

@@ -73,7 +73,7 @@ class MarketProvider {
         .expand((doc) =>
             doc.data().values.map((dynamic v) => MarketItem.fromMap(v)))
         .toList(growable: false)
-          ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
+      ..sort((a, b) => b.slotPrice.compareTo(a.slotPrice));
 
     if (_starred.isEmpty) await _getCommittedStars();
 
@@ -83,7 +83,6 @@ class MarketProvider {
   }
 
   void _onError(Object error) {
-    print(error.toString());
     _controller.addError(error);
   }
 
@@ -120,9 +119,7 @@ class MarketProvider {
       for (final idx in _starred) {
         _items[idx].isStarred = true;
       }
-    } on Exception catch (e) {
-      print('Error while getting committed starred IDs: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   Future<void> _setCommittedStars() async {
@@ -130,8 +127,8 @@ class MarketProvider {
       final prefs = await _preferences!;
       final ids = _starred.map((idx) => _items[idx].id).toList(growable: false);
       await prefs.setStringList(_storageKey, ids);
-    } on Exception catch (e) {
-      print('Error while committing starred IDs: $e');
+    } on Exception catch (_) {
+      rethrow;
     }
   }
 

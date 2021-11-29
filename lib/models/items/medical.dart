@@ -112,7 +112,7 @@ class Medical extends Item implements ExplorableSectionItem {
           properties: effects.effects.entries
               .map(
                 (e) => DisplayProperty(
-                  name: '${e.key.asTitle}',
+                  name: e.key.asTitle,
                   value: e.value.removes!
                       ? (e.value.duration.inSeconds > 0
                           ? 'Supressed for ${e.value.duration.inMilliseconds / 1000}s'
@@ -133,7 +133,7 @@ class Medical extends Item implements ExplorableSectionItem {
                   properties: effects.skills!
                       .map(
                         (e) => DisplayProperty(
-                          name: '${e.name!.asTitle}',
+                          name: e.name!.asTitle,
                           value:
                               '${e.value!.truncate()} lvl. for ${e.duration.inMilliseconds / 1000}s',
                         ),

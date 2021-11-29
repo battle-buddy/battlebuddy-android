@@ -15,10 +15,6 @@ import 'models/items/item.dart';
 final FirebaseAnalytics analytics = FirebaseAnalytics();
 
 Future<void> initializeSession() async {
-  print('Initializing anonymous session...');
-
-  WidgetsFlutterBinding.ensureInitialized();
-
   try {
     await Firebase.initializeApp();
     await FirebaseAppCheck.instance.activate();
@@ -29,15 +25,12 @@ Future<void> initializeSession() async {
         .set(<String, dynamic>{'lastLogin': Timestamp.now()},
             SetOptions(merge: true));
 
-    print('Anonymous session initialized ${creds.user!.uid}');
-
     if (!kDebugMode) {
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
       await FirebaseCrashlytics.instance.setUserIdentifier(creds.user!.uid);
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     }
-  } on FirebaseException catch (e) {
-    print('Initialization failed: $e');
+  } on FirebaseException catch (_) {
     rethrow;
   }
 }

@@ -24,7 +24,7 @@ class ItemSelectScreen<T extends ExplorableItem> extends StatefulWidget {
   static const String title = 'Compare to\u{2026}';
   static const String routeName = '/items/select';
 
-  ItemSelectScreen({Key? key}) : super(key: key);
+  const ItemSelectScreen({Key? key}) : super(key: key);
 
   @override
   _ItemSelectScreenState<T> createState() => _ItemSelectScreenState<T>();
@@ -89,7 +89,7 @@ class ItemSelectList<T extends Item> extends StatefulWidget {
   final String? selectedID;
   final void Function(List<T>, HashSet<String>)? onChange;
 
-  ItemSelectList(
+  const ItemSelectList(
     this.query, {
     Key? key,
     this.selectedID,
@@ -161,7 +161,7 @@ class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_items == null) {
       return const Center(child: CircularProgressIndicator());
@@ -181,7 +181,7 @@ class ItemSectionSelectScreen<T extends ExplorableSectionItem>
   static const String title = 'Compare to\u{2026}';
   static const String routeName = '/items/sectionSelect';
 
-  ItemSectionSelectScreen({Key? key}) : super(key: key);
+  const ItemSectionSelectScreen({Key? key}) : super(key: key);
 
   @override
   _ItemSectionSelectScreenState<T> createState() =>
@@ -249,7 +249,7 @@ class ItemSelectSectionList<T extends SectionView> extends StatefulWidget {
   final String? selectedID;
   final void Function(List<T>, HashSet<String>)? onChange;
 
-  ItemSelectSectionList(
+  const ItemSelectSectionList(
     this.query, {
     Key? key,
     this.sortSections = false,

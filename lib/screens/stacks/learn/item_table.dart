@@ -24,7 +24,7 @@ class ItemTableScreenArguments {
 class ItemTableScreen<T extends TableView> extends StatefulWidget {
   static const String routeName = '/learn/itemTable';
 
-  ItemTableScreen({Key? key}) : super(key: key);
+  const ItemTableScreen({Key? key}) : super(key: key);
 
   @override
   _ItemTableScreenState<T> createState() => _ItemTableScreenState<T>();
@@ -117,7 +117,7 @@ class ItemDualTableScreen<T1 extends TableView, T2 extends TableView>
     extends StatefulWidget {
   static const String routeName = '/learn/itemDualTable';
 
-  ItemDualTableScreen({Key? key}) : super(key: key);
+  const ItemDualTableScreen({Key? key}) : super(key: key);
 
   @override
   _ItemDualTableScreenState<T1, T2> createState() =>
@@ -338,7 +338,7 @@ class _ItemTableItemTableState<T extends TableView>
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_items == null) return const Center(child: CircularProgressIndicator());
 

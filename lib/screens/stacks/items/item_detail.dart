@@ -24,7 +24,7 @@ class ItemDetailScreenArguments<T extends ExplorableItem> {
 class ItemDetailScreen<T extends ExplorableItem> extends StatelessWidget {
   static const String routeName = '/items/detail';
 
-  ItemDetailScreen({Key? key}) : super(key: key);
+  const ItemDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class ItemDetail<T extends ExplorableItem> extends StatefulWidget {
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
-  ItemDetail({Key? key, required this.item}) : super(key: key);
+  const ItemDetail({Key? key, required this.item}) : super(key: key);
 
   @override
   _ItemDetailState<T> createState() => _ItemDetailState<T>();
@@ -90,39 +90,39 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
 
     switch (widget.item.type) {
       case ItemType.ammo:
-        builder = (context) => ItemSectionSelectScreen<Ammunition>();
+        builder = (context) => const ItemSectionSelectScreen<Ammunition>();
         break;
       case ItemType.bodyArmor:
-        builder = (context) => ItemSectionSelectScreen<Armor>();
+        builder = (context) => const ItemSectionSelectScreen<Armor>();
         break;
       case ItemType.chestRig:
-        builder = (context) => ItemSectionSelectScreen<ChestRig>();
+        builder = (context) => const ItemSectionSelectScreen<ChestRig>();
         break;
       case ItemType.firearm:
-        builder = (context) => ItemSectionSelectScreen<Firearm>();
+        builder = (context) => const ItemSectionSelectScreen<Firearm>();
         break;
       case ItemType.helmet:
-        builder = (context) => ItemSectionSelectScreen<Armor>();
+        builder = (context) => const ItemSectionSelectScreen<Armor>();
         break;
       case ItemType.medical:
-        builder = (context) => ItemSectionSelectScreen<Medical>();
+        builder = (context) => const ItemSectionSelectScreen<Medical>();
         break;
       case ItemType.melee:
-        builder = (context) => ItemSelectScreen<Melee>();
+        builder = (context) => const ItemSelectScreen<Melee>();
         arguments = ItemSelectScreenArguments(
           query: widget.item.type.getQuery(null),
           selectedID: widget.item.id,
         );
         break;
       case ItemType.throwable:
-        builder = (context) => ItemSectionSelectScreen<Throwable>();
+        builder = (context) => const ItemSectionSelectScreen<Throwable>();
         break;
       case ItemType.armor:
       case ItemType.attachment:
-        builder = (context) => ItemSectionSelectScreen<Armor>();
+        builder = (context) => const ItemSectionSelectScreen<Armor>();
         break;
       default:
-        throw ErrorScreen();
+        throw const ErrorScreen();
     }
 
     return Navigator.push<void>(

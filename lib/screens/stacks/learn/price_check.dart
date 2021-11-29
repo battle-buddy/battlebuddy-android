@@ -17,7 +17,7 @@ class PriceCheckScreen extends StatefulWidget {
   static const String title = 'Price Check';
   static const String routeName = '/learn/priceCheck';
 
-  PriceCheckScreen({Key? key}) : super(key: key);
+  const PriceCheckScreen({Key? key}) : super(key: key);
 
   @override
   _PriceCheckScreenState createState() => _PriceCheckScreenState();
@@ -156,7 +156,7 @@ class _PriceCheckListState extends State<PriceCheckList> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_items == null) return const Center(child: CircularProgressIndicator());
 

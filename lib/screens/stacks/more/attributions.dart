@@ -9,7 +9,7 @@ class AttributionScreen extends StatelessWidget {
   static const String title = 'Attributions';
   static const String routeName = '/more/attributions';
 
-  AttributionScreen({Key? key}) : super(key: key);
+  const AttributionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +17,16 @@ class AttributionScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(title),
       ),
-      body: AttributionList(),
+      body: const AttributionList(),
     );
   }
 }
 
 class AttributionList extends StatelessWidget {
-  AttributionList({Key? key}) : super(key: key);
+  const AttributionList({Key? key}) : super(key: key);
 
   Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    if (snapshot.hasError) return ErrorScreen();
+    if (snapshot.hasError) return const ErrorScreen();
 
     if (snapshot.connectionState == ConnectionState.waiting) {
       return const Center(child: CircularProgressIndicator());

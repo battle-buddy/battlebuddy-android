@@ -365,7 +365,7 @@ abstract class ExplorableSectionItem implements ExplorableItem, SectionView {}
 class Speed {
   final double metersPerSecond;
 
-  Speed({double metersPerSecond = 0.0}) : metersPerSecond = metersPerSecond;
+  Speed({this.metersPerSecond = 0.0});
 
   @override
   String toString() => '$metersPerSecond m/s';
@@ -374,7 +374,7 @@ class Speed {
 class Length {
   final double meter;
 
-  Length({double meter = 0.0}) : meter = meter;
+  Length({this.meter = 0.0});
 
   @override
   String toString() => '$meter m';

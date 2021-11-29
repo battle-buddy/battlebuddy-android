@@ -21,7 +21,7 @@ class DamageCalculatorScreen extends StatelessWidget {
   static const String title = 'Damage Calculator';
   static const String routeName = '/learn/damageCalc';
 
-  DamageCalculatorScreen({Key? key}) : super(key: key);
+  const DamageCalculatorScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
     final item = await Navigator.push<Ammunition>(
       context,
       MaterialPageRoute(
-        builder: (context) => ItemTableScreen<Ammunition>(),
+        builder: (context) => const ItemTableScreen<Ammunition>(),
         settings: RouteSettings(
           name: ItemDualTableScreen.routeName,
           arguments: ItemTableScreenArguments(
@@ -169,7 +169,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_health == null) {
       return const Center(child: CircularProgressIndicator());

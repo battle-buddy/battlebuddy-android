@@ -19,18 +19,21 @@ class LearnTab extends StatelessWidget {
   );
 
   static final Map<String, Widget Function(BuildContext)> routes = {
-    PriceCheckScreen.routeName: (context) => PriceCheckScreen(),
-    PenetrationChanceScreen.routeName: (context) => PenetrationChanceScreen(),
-    DamageCalculatorScreen.routeName: (context) => DamageCalculatorScreen(),
-    BallisticsScreen.routeName: (context) => BallisticsScreen(),
+    PriceCheckScreen.routeName: (context) => const PriceCheckScreen(),
+    PenetrationChanceScreen.routeName: (context) =>
+        const PenetrationChanceScreen(),
+    DamageCalculatorScreen.routeName: (context) =>
+        const DamageCalculatorScreen(),
+    BallisticsScreen.routeName: (context) => const BallisticsScreen(),
     '${ItemTableScreen.routeName}/ammunition': (context) =>
-        ItemTableScreen<Ammunition>(),
+        const ItemTableScreen<Ammunition>(),
     '${ItemDualTableScreen.routeName}/armored': (context) =>
-        ItemDualTableScreen<Armor, ChestRig>(),
-    CharacterSelectionScreen.routeName: (context) => CharacterSelectionScreen(),
+        const ItemDualTableScreen<Armor, ChestRig>(),
+    CharacterSelectionScreen.routeName: (context) =>
+        const CharacterSelectionScreen(),
   };
 
-  LearnTab({Key? key}) : super(key: key);
+  const LearnTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

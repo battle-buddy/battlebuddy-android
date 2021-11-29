@@ -124,7 +124,7 @@ class _ItemComparisonListState<T extends ComparisonView>
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_sections == null) {
       return const Center(child: CircularProgressIndicator());

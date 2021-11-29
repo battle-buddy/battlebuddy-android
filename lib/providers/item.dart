@@ -70,7 +70,6 @@ class ItemProvider<T extends Item> {
   }
 
   void _onError(Object error) {
-    print(error.toString());
     _controller.addError(error);
   }
 
@@ -182,7 +181,6 @@ class ItemSectionProvider<T extends SectionView> {
   }
 
   void _onError(Object error) {
-    print(error.toString());
     _controller.addError(error);
   }
 

@@ -13,7 +13,7 @@ class BallisticsScreen extends StatelessWidget {
   static const String title = 'Ballistics';
   static const String routeName = '/learn/ballistics';
 
-  BallisticsScreen({Key? key}) : super(key: key);
+  const BallisticsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,14 @@ class BallisticsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(title),
       ),
-      body: BallisticsArticle(),
+      body: const BallisticsArticle(),
     );
   }
 }
 
 class BallisticsArticle extends StatelessWidget {
+  const BallisticsArticle({Key? key}) : super(key: key);
+
   Future<Map<String, String>> _loadText(BuildContext context) async {
     final data = await DefaultAssetBundle.of(context)
         .loadString('assets/texts/ballistics.json');
@@ -60,7 +62,7 @@ class BallisticsArticle extends StatelessWidget {
 
   Widget _builder(
       BuildContext context, AsyncSnapshot<Map<String, String>> snapshot) {
-    if (snapshot.hasError) return ErrorScreen();
+    if (snapshot.hasError) return const ErrorScreen();
 
     if (snapshot.connectionState == ConnectionState.waiting) {
       return const Center(child: CircularProgressIndicator());

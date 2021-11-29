@@ -20,7 +20,7 @@ class PenetrationChanceScreen extends StatelessWidget {
   static const String title = 'Penetration Chance';
   static const String routeName = '/learn/penChance';
 
-  PenetrationChanceScreen({Key? key}) : super(key: key);
+  const PenetrationChanceScreen({Key? key}) : super(key: key);
 
   Future<void> _onPressHelp(BuildContext context) async {
     return showDialog(
@@ -129,7 +129,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
     final item = await Navigator.push<Ammunition>(
       context,
       MaterialPageRoute(
-        builder: (context) => ItemTableScreen<Ammunition>(),
+        builder: (context) => const ItemTableScreen<Ammunition>(),
         settings: RouteSettings(
           name: ItemDualTableScreen.routeName,
           arguments: ItemTableScreenArguments(
@@ -154,7 +154,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
     final item = await Navigator.push<Armored>(
       context,
       MaterialPageRoute(
-        builder: (context) => ItemDualTableScreen<Armor, ChestRig>(),
+        builder: (context) => const ItemDualTableScreen<Armor, ChestRig>(),
         settings: RouteSettings(
           name: ItemDualTableScreen.routeName,
           arguments: ItemDualTableScreenArguments(
