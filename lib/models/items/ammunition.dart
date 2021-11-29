@@ -13,7 +13,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
   final bool isTracer;
   final bool isSubsonic;
   final WeaponModifier modifier;
-  // final GrenadeProperties grenadeProperties;
+  final GrenadeProperties? grenadeProperties;
 
   Ammunition.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
       : assert(map['caliber'] != null),
@@ -36,7 +36,9 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         isTracer = map['tracer'],
         isSubsonic = map['subsonic'],
         modifier = WeaponModifier.fromMap(map['weaponModifier']),
-        // grenadeProperties = GrenadeProperties.fromMap(map['grenadeProps']),
+        grenadeProperties = map['grenadeProps'] != null
+            ? GrenadeProperties.fromMap(map['grenadeProps'])
+            : null,
         super.fromMap(map, reference: reference);
 
   Ammunition.fromSnapshot(DocumentSnapshot snapshot)
@@ -91,6 +93,29 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
             ),
           ],
         ),
+        ...grenadeProperties != null
+            ? [
+                PropertySection(
+                  title: 'Grenade Properties',
+                  properties: <DisplayProperty>[
+                    DisplayProperty(
+                      name: 'Delay',
+                      value:
+                          '${grenadeProperties!.delay.inMilliseconds / 1000} sec.',
+                    ),
+                    DisplayProperty(
+                      name: 'Explosion Radius',
+                      value:
+                          '${grenadeProperties!.minRadius.meter} - ${grenadeProperties!.maxRadius.meter} m',
+                    ),
+                    DisplayProperty(
+                      name: 'Fragmentation Count',
+                      value: '${grenadeProperties!.fragCount}',
+                    ),
+                  ],
+                )
+              ]
+            : [],
         ...modifier.accuracy != 0 || modifier.recoil != 0
             ? [
                 PropertySection(
@@ -165,19 +190,20 @@ class WeaponModifier {
         recoil = map['recoil'].toDouble();
 }
 
-// class GrenadeProperties {
-//   final Duration delay;
-//   final int fragmentCount;
-//   final double minRadius;
-//   final double maxRadius;
+class GrenadeProperties {
+  final Duration delay;
+  final int fragCount;
+  final Length minRadius;
+  final Length maxRadius;
 
-//   GrenadeProperties.fromMap(Map<String, dynamic> map)
-//       : assert(map['delay'] != null),
-//         assert(map['fragCount'] != null),
-//         assert(map['minRadius'] != null),
-//         assert(map['maxRadius'] != null),
-//         delay = Duration(milliseconds: (map['delay'] * 1000).toInt()),
-//         fragmentCount = map['fragCount'].toInt(),
-//         minRadius = map['minRadius'].toDouble(),
-//         maxRadius = map['maxRadius'].toDouble();
-// }
+  GrenadeProperties.fromMap(Map<String, dynamic> map)
+      : assert(map['delay'] != null),
+        assert(map['fragCount'] != null),
+        assert(map['minRadius'] != null),
+        assert(map['maxRadius'] != null),
+        delay =
+            Duration(milliseconds: (map['delay'].toDouble() * 1000).toInt()),
+        fragCount = map['fragCount'].toInt(),
+        minRadius = Length(meter: map['minRadius'].toDouble()),
+        maxRadius = Length(meter: map['maxRadius'].toDouble());
+}
