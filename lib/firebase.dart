@@ -11,12 +11,13 @@ import 'package:flutter/widgets.dart';
 
 import 'models/items/item.dart';
 
-final FirebaseAnalytics analytics = FirebaseAnalytics();
+late FirebaseAnalytics analytics;
 
 Future<void> initializeSession() async {
   try {
     await Firebase.initializeApp();
     final creds = await FirebaseAuth.instance.signInAnonymously();
+    analytics = FirebaseAnalytics.instance;
     await FirebaseFirestore.instance
         .collection('users')
         .doc(creds.user!.uid)
