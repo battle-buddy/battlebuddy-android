@@ -20,6 +20,9 @@ enum FireMode {
   single,
   burst,
   full,
+  double,
+  doublet,
+  undefined,
 }
 
 extension FireModeExt on FireMode {
@@ -27,6 +30,9 @@ extension FireModeExt on FireMode {
     FireMode.single: 'Single',
     FireMode.burst: 'Burst',
     FireMode.full: 'Full',
+    FireMode.doublet: 'Doublet',
+    FireMode.double: 'Double',
+    FireMode.undefined: 'Unknown',
   };
 
   String? get displayName => _displayName[this];
@@ -68,9 +74,13 @@ extension StringParsing on String {
         return FireMode.burst;
       case 'full':
         return FireMode.full;
+      case 'doublet':
+        return FireMode.doublet;
+      case 'double':
+        return FireMode.double;
     }
 
-    return null;
+    return FireMode.undefined;
   }
 }
 
