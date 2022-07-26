@@ -20,7 +20,7 @@ jobs:
           java-package: jdk
 
       - name: Flutter action
-        uses: subosito/flutter-action@v2.5.0
+        uses: subosito/flutter-action@v2.6.1
 
       - run: |
               dart --version
