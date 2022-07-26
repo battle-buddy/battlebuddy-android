@@ -60,7 +60,7 @@ class BallisticsEngine {
 
   late final _create_armorPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Armor> Function(ffi.Int32, ffi.Double, ffi.Double,
+          ffi.Pointer<Armor> Function(ffi.Int, ffi.Double, ffi.Double,
               ffi.Double, ffi.Double)>>('create_armor');
   late final _create_armor = _create_armorPtr.asFunction<
       ffi.Pointer<Armor> Function(int, double, double, double, double)>();
@@ -175,9 +175,8 @@ class BallisticsEngine {
   }
 
   late final _health_get_person_alivePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<HealthCalculator>)>>('health_get_person_alive');
+          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<HealthCalculator>)>>(
+      'health_get_person_alive');
   late final _health_get_person_alive = _health_get_person_alivePtr
       .asFunction<int Function(ffi.Pointer<HealthCalculator>)>();
 
@@ -195,7 +194,7 @@ class BallisticsEngine {
   late final _health_impact_on_zonePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<HealthCalculator> Function(ffi.Pointer<HealthCalculator>,
-              ffi.Uint32)>>('health_impact_on_zone');
+              ffi.UnsignedInt)>>('health_impact_on_zone');
   late final _health_impact_on_zone = _health_impact_on_zonePtr.asFunction<
       ffi.Pointer<HealthCalculator> Function(
           ffi.Pointer<HealthCalculator>, int)>();
