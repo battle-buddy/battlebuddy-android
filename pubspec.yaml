@@ -28,9 +28,9 @@ dependencies:
 
   # Firebase
   firebase_core: ^1.20.0
-  firebase_auth: ^3.5.1
+  firebase_auth: ^3.6.0
   cloud_firestore: ^3.4.1
-  firebase_storage: ^10.3.3
+  firebase_storage: ^10.3.4
   firebase_analytics: ^9.3.0
   firebase_crashlytics: ^2.8.6
 
@@ -41,7 +41,7 @@ dependencies:
   firebase_image:
     git:
       url: https://github.com/battle-buddy/firebase_image.git
-      ref: type-fixes
+      ref: flutter-3.0
   percent_indicator: ^4.2.2
   url_launcher: ^6.1.5
   in_app_review: ^2.0.0
