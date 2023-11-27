@@ -218,7 +218,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
         Text(
           PriceCheckItem._currencyFormat.format(widget.item.avgPrice24h),
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 fontSize: 21,
               ),
         ),
@@ -254,13 +254,22 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = Theme.of(context).accentIconTheme.color;
+    final iconColor = Theme.of(context).iconTheme.color;
 
     return Container(
       height: 100,
-      child: FlatButton(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-        color: Colors.black54,
+      child: TextButton(
+        // TODO: Fix this
+        // padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+        // color: Colors.black54,
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+        ),
         onPressed: _onPress,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

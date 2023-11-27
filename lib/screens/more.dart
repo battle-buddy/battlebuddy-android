@@ -45,8 +45,8 @@ class MoreTab extends StatelessWidget {
             CustomTile(
               title: const Text('App Version'),
               leading: FaIcon(
-                FontAwesomeIcons.draftingCompass,
-                color: Theme.of(context).accentColor,
+                FontAwesomeIcons.compassDrafting,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               subtitle: Text(
@@ -56,7 +56,7 @@ class MoreTab extends StatelessWidget {
               title: const Text('Developed by Veritas'),
               leading: ImageIcon(
                 const AssetImage('assets/images/icons/veritas.png'),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -67,7 +67,7 @@ class MoreTab extends StatelessWidget {
               title: const Text('Attributions'),
               leading: FaIcon(
                 FontAwesomeIcons.solidStar,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -85,7 +85,7 @@ class MoreTab extends StatelessWidget {
               subtitle: const Text('Battle Buddies have joined the fight!'),
               leading: FaIcon(
                 FontAwesomeIcons.gamepad,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
             ),
@@ -97,7 +97,7 @@ class MoreTab extends StatelessWidget {
               subtitle: const Text('days since last wipe...'),
               leading: FaIcon(
                 FontAwesomeIcons.toiletPaper,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
             ),
@@ -105,7 +105,7 @@ class MoreTab extends StatelessWidget {
               title: const Text('Battlestate Games Limited'),
               leading: FaIcon(
                 FontAwesomeIcons.twitter,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -121,7 +121,7 @@ class MoreTab extends StatelessWidget {
               subtitle: const Text('Join our discord!'),
               leading: FaIcon(
                 FontAwesomeIcons.discord,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -131,7 +131,7 @@ class MoreTab extends StatelessWidget {
               title: const Text('Rate the app'),
               leading: Icon(
                 Icons.rate_review,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -141,7 +141,7 @@ class MoreTab extends StatelessWidget {
               title: const Text('View on GitHub'),
               leading: FaIcon(
                 FontAwesomeIcons.github,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -152,7 +152,7 @@ class MoreTab extends StatelessWidget {
               title: const Text('Check Out The Team'),
               leading: ImageIcon(
                 const AssetImage('assets/images/icons/the_team.png'),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),

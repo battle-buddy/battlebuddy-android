@@ -365,8 +365,14 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                     horizontal: 10,
                     vertical: 20,
                   ),
-                  child: FlatButton(
-                    color: Theme.of(context).accentColor,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
                     onPressed: () => _onTabAmmunition(context),
                     child: Text(_ammo?.shortName ?? 'Select Ammo'),
                   ),
@@ -375,7 +381,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: IconButton(
-                    color: Theme.of(context).accentColor,
+                    // color: Theme.of(context).colorScheme.secondary,
                     iconSize: 36,
                     icon: const Icon(Icons.refresh),
                     onPressed: _health != null &&

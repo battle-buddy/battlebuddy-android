@@ -8,7 +8,7 @@ class ErrorScreen extends StatelessWidget {
     return Center(
       child: Icon(
         Icons.error_outline,
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
         size: 40,
       ),
     );

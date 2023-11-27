@@ -11,23 +11,22 @@ class AppTheme {
   static ThemeData get themeData {
     return ThemeData(
       colorScheme: const ColorScheme.dark(
-        primary: accent,
+        primary: primary,
         secondary: accent,
+        background: primary,
       ),
       primaryColor: primary,
-      accentColor: accent,
       scaffoldBackgroundColor: primary,
-      dividerColor: Colors.grey[400],
+      dividerTheme: const DividerThemeData(
+        thickness: 0.5,
+        color: Colors.grey,
+      ),
       sliderTheme: SliderThemeData(
         activeTrackColor: accent,
         inactiveTrackColor: secondary,
         thumbColor: accent,
         overlayColor: accent.withOpacity(0.2),
       ),
-      accentIconTheme: const IconThemeData(
-        color: accent,
-      ),
-      buttonColor: accent,
       appBarTheme: const AppBarTheme(
         elevation: 0,
         color: primary,
@@ -37,13 +36,9 @@ class AppTheme {
         actionsIconTheme: IconThemeData(
           color: accent,
         ),
-        textTheme: TextTheme(
-          headline6: TextStyle(
-            color: accent,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      ),
+      iconTheme: const IconThemeData(
+        color: accent,
       ),
       tabBarTheme: TabBarTheme(
         labelColor: accent,
@@ -57,7 +52,6 @@ class AppTheme {
           fontWeight: FontWeight.w500,
         ),
       ),
-      bottomAppBarColor: secondary,
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
         TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),

@@ -64,15 +64,21 @@ class _ItemSelectScreenState<T extends ExplorableItem>
       ),
       bottomNavigationBar: Container(
         height: 45,
-        child: FlatButton.icon(
+        child: TextButton.icon(
+          style: TextButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            disabledBackgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
           label: const Text('Compare'),
-          color: Theme.of(context).accentColor,
           icon: const Icon(Icons.navigate_next),
           onPressed:
               _compareArgs != null && _compareArgs!.selectedIDs.length > 1
                   ? _onNext
                   : null,
-          shape: Border.all(style: BorderStyle.none),
         ),
       ),
       body: ItemSelectList<T>(
@@ -222,15 +228,21 @@ class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
       ),
       bottomNavigationBar: Container(
         height: 45,
-        child: FlatButton.icon(
+        child: TextButton.icon(
+          style: TextButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            disabledBackgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
           label: const Text('Compare'),
-          color: Theme.of(context).accentColor,
           icon: const Icon(Icons.navigate_next),
           onPressed:
               _compareArgs != null && _compareArgs!.selectedIDs.length > 1
                   ? _onNext
                   : null,
-          shape: Border.all(style: BorderStyle.none),
         ),
       ),
       body: ItemSelectSectionList<T>(
@@ -419,7 +431,7 @@ class _ItemTileState extends State<ItemTile> {
         ),
         value: _isSelected,
         onChanged: onChanged,
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Theme.of(context).colorScheme.secondary,
       ),
     );
   }

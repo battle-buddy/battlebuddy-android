@@ -34,7 +34,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.twitch,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('Watch Live on Twitch'),
@@ -44,7 +44,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.youtube,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('Watch on YouTube'),
@@ -55,7 +55,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.twitter,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('Stay Up to Date'),
@@ -65,7 +65,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.discord,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('Join our Community Discord'),
@@ -75,7 +75,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.instagram,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('Media on Instagram'),
@@ -85,7 +85,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: ImageIcon(
                 const AssetImage('assets/images/icons/veritas.png'),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('More about Veritas'),
@@ -100,7 +100,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.spotify,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               title: const Text('Listen on Spotify'),
@@ -111,7 +111,7 @@ class VeritasInfo extends StatelessWidget {
             CustomTile(
               leading: FaIcon(
                 FontAwesomeIcons.soundcloud,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               title: const Text('Listen on Soundcloud'),

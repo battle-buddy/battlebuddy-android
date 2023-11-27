@@ -319,6 +319,8 @@ class _SelectionCardState extends State<SelectionCard> {
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      color: Colors.grey[900],
+      shadowColor: Colors.black,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -334,7 +336,7 @@ class _SelectionCardState extends State<SelectionCard> {
           ),
           Text(
             widget.title,
-            style: Theme.of(context).textTheme.button!.copyWith(
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
               fontSize: 18,
               shadows: const <Shadow>[
                 Shadow(blurRadius: 5),

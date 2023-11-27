@@ -360,7 +360,7 @@ class _SectionListState<T extends ExplorableSectionItem>
                     icon: const Icon(Icons.compare_arrows),
                     iconSize: 32,
                     splashRadius: 24,
-                    color: Theme.of(context).accentIconTheme.color,
+                    color: Theme.of(context).iconTheme.color,
                     onPressed: section.items.length > 1
                         ? () => _onCompare(index)
                         : null,

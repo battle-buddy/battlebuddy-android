@@ -18,30 +18,26 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.2.9+52
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  intl: ^0.17.0
+  intl: ^0.18.1
 
   # Firebase
-  firebase_core: ^1.24.0
-  firebase_auth: ^3.11.2
-  cloud_firestore: ^3.5.1
-  firebase_storage: ^10.3.4
-  firebase_analytics: ^9.3.8
-  firebase_crashlytics: ^2.9.0
+  firebase_core: ^2.23.0
+  firebase_auth: ^4.14.1
+  cloud_firestore: ^4.13.2
+  firebase_storage: ^11.5.2
+  firebase_analytics: ^10.7.1
+  firebase_crashlytics: ^3.4.5
 
-  package_info: ^2.0.2
+  package_info_plus: ^5.0.1
   shared_preferences: ^2.0.15
   font_awesome_flutter: ^10.2.1
-  # firebase_image: ^1.0.1
-  firebase_image:
-    git:
-      url: https://github.com/battle-buddy/firebase_image.git
-      ref: flutter-3.0
+  firebase_cached_image: ^0.4.5
   percent_indicator: ^4.2.2
   url_launcher: ^6.1.6
   in_app_review: ^2.0.4
@@ -51,8 +47,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
-  ffigen: ^7.1.0
+  flutter_lints: ^3.0.1
+  ffigen: ^10.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

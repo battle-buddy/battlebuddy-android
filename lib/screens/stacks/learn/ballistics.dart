@@ -87,10 +87,8 @@ class BallisticsArticle extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Text(
                     'Veritas - 13/07/2019',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Theme.of(context).accentColor),
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                 ),
                 Container(

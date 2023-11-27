@@ -110,7 +110,7 @@ class _ItemComparisonListState<T extends ComparisonView>
   }
 
   List<Color> _calculateColorRange(BuildContext context, int length) {
-    final color = HSLColor.fromColor(Theme.of(context).accentColor)
+    final color = HSLColor.fromColor(Theme.of(context).colorScheme.secondary)
         .withHue(354)
         .toColor();
     final redValue = (255 / length).round();
