@@ -6,11 +6,11 @@ class TileSectionList extends StatelessWidget {
   final Color? color;
 
   const TileSectionList({
-    Key? key,
+    super.key,
     required this.title,
     required this.tiles,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class TileSectionList extends StatelessWidget {
               title,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle2!
+                  .titleSmall!
                   .copyWith(color: Colors.grey[400]),
             ),
           ),
@@ -41,10 +41,10 @@ class CustomTileList extends StatelessWidget {
   final Color? color;
 
   const CustomTileList({
-    Key? key,
+    super.key,
     required this.tiles,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +67,14 @@ class CustomTile extends StatelessWidget {
   final void Function()? onTab;
 
   const CustomTile({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     this.leading,
     this.trailing,
     this.color = Colors.black45,
     this.onTab,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

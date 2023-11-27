@@ -15,7 +15,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
   final WeaponModifier modifier;
   final GrenadeProperties? grenadeProperties;
 
-  Ammunition.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  Ammunition.fromMap(super.map, {super.reference})
       : assert(map['caliber'] != null),
         assert(map['penetration'] != null),
         assert(map['damage'] != null),
@@ -39,7 +39,7 @@ class Ammunition extends Item implements ExplorableSectionItem, TableView {
         grenadeProperties = map['grenadeProps'] != null
             ? GrenadeProperties.fromMap(map['grenadeProps'])
             : null,
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   Ammunition.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,

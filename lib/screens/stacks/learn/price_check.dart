@@ -17,7 +17,7 @@ class PriceCheckScreen extends StatefulWidget {
   static const String title = 'Price Check';
   static const String routeName = '/learn/priceCheck';
 
-  const PriceCheckScreen({Key? key}) : super(key: key);
+  const PriceCheckScreen({super.key});
 
   @override
   _PriceCheckScreenState createState() => _PriceCheckScreenState();
@@ -108,8 +108,7 @@ class PriceCheckList extends StatefulWidget {
   final Stream<List<MarketItem>> stream;
   final Function(MarketItem item)? onPress;
 
-  const PriceCheckList({Key? key, required this.stream, this.onPress})
-      : super(key: key);
+  const PriceCheckList({super.key, required this.stream, this.onPress});
 
   @override
   _PriceCheckListState createState() => _PriceCheckListState();
@@ -176,10 +175,10 @@ class PriceCheckItem extends StatefulWidget {
       NumberFormat.currency(name: 'RUB', symbol: '\u{20BD}', decimalDigits: 0);
 
   const PriceCheckItem({
-    Key? key,
+    super.key,
     required this.item,
     required this.onPress,
-  }) : super(key: key);
+  });
 
   @override
   _PriceCheckItemState createState() => _PriceCheckItemState();
@@ -217,7 +216,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
       children: <Widget>[
         Text(
           PriceCheckItem._currencyFormat.format(widget.item.avgPrice24h),
-          style: Theme.of(context).textTheme.subtitle2!.copyWith(
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.secondary,
                 fontSize: 21,
               ),
@@ -226,10 +225,10 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
           padding: const EdgeInsets.only(top: 1, bottom: 3),
           child: Text(
             '${PriceCheckItem._currencyFormat.format(widget.item.slotPrice)} / slot',
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .color!
                       .withOpacity(0.8),
                   fontSize: 16,
@@ -240,7 +239,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
           widget.item.diff24h != 0
               ? '${widget.item.diff24h}% ${(widget.item.diff24h.isNegative ? '\u{25BC}' : '\u{25B2}')}'
               : '\u{2014}',
-          style: Theme.of(context).textTheme.bodyText2!.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: widget.item.diff24h.isNegative
                     ? Colors.red
                     : (widget.item.diff24h == 0
@@ -256,7 +255,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
   Widget build(BuildContext context) {
     final iconColor = Theme.of(context).iconTheme.color;
 
-    return Container(
+    return SizedBox(
       height: 100,
       child: TextButton(
         // TODO: Fix this
@@ -288,7 +287,7 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
                   softWrap: true,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontSize: 18,
                       ),
                 ),

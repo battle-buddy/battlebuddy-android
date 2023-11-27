@@ -24,7 +24,7 @@ class ItemTableScreenArguments {
 class ItemTableScreen<T extends TableView> extends StatefulWidget {
   static const String routeName = '/learn/itemTable';
 
-  const ItemTableScreen({Key? key}) : super(key: key);
+  const ItemTableScreen({super.key});
 
   @override
   _ItemTableScreenState<T> createState() => _ItemTableScreenState<T>();
@@ -117,7 +117,7 @@ class ItemDualTableScreen<T1 extends TableView, T2 extends TableView>
     extends StatefulWidget {
   static const String routeName = '/learn/itemDualTable';
 
-  const ItemDualTableScreen({Key? key}) : super(key: key);
+  const ItemDualTableScreen({super.key});
 
   @override
   _ItemDualTableScreenState<T1, T2> createState() =>
@@ -272,7 +272,7 @@ class _ItemDualTableScreenState<T1 extends TableView, T2 extends TableView>
 class ItemTable<T extends TableView> extends StatefulWidget {
   final Stream<List<T>?>? stream;
 
-  const ItemTable(this.stream, {Key? key}) : super(key: key);
+  const ItemTable(this.stream, {super.key});
 
   @override
   _ItemTableItemTableState<T> createState() => _ItemTableItemTableState<T>();
@@ -365,7 +365,7 @@ class _ItemTableItemTableState<T extends TableView>
                         ),
                         child: Text(
                           header.value,
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: Theme.of(context).textTheme.titleSmall,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),

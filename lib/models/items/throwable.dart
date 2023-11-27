@@ -60,7 +60,7 @@ class Throwable extends Item implements ExplorableSectionItem {
   final double strength;
   final Duration emitTime;
 
-  Throwable.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  Throwable.fromMap(super.map, {super.reference})
       : assert(map['type'] != null),
         assert(map['delay'] != null),
         assert(map['fragCount'] != null),
@@ -79,7 +79,7 @@ class Throwable extends Item implements ExplorableSectionItem {
         strength = map['strength'].toDouble(),
         emitTime =
             Duration(milliseconds: (map['emitTime'].toDouble() * 1000).toInt()),
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   Throwable.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,

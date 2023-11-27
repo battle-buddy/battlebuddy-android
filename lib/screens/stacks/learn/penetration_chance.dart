@@ -20,7 +20,7 @@ class PenetrationChanceScreen extends StatelessWidget {
   static const String title = 'Penetration Chance';
   static const String routeName = '/learn/penChance';
 
-  const PenetrationChanceScreen({Key? key}) : super(key: key);
+  const PenetrationChanceScreen({super.key});
 
   Future<void> _onPressHelp(BuildContext context) async {
     return showDialog(
@@ -69,7 +69,7 @@ class PenetrationChance extends StatefulWidget {
   final Armored? armor;
   final Ammunition? ammo;
 
-  const PenetrationChance({Key? key, this.armor, this.ammo}) : super(key: key);
+  const PenetrationChance({super.key, this.armor, this.ammo});
 
   @override
   _PenetrationChanceState createState() => _PenetrationChanceState();
@@ -192,7 +192,7 @@ class _PenetrationChanceState extends State<PenetrationChance> {
               alignment: Alignment.center,
               child: Text(
                 '${_penetrationChance?.toStringAsFixed(1) ?? '\u{2500}'} %',
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: _penetrationChance != null
                           ? HSVColor.fromAHSV(
                               1,
@@ -236,14 +236,14 @@ class _PenetrationChanceState extends State<PenetrationChance> {
               children: [
                 Text(
                   'Durability',
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 18,
                         color: Colors.grey[400],
                       ),
                 ),
                 Text(
                   _currentDurability?.round().toString() ?? '-',
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 18,
                         color: Colors.grey[400],
                       ),
@@ -277,11 +277,11 @@ class SelectionCard extends StatefulWidget {
       AssetImage('assets/images/placeholders/generic.png');
 
   const SelectionCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.item,
     this.onTab,
-  }) : super(key: key);
+  });
 
   @override
   _SelectionCardState createState() => _SelectionCardState();
@@ -324,7 +324,7 @@ class _SelectionCardState extends State<SelectionCard> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.39,
             child: AspectRatio(
               aspectRatio: 1 / 1,

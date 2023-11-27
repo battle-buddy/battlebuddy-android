@@ -18,7 +18,7 @@ class ItemComparisonScreen<T extends ComparisonView> extends StatelessWidget {
   static const String title = 'Compare';
   static const String routeName = '/items/compare';
 
-  const ItemComparisonScreen({Key? key}) : super(key: key);
+  const ItemComparisonScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +42,10 @@ class ItemComparisonList<T extends ComparisonView> extends StatefulWidget {
   final HashSet<String> selectedIDs;
 
   const ItemComparisonList({
-    Key? key,
+    super.key,
     required this.items,
     required this.selectedIDs,
-  }) : super(key: key);
+  });
 
   @override
   _ItemComparisonListState<T> createState() => _ItemComparisonListState<T>();
@@ -148,7 +148,7 @@ class _ItemComparisonListState<T extends ComparisonView>
                 section.title.toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1!
+                    .titleMedium!
                     .copyWith(fontSize: 18),
               ),
             ),
@@ -175,12 +175,12 @@ class GraphBar extends StatelessWidget {
   final Color? color;
 
   const GraphBar({
-    Key? key,
+    super.key,
     required this.name,
     required this.value,
     this.percent = 0.0,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +197,7 @@ class GraphBar extends StatelessWidget {
             children: <Text>[
               Text(
                 name!,
-                style: Theme.of(context).textTheme.subtitle2,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(value),
             ],

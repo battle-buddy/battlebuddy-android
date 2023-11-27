@@ -296,15 +296,15 @@ class Item implements Indexable {
 }
 
 abstract class SectionView extends Item {
-  SectionView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
-      : super.fromSnapshot(snapshot);
+  SectionView.fromSnapshot(super.snapshot)
+      : super.fromSnapshot();
 
   String? get sectionValue;
 }
 
 abstract class DetailView extends Item {
-  DetailView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
-      : super.fromSnapshot(snapshot);
+  DetailView.fromSnapshot(super.snapshot)
+      : super.fromSnapshot();
 
   List<PropertySection> get propertySections;
 }
@@ -330,8 +330,8 @@ class DisplayProperty {
 }
 
 abstract class ComparisonView extends Item {
-  ComparisonView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
-      : super.fromSnapshot(snapshot);
+  ComparisonView.fromSnapshot(super.snapshot)
+      : super.fromSnapshot();
 
   List<ComparableProperty> get comparableProperties;
 }
@@ -347,8 +347,8 @@ class ComparableProperty {
 }
 
 abstract class TableView extends Item {
-  TableView.fromSnapshot(DocumentSnapshot<Object?> snapshot)
-      : super.fromSnapshot(snapshot);
+  TableView.fromSnapshot(super.snapshot)
+      : super.fromSnapshot();
 
   List<String> get tableHeaders;
   List<dynamic> get tableData;
@@ -356,8 +356,8 @@ abstract class TableView extends Item {
 
 abstract class ExplorableItem extends Item
     implements DetailView, ComparisonView {
-  ExplorableItem.fromSnapshot(DocumentSnapshot<Object?> snapshot)
-      : super.fromSnapshot(snapshot);
+  ExplorableItem.fromSnapshot(super.snapshot)
+      : super.fromSnapshot();
 }
 
 abstract class ExplorableSectionItem implements ExplorableItem, SectionView {}

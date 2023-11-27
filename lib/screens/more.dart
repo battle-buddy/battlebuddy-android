@@ -25,7 +25,7 @@ class MoreTab extends StatelessWidget {
     TheTeamScreen.routeName: (context) => const TheTeamScreen(),
   };
 
-  const MoreTab({Key? key}) : super(key: key);
+  const MoreTab({super.key});
 
   Future<void> _onAppReview() async {
     if (!Platform.isAndroid) return;

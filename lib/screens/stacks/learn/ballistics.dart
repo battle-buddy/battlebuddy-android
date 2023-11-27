@@ -13,7 +13,7 @@ class BallisticsScreen extends StatelessWidget {
   static const String title = 'Ballistics';
   static const String routeName = '/learn/ballistics';
 
-  const BallisticsScreen({Key? key}) : super(key: key);
+  const BallisticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class BallisticsScreen extends StatelessWidget {
 }
 
 class BallisticsArticle extends StatelessWidget {
-  const BallisticsArticle({Key? key}) : super(key: key);
+  const BallisticsArticle({super.key});
 
   Future<Map<String, String>> _loadText(BuildContext context) async {
     final data = await DefaultAssetBundle.of(context)
@@ -78,7 +78,7 @@ class BallisticsArticle extends StatelessWidget {
                 Image.asset('assets/images/card_heroes/ballistics.png'),
             title: Text(
               data['headline']!,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class BallisticsArticle extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Text(
                     'Veritas - 13/07/2019',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Theme.of(context).colorScheme.secondary),
                   ),
                 ),
@@ -212,11 +212,11 @@ class ArticleSection extends StatelessWidget {
   final Widget? headerImage;
 
   const ArticleSection({
-    Key? key,
+    super.key,
     required this.title,
     required this.body,
     this.headerImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -236,14 +236,14 @@ class ArticleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: DefaultTextStyle(
-              style: Theme.of(context).textTheme.headline6!,
+              style: Theme.of(context).textTheme.titleLarge!,
               child: title,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: DefaultTextStyle(
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 15,
                     color: Colors.white70,
                   ),

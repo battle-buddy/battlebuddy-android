@@ -9,7 +9,7 @@ class AttributionScreen extends StatelessWidget {
   static const String title = 'Attributions';
   static const String routeName = '/more/attributions';
 
-  const AttributionScreen({Key? key}) : super(key: key);
+  const AttributionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AttributionScreen extends StatelessWidget {
 }
 
 class AttributionList extends StatelessWidget {
-  const AttributionList({Key? key}) : super(key: key);
+  const AttributionList({super.key});
 
   Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.hasError) return const ErrorScreen();
@@ -61,9 +61,9 @@ class AttributionCard extends StatelessWidget {
   final Attribution doc;
 
   const AttributionCard({
-    Key? key,
+    super.key,
     required this.doc,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class AttributionCard extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
                         doc.title,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
                               fontWeight: FontWeight.w500,
                             ),
                       ),
@@ -91,7 +91,7 @@ class AttributionCard extends StatelessWidget {
                     Container(
                       child: Text(
                         doc.subtitle,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               fontSize: 14,
                             ),
                       ),

@@ -26,7 +26,7 @@ class ItemListScreenArguments {
 class ItemListScreen<T extends ExplorableItem> extends StatefulWidget {
   static const String routeName = '/items/list';
 
-  const ItemListScreen({Key? key}) : super(key: key);
+  const ItemListScreen({super.key});
 
   @override
   _ItemListScreenState<T> createState() => _ItemListScreenState<T>();
@@ -101,9 +101,9 @@ class ItemList<T extends ExplorableItem> extends StatefulWidget {
   final Stream<List<T>?> stream;
 
   const ItemList({
-    Key? key,
+    super.key,
     required this.stream,
-  }) : super(key: key);
+  });
 
   @override
   _ItemListState<T> createState() => _ItemListState<T>();
@@ -148,7 +148,7 @@ class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
     return ItemCard(
       key: Key(item.id),
       item: item,
-      fontSize: Theme.of(context).textTheme.headline4!.fontSize,
+      fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
     );
   }
 
@@ -183,7 +183,7 @@ class ItemSectionListScreen<T extends ExplorableSectionItem>
     extends StatefulWidget {
   static const String routeName = '/items/sectionList';
 
-  const ItemSectionListScreen({Key? key}) : super(key: key);
+  const ItemSectionListScreen({super.key});
 
   @override
   _ItemSectionListScreenState<T> createState() =>
@@ -265,8 +265,8 @@ class SectionList<T extends ExplorableSectionItem> extends StatefulWidget {
 
   const SectionList(
     this.stream, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _SectionListState<T> createState() => _SectionListState<T>();
@@ -348,8 +348,8 @@ class _SectionListState<T extends ExplorableSectionItem>
               children: <Widget>[
                 Text(
                   section.title!,
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        color: Theme.of(context).textTheme.bodyText2!.color,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
                         fontWeight: FontWeight.w600,
                       ),
                   overflow: TextOverflow.ellipsis,
@@ -369,7 +369,7 @@ class _SectionListState<T extends ExplorableSectionItem>
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: 130,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
@@ -413,11 +413,11 @@ class ItemCard<T extends ExplorableItem> extends StatefulWidget {
       AssetImage('assets/images/placeholders/generic.png');
 
   const ItemCard({
-    Key? key,
+    super.key,
     required this.item,
     this.fontSize,
     this.shape = 8,
-  }) : super(key: key);
+  });
 
   @override
   _ItemCardState<T> createState() => _ItemCardState<T>();
@@ -486,10 +486,10 @@ class _ItemCardState<T extends ExplorableItem> extends State<ItemCard<T>> {
             padding: const EdgeInsets.all(20),
             child: Text(
               widget.item.shortName,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: widget.fontSize ??
-                    Theme.of(context).textTheme.headline5!.fontSize,
-                color: Theme.of(context).textTheme.bodyText2!.color,
+                    Theme.of(context).textTheme.headlineSmall!.fontSize,
+                color: Theme.of(context).textTheme.bodyMedium!.color,
                 fontWeight: FontWeight.w600,
                 shadows: const <Shadow>[
                   Shadow(blurRadius: 5),

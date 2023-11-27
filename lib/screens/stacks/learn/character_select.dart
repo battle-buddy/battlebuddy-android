@@ -8,7 +8,7 @@ class CharacterSelectionScreen extends StatelessWidget {
   static const String title = 'Select Character\u{2026}';
   static const String routeName = '/learn/charSelect';
 
-  const CharacterSelectionScreen({Key? key}) : super(key: key);
+  const CharacterSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CharacterSelectionScreen extends StatelessWidget {
 }
 
 class CharacterSelection extends StatefulWidget {
-  const CharacterSelection({Key? key}) : super(key: key);
+  const CharacterSelection({super.key});
 
   @override
   _CharacterSelectionState createState() => _CharacterSelectionState();

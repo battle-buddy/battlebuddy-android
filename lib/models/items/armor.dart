@@ -50,7 +50,7 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
   final ArmorPenalties penalties;
   final List<String> blocking;
 
-  Armor.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  Armor.fromMap(super.map, {super.reference})
       : assert(map['type'] != null),
         assert(map['armor'] != null),
         assert(map['penalties'] != null),
@@ -59,7 +59,7 @@ class Armor extends Item implements Armored, ExplorableSectionItem, TableView {
         properties = ArmorProperties.fromMap(map['armor']),
         penalties = ArmorPenalties.fromMap(map['penalties']),
         blocking = List<String>.from(map['blocking'], growable: false),
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   Armor.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,
@@ -244,8 +244,8 @@ class ArmorPenalties {
 }
 
 abstract class Armored extends Item {
-  Armored.fromSnapshot(DocumentSnapshot<Object?> snapshot)
-      : super.fromSnapshot(snapshot);
+  Armored.fromSnapshot(super.snapshot)
+      : super.fromSnapshot();
 
   ArmorProperties? get armorProperties;
 }

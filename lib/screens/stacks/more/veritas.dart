@@ -8,7 +8,7 @@ class VeritasScreen extends StatelessWidget {
   static const String title = 'Veritas';
   static const String routeName = '/more/veritas';
 
-  const VeritasScreen({Key? key}) : super(key: key);
+  const VeritasScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class VeritasScreen extends StatelessWidget {
 }
 
 class VeritasInfo extends StatelessWidget {
-  const VeritasInfo({Key? key}) : super(key: key);
+  const VeritasInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

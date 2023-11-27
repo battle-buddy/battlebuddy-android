@@ -33,7 +33,7 @@ class LearnTab extends StatelessWidget {
         const CharacterSelectionScreen(),
   };
 
-  const LearnTab({Key? key}) : super(key: key);
+  const LearnTab({super.key});
 
   @override
   Widget build(BuildContext context) {

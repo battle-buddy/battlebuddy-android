@@ -63,7 +63,7 @@ class Medical extends Item implements ExplorableSectionItem {
   final Duration useTime;
   final Effects effects;
 
-  Medical.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  Medical.fromMap(super.map, {super.reference})
       : assert(map['type'] != null),
         assert(map['resources'] != null),
         assert(map['useTime'] != null),
@@ -72,7 +72,7 @@ class Medical extends Item implements ExplorableSectionItem {
         useTime =
             Duration(milliseconds: (map['useTime'].toDouble() * 1000).toInt()),
         effects = Effects.fromMap(map['effects']),
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   Medical.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,
@@ -119,7 +119,7 @@ class Medical extends Item implements ExplorableSectionItem {
                           : 'Removed')
                       : (e.value.value != 0
                           ? (e.value.isPercent!
-                              ? (e.value.value! * 100).toString() + ' %'
+                              ? '${e.value.value! * 100} %'
                               : '${e.value.value}')
                           : 'Added for ${e.value.duration.inMilliseconds / 1000}s'),
                 ),

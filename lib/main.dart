@@ -14,7 +14,7 @@ void main() {
 }
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   _AppState createState() => _AppState();
@@ -82,7 +82,7 @@ class _AppState extends State<App> {
 class MainNavigatorWidget extends StatefulWidget {
   final String? title;
 
-  const MainNavigatorWidget({Key? key, this.title}) : super(key: key);
+  const MainNavigatorWidget({super.key, this.title});
 
   @override
   MainNavigatorWidgetState createState() => MainNavigatorWidgetState();
@@ -153,10 +153,10 @@ class InitScreen extends StatelessWidget {
   static const Color _backgroundColor = AppTheme.primary;
 
   const InitScreen({
-    Key? key,
+    super.key,
     this.title = 'Initializing...',
     this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
