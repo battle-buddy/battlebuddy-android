@@ -19,7 +19,7 @@ class ChestRig extends Item
   final ArmorPenalties? penalties;
   final List<String>? blocking;
 
-  ChestRig.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  ChestRig.fromMap(super.map, {super.reference})
       : chestRigType = map['armor'] != null
             ? ChestRigType.armored
             : ChestRigType.unarmored,
@@ -34,7 +34,7 @@ class ChestRig extends Item
         blocking = map['blocking'] != null
             ? List<String>.from(map['blocking'], growable: false)
             : null,
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   ChestRig.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,

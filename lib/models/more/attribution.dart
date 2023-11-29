@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Attribution {
   final String title;
   final String subtitle;
-  final String? url;
+  final Uri? url;
   final int index;
 
   final DocumentReference? reference;

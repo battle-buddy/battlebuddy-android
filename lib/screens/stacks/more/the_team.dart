@@ -10,7 +10,7 @@ class TheTeamScreen extends StatelessWidget {
   static const String title = 'The Team';
   static const String routeName = '/more/theTeam';
 
-  const TheTeamScreen({Key? key}) : super(key: key);
+  const TheTeamScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class TheTeamScreen extends StatelessWidget {
 }
 
 class TeamList extends StatelessWidget {
-  const TeamList({Key? key}) : super(key: key);
+  const TeamList({super.key});
 
   Widget _builder(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.hasError) return const ErrorScreen();
@@ -62,9 +62,9 @@ class MemberTile extends StatelessWidget {
   final TeamMember member;
 
   const MemberTile({
-    Key? key,
+    super.key,
     required this.member,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class MemberTile extends StatelessWidget {
       subtitle: member.live
           ? Text(
               'Live',
-              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Colors.red,
                   ),
             )

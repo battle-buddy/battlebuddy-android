@@ -115,7 +115,7 @@ class Firearm extends Item implements ExplorableSectionItem {
   final int recoilHorizontal;
   final int recoilVertical;
 
-  Firearm.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  Firearm.fromMap(super.map, {super.reference})
       : assert(map['class'] != null),
         assert(map['caliber'] != null),
         assert(map['rof'] != null),
@@ -141,7 +141,7 @@ class Firearm extends Item implements ExplorableSectionItem {
         foldRectractable = map['foldRectractable'],
         recoilHorizontal = map['recoilHorizontal'].toInt(),
         recoilVertical = map['recoilVertical'].toInt(),
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   Firearm.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,

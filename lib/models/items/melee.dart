@@ -6,12 +6,12 @@ class Melee extends Item implements ExplorableItem {
   final MeleeAttack slash;
   final MeleeAttack stab;
 
-  Melee.fromMap(Map<String, dynamic> map, {DocumentReference? reference})
+  Melee.fromMap(super.map, {super.reference})
       : assert(map['slash'] != null),
         assert(map['stab'] != null),
         slash = MeleeAttack.fromMap(map['slash']),
         stab = MeleeAttack.fromMap(map['stab']),
-        super.fromMap(map, reference: reference);
+        super.fromMap();
 
   Melee.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,

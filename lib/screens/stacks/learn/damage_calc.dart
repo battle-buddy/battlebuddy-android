@@ -21,7 +21,7 @@ class DamageCalculatorScreen extends StatelessWidget {
   static const String title = 'Damage Calculator';
   static const String routeName = '/learn/damageCalc';
 
-  const DamageCalculatorScreen({Key? key}) : super(key: key);
+  const DamageCalculatorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +42,10 @@ class DamageCalculatorScreen extends StatelessWidget {
 class DamageCalculator extends StatefulWidget {
   final Ammunition? ammo;
 
-  const DamageCalculator({Key? key, this.ammo}) : super(key: key);
+  const DamageCalculator({super.key, this.ammo});
 
   @override
-  _DamageCalculatorState createState() => _DamageCalculatorState();
+  State<DamageCalculator> createState() => _DamageCalculatorState();
 }
 
 class _DamageCalculatorState extends State<DamageCalculator> {
@@ -175,7 +175,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final totalStyle = Theme.of(context).textTheme.bodyText2!.copyWith(
+    final totalStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
       shadows: const <Shadow>[
         Shadow(blurRadius: 5),
       ],
@@ -203,7 +203,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
+              SizedBox(
                 key: Key(_character!.id),
                 height: 90,
                 width: 90,
@@ -224,7 +224,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                       margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Text(
                         _character!.name,
-                        style: Theme.of(context).textTheme.subtitle2,
+                        style: Theme.of(context).textTheme.titleSmall,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -325,7 +325,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 key: const Key('separator'),
                 child: Text(
                   '/',
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[400],
@@ -341,7 +341,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                 alignment: Alignment.center,
                 child: Text(
                   _healthInitial!.total.ceil().toString(),
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[400],
@@ -365,8 +365,14 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                     horizontal: 10,
                     vertical: 20,
                   ),
-                  child: FlatButton(
-                    color: Theme.of(context).accentColor,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
                     onPressed: () => _onTabAmmunition(context),
                     child: Text(_ammo?.shortName ?? 'Select Ammo'),
                   ),
@@ -375,7 +381,7 @@ class _DamageCalculatorState extends State<DamageCalculator> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: IconButton(
-                    color: Theme.of(context).accentColor,
+                    // color: Theme.of(context).colorScheme.secondary,
                     iconSize: 36,
                     icon: const Icon(Icons.refresh),
                     onPressed: _health != null &&
@@ -401,16 +407,16 @@ class ZoneBar extends StatefulWidget {
   final int animationDuration;
 
   const ZoneBar({
-    Key? key,
+    super.key,
     required this.title,
     required this.value,
     required this.maxValue,
     this.onTab,
     this.animationDuration = 250,
-  }) : super(key: key);
+  });
 
   @override
-  _ZoneBarState createState() => _ZoneBarState();
+  State<ZoneBar> createState() => _ZoneBarState();
 }
 
 class _ZoneBarState extends State<ZoneBar> {
@@ -437,7 +443,7 @@ class _ZoneBarState extends State<ZoneBar> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2!.copyWith(
+    final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
           fontSize: 13,
           color: Colors.grey[100],
         );
@@ -471,7 +477,7 @@ class _ZoneBarState extends State<ZoneBar> {
               key: widget.key,
               percent: _value / _maxValue,
               lineHeight: 22,
-              linearStrokeCap: LinearStrokeCap.butt,
+              barRadius: Radius.zero,
               center: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -513,10 +519,10 @@ class CharacterAvatar extends StatefulWidget {
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
-  const CharacterAvatar({Key? key, this.character}) : super(key: key);
+  const CharacterAvatar({super.key, this.character});
 
   @override
-  _CharacterAvatarState createState() => _CharacterAvatarState();
+  State<CharacterAvatar> createState() => _CharacterAvatarState();
 }
 
 class _CharacterAvatarState extends State<CharacterAvatar> {
@@ -561,15 +567,13 @@ class AnimatedCount extends ImplicitlyAnimatedWidget {
   final TextStyle? style;
 
   AnimatedCount({
-    Key? key,
+    super.key,
     required this.count,
     required int duration,
-    Curve curve = Curves.linear,
+    super.curve,
     this.style,
   }) : super(
-          key: key,
           duration: Duration(milliseconds: duration),
-          curve: curve,
         );
 
   @override

@@ -24,7 +24,7 @@ class ItemDetailScreenArguments<T extends ExplorableItem> {
 class ItemDetailScreen<T extends ExplorableItem> extends StatelessWidget {
   static const String routeName = '/items/detail';
 
-  const ItemDetailScreen({Key? key}) : super(key: key);
+  const ItemDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +47,10 @@ class ItemDetail<T extends ExplorableItem> extends StatefulWidget {
   static const AssetImage _placeholder =
       AssetImage('assets/images/placeholders/generic.png');
 
-  const ItemDetail({Key? key, required this.item}) : super(key: key);
+  const ItemDetail({super.key, required this.item});
 
   @override
-  _ItemDetailState<T> createState() => _ItemDetailState<T>();
+  State<ItemDetail<T>> createState() => _ItemDetailState<T>();
 }
 
 class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
@@ -171,7 +171,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Text(
             widget.item.description,
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 16,
                   color: Colors.white70,
                 ),
@@ -193,7 +193,7 @@ class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {
               ),
               child: Text(
                 'Explore',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             CustomTileList(
@@ -235,10 +235,10 @@ class PropertyList extends StatelessWidget {
   final Color? dividerColor;
 
   const PropertyList({
-    Key? key,
+    super.key,
     this.sections,
     this.dividerColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +254,7 @@ class PropertyList extends StatelessWidget {
                 ),
                 child: Text(
                   e.title,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               Container(

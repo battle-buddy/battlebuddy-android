@@ -10,13 +10,13 @@ class NavigationCard extends StatelessWidget {
   static const double _shape = 8;
 
   const NavigationCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.image,
     this.routeName,
     this.arguments,
     this.pageRoute,
-  }) : super(key: key);
+  });
 
   void _onTab(BuildContext context) {
     if (pageRoute == null) {
@@ -53,8 +53,8 @@ class NavigationCard extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: Theme.of(context).textTheme.bodyText2!.color,
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                color: Theme.of(context).textTheme.bodyMedium!.color,
                 fontWeight: FontWeight.bold,
                 shadows: const <Shadow>[
                   Shadow(blurRadius: 5),
@@ -79,7 +79,7 @@ class NavigationCard extends StatelessWidget {
 class NavigationCardList extends StatelessWidget {
   final List<NavigationCard> cards;
 
-  const NavigationCardList({Key? key, required this.cards}) : super(key: key);
+  const NavigationCardList({super.key, required this.cards});
 
   @override
   Widget build(BuildContext context) {

@@ -241,19 +241,19 @@ class ItemSectionProvider<T extends SectionView> {
 
 T _serializeSnapshot<T extends Item>(DocumentSnapshot snapshot) {
   switch (T) {
-    case Ammunition:
+    case const (Ammunition):
       return Ammunition.fromSnapshot(snapshot) as T;
-    case Armor:
+    case const (Armor):
       return Armor.fromSnapshot(snapshot) as T;
-    case ChestRig:
+    case const (ChestRig):
       return ChestRig.fromSnapshot(snapshot) as T;
-    case Firearm:
+    case const (Firearm):
       return Firearm.fromSnapshot(snapshot) as T;
-    case Medical:
+    case const (Medical):
       return Medical.fromSnapshot(snapshot) as T;
-    case Melee:
+    case const (Melee):
       return Melee.fromSnapshot(snapshot) as T;
-    case Throwable:
+    case const (Throwable):
       return Throwable.fromSnapshot(snapshot) as T;
   }
 

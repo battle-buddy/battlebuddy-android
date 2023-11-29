@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_cached_image/firebase_cached_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_image/firebase_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/rendering.dart';
@@ -60,7 +60,7 @@ class StorageImage {
 
   const StorageImage({this.size = ImageSize.medium});
 
-  ImageProvider<FirebaseImage> getItemImage(ItemType? type, String? id) {
+  FirebaseImageProvider getItemImage(ItemType? type, String? id) {
     final filename = '${id}_${size.string}.jpg';
 
     var ref = _storage.ref();
@@ -94,21 +94,31 @@ class StorageImage {
 
     final path = ref.child(filename).fullPath;
     final bucket = ref.bucket;
-    return FirebaseImage(
-      'gs://$bucket/$path',
-      firebaseApp: Firebase.app(),
-    );
+    return FirebaseImageProvider(
+        FirebaseUrl(
+          'gs://$bucket/$path',
+          app: Firebase.app(),
+        ),
+        options: const CacheOptions(
+          checkForMetadataChange: true,
+          metadataRefreshInBackground: false,
+        ));
   }
 
-  ImageProvider<FirebaseImage> getCharacterImage(String? id) {
+  FirebaseImageProvider getCharacterImage(String? id) {
     final filename = '${id}_avatar.png';
     final ref = _storage.ref().child('character');
 
     final path = ref.child(filename).fullPath;
     final bucket = ref.bucket;
-    return FirebaseImage(
-      'gs://$bucket/$path',
-      firebaseApp: Firebase.app(),
-    );
+    return FirebaseImageProvider(
+        FirebaseUrl(
+          'gs://$bucket/$path',
+          app: Firebase.app(),
+        ),
+        options: const CacheOptions(
+          checkForMetadataChange: true,
+          metadataRefreshInBackground: false,
+        ));
   }
 }

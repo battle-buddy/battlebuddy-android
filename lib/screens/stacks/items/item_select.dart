@@ -24,10 +24,10 @@ class ItemSelectScreen<T extends ExplorableItem> extends StatefulWidget {
   static const String title = 'Compare to\u{2026}';
   static const String routeName = '/items/select';
 
-  const ItemSelectScreen({Key? key}) : super(key: key);
+  const ItemSelectScreen({super.key});
 
   @override
-  _ItemSelectScreenState<T> createState() => _ItemSelectScreenState<T>();
+  State<ItemSelectScreen<T>> createState() => _ItemSelectScreenState<T>();
 }
 
 class _ItemSelectScreenState<T extends ExplorableItem>
@@ -62,17 +62,23 @@ class _ItemSelectScreenState<T extends ExplorableItem>
       appBar: AppBar(
         title: const Text(ItemSelectScreen.title),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 45,
-        child: FlatButton.icon(
+        child: TextButton.icon(
+          style: TextButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            disabledBackgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
           label: const Text('Compare'),
-          color: Theme.of(context).accentColor,
           icon: const Icon(Icons.navigate_next),
           onPressed:
               _compareArgs != null && _compareArgs!.selectedIDs.length > 1
                   ? _onNext
                   : null,
-          shape: Border.all(style: BorderStyle.none),
         ),
       ),
       body: ItemSelectList<T>(
@@ -91,13 +97,13 @@ class ItemSelectList<T extends Item> extends StatefulWidget {
 
   const ItemSelectList(
     this.query, {
-    Key? key,
+    super.key,
     this.selectedID,
     this.onChange,
-  }) : super(key: key);
+  });
 
   @override
-  _ItemSelectListState<T> createState() => _ItemSelectListState<T>();
+  State<ItemSelectList<T>> createState() => _ItemSelectListState<T>();
 }
 
 class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
@@ -181,10 +187,10 @@ class ItemSectionSelectScreen<T extends ExplorableSectionItem>
   static const String title = 'Compare to\u{2026}';
   static const String routeName = '/items/sectionSelect';
 
-  const ItemSectionSelectScreen({Key? key}) : super(key: key);
+  const ItemSectionSelectScreen({super.key});
 
   @override
-  _ItemSectionSelectScreenState<T> createState() =>
+  State<ItemSectionSelectScreen<T>> createState() =>
       _ItemSectionSelectScreenState<T>();
 }
 
@@ -220,17 +226,23 @@ class _ItemSectionSelectScreenState<T extends ExplorableSectionItem>
       appBar: AppBar(
         title: const Text(ItemSectionSelectScreen.title),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 45,
-        child: FlatButton.icon(
+        child: TextButton.icon(
+          style: TextButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            disabledBackgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
           label: const Text('Compare'),
-          color: Theme.of(context).accentColor,
           icon: const Icon(Icons.navigate_next),
           onPressed:
               _compareArgs != null && _compareArgs!.selectedIDs.length > 1
                   ? _onNext
                   : null,
-          shape: Border.all(style: BorderStyle.none),
         ),
       ),
       body: ItemSelectSectionList<T>(
@@ -251,14 +263,14 @@ class ItemSelectSectionList<T extends SectionView> extends StatefulWidget {
 
   const ItemSelectSectionList(
     this.query, {
-    Key? key,
+    super.key,
     this.sortSections = false,
     this.selectedID,
     this.onChange,
-  }) : super(key: key);
+  });
 
   @override
-  _ItemSelectSectionListState<T> createState() =>
+  State<ItemSelectSectionList<T>> createState() =>
       _ItemSelectSectionListState<T>();
 }
 
@@ -328,7 +340,7 @@ class _ItemSelectSectionListState<T extends SectionView>
             section.title!,
             style: Theme.of(context)
                 .textTheme
-                .subtitle2!
+                .titleSmall!
                 .copyWith(color: Colors.grey[400]),
           ),
         ),
@@ -351,7 +363,7 @@ class _ItemSelectSectionListState<T extends SectionView>
 
   @override
   Widget build(BuildContext context) {
-    if (_error != null) return ErrorScreen();
+    if (_error != null) return const ErrorScreen();
 
     if (_sections == null) {
       return const Center(child: CircularProgressIndicator());
@@ -372,14 +384,14 @@ class ItemTile extends StatefulWidget {
   final void Function(Item, {bool value}) onChange;
 
   const ItemTile({
-    Key? key,
+    super.key,
     required this.item,
     this.isSelected = false,
     required this.onChange,
-  }) : super(key: key);
+  });
 
   @override
-  _ItemTileState createState() => _ItemTileState();
+  State<ItemTile> createState() => _ItemTileState();
 }
 
 class _ItemTileState extends State<ItemTile> {
@@ -419,7 +431,7 @@ class _ItemTileState extends State<ItemTile> {
         ),
         value: _isSelected,
         onChanged: onChanged,
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Theme.of(context).colorScheme.secondary,
       ),
     );
   }

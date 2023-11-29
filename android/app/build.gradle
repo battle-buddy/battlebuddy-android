@@ -33,7 +33,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         applicationId "com.veritas.battlebuddy"
-        minSdkVersion 24
-        targetSdkVersion 31
+        minSdkVersion 28
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         ndk {
@@ -67,6 +67,15 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    if (project.android.hasProperty('namespace')) {
+        namespace 'com.veritas.battlebuddy'
     }
 }
 
