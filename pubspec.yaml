@@ -27,7 +27,7 @@ dependencies:
   intl: ^0.18.1
 
   # Firebase
-  firebase_core: ^2.23.0
+  firebase_core: ^2.24.0
   firebase_auth: ^4.14.1
   cloud_firestore: ^4.13.2
   firebase_storage: ^11.5.2
