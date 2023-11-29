@@ -45,7 +45,7 @@ class DamageCalculator extends StatefulWidget {
   const DamageCalculator({super.key, this.ammo});
 
   @override
-  _DamageCalculatorState createState() => _DamageCalculatorState();
+  State<DamageCalculator> createState() => _DamageCalculatorState();
 }
 
 class _DamageCalculatorState extends State<DamageCalculator> {
@@ -416,7 +416,7 @@ class ZoneBar extends StatefulWidget {
   });
 
   @override
-  _ZoneBarState createState() => _ZoneBarState();
+  State<ZoneBar> createState() => _ZoneBarState();
 }
 
 class _ZoneBarState extends State<ZoneBar> {
@@ -477,7 +477,7 @@ class _ZoneBarState extends State<ZoneBar> {
               key: widget.key,
               percent: _value / _maxValue,
               lineHeight: 22,
-              linearStrokeCap: LinearStrokeCap.butt,
+              barRadius: Radius.zero,
               center: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -522,7 +522,7 @@ class CharacterAvatar extends StatefulWidget {
   const CharacterAvatar({super.key, this.character});
 
   @override
-  _CharacterAvatarState createState() => _CharacterAvatarState();
+  State<CharacterAvatar> createState() => _CharacterAvatarState();
 }
 
 class _CharacterAvatarState extends State<CharacterAvatar> {

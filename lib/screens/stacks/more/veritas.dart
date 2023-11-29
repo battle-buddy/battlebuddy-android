@@ -39,7 +39,7 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Watch Live on Twitch'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://www.twitch.tv/veritas'),
+              onTab: () => openURL(Uri.parse('https://www.twitch.tv/veritas')),
             ),
             CustomTile(
               leading: FaIcon(
@@ -49,8 +49,8 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Watch on YouTube'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL(
-                  'https://www.youtube.com/channel/UCkS33XH4KH0IqD2S2-f7ovA'),
+              onTab: () => openURL(Uri.parse(
+                  'https://www.youtube.com/channel/UCkS33XH4KH0IqD2S2-f7ovA')),
             ),
             CustomTile(
               leading: FaIcon(
@@ -60,7 +60,8 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Stay Up to Date'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://twitter.com/veriitasgames'),
+              onTab: () =>
+                  openURL(Uri.parse('https://twitter.com/veriitasgames')),
             ),
             CustomTile(
               leading: FaIcon(
@@ -70,7 +71,7 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Join our Community Discord'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://discord.gg/g99WEgG'),
+              onTab: () => openURL(Uri.parse('https://discord.gg/g99WEgG')),
             ),
             CustomTile(
               leading: FaIcon(
@@ -80,7 +81,8 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Media on Instagram'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://www.instagram.com/veritaswtf'),
+              onTab: () =>
+                  openURL(Uri.parse('https://www.instagram.com/veritaswtf')),
             ),
             CustomTile(
               leading: ImageIcon(
@@ -90,7 +92,7 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('More about Veritas'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://www.veritas.wtf/'),
+              onTab: () => openURL(Uri.parse('https://www.veritas.wtf/')),
             ),
           ],
         ),
@@ -105,8 +107,8 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Listen on Spotify'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL(
-                  'https://open.spotify.com/artist/2S6iwClVoSNnpOcCzyMeUj'),
+              onTab: () => openURL(Uri.parse(
+                  'https://open.spotify.com/artist/2S6iwClVoSNnpOcCzyMeUj')),
             ),
             CustomTile(
               leading: FaIcon(
@@ -116,7 +118,8 @@ class VeritasInfo extends StatelessWidget {
               ),
               title: const Text('Listen on Soundcloud'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://soundcloud.com/veritaswtf'),
+              onTab: () =>
+                  openURL(Uri.parse('https://soundcloud.com/veritaswtf')),
             ),
           ],
         ),

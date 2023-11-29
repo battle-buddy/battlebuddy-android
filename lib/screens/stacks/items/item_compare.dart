@@ -48,7 +48,7 @@ class ItemComparisonList<T extends ComparisonView> extends StatefulWidget {
   });
 
   @override
-  _ItemComparisonListState<T> createState() => _ItemComparisonListState<T>();
+  State<ItemComparisonList<T>> createState() => _ItemComparisonListState<T>();
 }
 
 class _ItemComparisonListState<T extends ComparisonView>
@@ -189,7 +189,7 @@ class GraphBar extends StatelessWidget {
       child: LinearPercentIndicator(
         percent: max(percent, 0.01),
         lineHeight: 28,
-        linearStrokeCap: LinearStrokeCap.butt,
+        barRadius: Radius.zero,
         center: Container(
           padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Row(

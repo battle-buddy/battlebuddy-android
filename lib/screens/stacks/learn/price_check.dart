@@ -20,7 +20,7 @@ class PriceCheckScreen extends StatefulWidget {
   const PriceCheckScreen({super.key});
 
   @override
-  _PriceCheckScreenState createState() => _PriceCheckScreenState();
+  State<PriceCheckScreen> createState() => _PriceCheckScreenState();
 }
 
 class _PriceCheckScreenState extends State<PriceCheckScreen> {
@@ -111,7 +111,7 @@ class PriceCheckList extends StatefulWidget {
   const PriceCheckList({super.key, required this.stream, this.onPress});
 
   @override
-  _PriceCheckListState createState() => _PriceCheckListState();
+  State<PriceCheckList> createState() => _PriceCheckListState();
 }
 
 class _PriceCheckListState extends State<PriceCheckList> {
@@ -181,7 +181,7 @@ class PriceCheckItem extends StatefulWidget {
   });
 
   @override
-  _PriceCheckItemState createState() => _PriceCheckItemState();
+  State<PriceCheckItem> createState() => _PriceCheckItemState();
 }
 
 class _PriceCheckItemState extends State<PriceCheckItem> {
@@ -258,9 +258,6 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
     return SizedBox(
       height: 100,
       child: TextButton(
-        // TODO: Fix this
-        // padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-        // color: Colors.black54,
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.transparent),
           shape: MaterialStateProperty.all(
@@ -273,11 +270,9 @@ class _PriceCheckItemState extends State<PriceCheckItem> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              child: Icon(
-                _isStarred ? Icons.star : Icons.star_border,
-                color: _isStarred ? iconColor : iconColor!.withOpacity(0.9),
-              ),
+            Icon(
+              _isStarred ? Icons.star : Icons.star_border,
+              color: _isStarred ? iconColor : iconColor!.withOpacity(0.9),
             ),
             Expanded(
               child: Padding(

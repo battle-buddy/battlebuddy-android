@@ -83,18 +83,17 @@ class AttributionCard extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
                         doc.title,
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
                       ),
                     ),
-                    Container(
-                      child: Text(
-                        doc.subtitle,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: 14,
-                            ),
-                      ),
+                    Text(
+                      doc.subtitle,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 14,
+                          ),
                     )
                   ],
                 ),

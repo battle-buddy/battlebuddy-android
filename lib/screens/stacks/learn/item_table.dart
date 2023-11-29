@@ -27,7 +27,7 @@ class ItemTableScreen<T extends TableView> extends StatefulWidget {
   const ItemTableScreen({super.key});
 
   @override
-  _ItemTableScreenState<T> createState() => _ItemTableScreenState<T>();
+  State<ItemTableScreen<T>> createState() => _ItemTableScreenState<T>();
 }
 
 class _ItemTableScreenState<T extends TableView>
@@ -120,7 +120,7 @@ class ItemDualTableScreen<T1 extends TableView, T2 extends TableView>
   const ItemDualTableScreen({super.key});
 
   @override
-  _ItemDualTableScreenState<T1, T2> createState() =>
+  State<ItemDualTableScreen<T1, T2>> createState() =>
       _ItemDualTableScreenState<T1, T2>();
 }
 
@@ -275,7 +275,7 @@ class ItemTable<T extends TableView> extends StatefulWidget {
   const ItemTable(this.stream, {super.key});
 
   @override
-  _ItemTableItemTableState<T> createState() => _ItemTableItemTableState<T>();
+  State<ItemTable<T>> createState() => _ItemTableItemTableState<T>();
 }
 
 class _ItemTableItemTableState<T extends TableView>
@@ -346,34 +346,32 @@ class _ItemTableItemTableState<T extends TableView>
 
     return Column(
       children: <Widget>[
-        Container(
-          child: Row(
-            key: const Key('header'),
-            children: _headers!
-                .asMap()
-                .entries
-                .map(
-                  (header) => Material(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: InkWell(
-                      onTap: () => _onSort(header.key),
-                      child: Container(
-                        width: columnWidth,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 20,
-                        ),
-                        child: Text(
-                          header.value,
-                          style: Theme.of(context).textTheme.titleSmall,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+        Row(
+          key: const Key('header'),
+          children: _headers!
+              .asMap()
+              .entries
+              .map(
+                (header) => Material(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: InkWell(
+                    onTap: () => _onSort(header.key),
+                    child: Container(
+                      width: columnWidth,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 20,
+                      ),
+                      child: Text(
+                        header.value,
+                        style: Theme.of(context).textTheme.titleSmall,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
-                )
-                .toList(growable: false),
-          ),
+                ),
+              )
+              .toList(growable: false),
         ),
         Expanded(
           child: ListView.separated(

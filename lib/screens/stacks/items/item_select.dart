@@ -27,7 +27,7 @@ class ItemSelectScreen<T extends ExplorableItem> extends StatefulWidget {
   const ItemSelectScreen({super.key});
 
   @override
-  _ItemSelectScreenState<T> createState() => _ItemSelectScreenState<T>();
+  State<ItemSelectScreen<T>> createState() => _ItemSelectScreenState<T>();
 }
 
 class _ItemSelectScreenState<T extends ExplorableItem>
@@ -103,7 +103,7 @@ class ItemSelectList<T extends Item> extends StatefulWidget {
   });
 
   @override
-  _ItemSelectListState<T> createState() => _ItemSelectListState<T>();
+  State<ItemSelectList<T>> createState() => _ItemSelectListState<T>();
 }
 
 class _ItemSelectListState<T extends Item> extends State<ItemSelectList<T>> {
@@ -190,7 +190,7 @@ class ItemSectionSelectScreen<T extends ExplorableSectionItem>
   const ItemSectionSelectScreen({super.key});
 
   @override
-  _ItemSectionSelectScreenState<T> createState() =>
+  State<ItemSectionSelectScreen<T>> createState() =>
       _ItemSectionSelectScreenState<T>();
 }
 
@@ -270,7 +270,7 @@ class ItemSelectSectionList<T extends SectionView> extends StatefulWidget {
   });
 
   @override
-  _ItemSelectSectionListState<T> createState() =>
+  State<ItemSelectSectionList<T>> createState() =>
       _ItemSelectSectionListState<T>();
 }
 
@@ -391,7 +391,7 @@ class ItemTile extends StatefulWidget {
   });
 
   @override
-  _ItemTileState createState() => _ItemTileState();
+  State<ItemTile> createState() => _ItemTileState();
 }
 
 class _ItemTileState extends State<ItemTile> {

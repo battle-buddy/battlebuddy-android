@@ -50,7 +50,7 @@ class ItemDetail<T extends ExplorableItem> extends StatefulWidget {
   const ItemDetail({super.key, required this.item});
 
   @override
-  _ItemDetailState<T> createState() => _ItemDetailState<T>();
+  State<ItemDetail<T>> createState() => _ItemDetailState<T>();
 }
 
 class _ItemDetailState<T extends ExplorableItem> extends State<ItemDetail<T>> {

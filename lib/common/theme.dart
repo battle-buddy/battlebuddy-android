@@ -36,6 +36,12 @@ class AppTheme {
         actionsIconTheme: IconThemeData(
           color: accent,
         ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: primary,
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarColor: primary,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
       ),
       iconTheme: const IconThemeData(
         color: accent,
@@ -51,6 +57,10 @@ class AppTheme {
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
+      ),
+      navigationBarTheme: const NavigationBarThemeData(
+        backgroundColor: primary,
+        indicatorColor: accent,
       ),
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),

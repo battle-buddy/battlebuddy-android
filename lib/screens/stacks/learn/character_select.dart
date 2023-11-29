@@ -25,7 +25,7 @@ class CharacterSelection extends StatefulWidget {
   const CharacterSelection({super.key});
 
   @override
-  _CharacterSelectionState createState() => _CharacterSelectionState();
+  State<CharacterSelection> createState() => _CharacterSelectionState();
 }
 
 class _CharacterSelectionState extends State<CharacterSelection> {

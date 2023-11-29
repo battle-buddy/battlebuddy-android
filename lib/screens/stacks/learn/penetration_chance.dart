@@ -72,7 +72,7 @@ class PenetrationChance extends StatefulWidget {
   const PenetrationChance({super.key, this.armor, this.ammo});
 
   @override
-  _PenetrationChanceState createState() => _PenetrationChanceState();
+  State<PenetrationChance> createState() => _PenetrationChanceState();
 }
 
 class _PenetrationChanceState extends State<PenetrationChance> {
@@ -284,7 +284,7 @@ class SelectionCard extends StatefulWidget {
   });
 
   @override
-  _SelectionCardState createState() => _SelectionCardState();
+  State<SelectionCard> createState() => _SelectionCardState();
 }
 
 class _SelectionCardState extends State<SelectionCard> {

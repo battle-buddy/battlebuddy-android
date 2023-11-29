@@ -17,7 +17,7 @@ class App extends StatefulWidget {
   const App({super.key});
 
   @override
-  _AppState createState() => _AppState();
+  State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
@@ -46,7 +46,8 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _theme = AppTheme.themeData;
-    setNavigationBarColor(_theme.bottomAppBarColor);
+    setNavigationBarColor(
+        _theme.appBarTheme.systemOverlayStyle!.systemNavigationBarColor!);
     initialize();
   }
 

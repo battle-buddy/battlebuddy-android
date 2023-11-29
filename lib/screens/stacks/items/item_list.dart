@@ -29,7 +29,7 @@ class ItemListScreen<T extends ExplorableItem> extends StatefulWidget {
   const ItemListScreen({super.key});
 
   @override
-  _ItemListScreenState<T> createState() => _ItemListScreenState<T>();
+  State<ItemListScreen<T>> createState() => _ItemListScreenState<T>();
 }
 
 class _ItemListScreenState<T extends ExplorableItem>
@@ -106,7 +106,7 @@ class ItemList<T extends ExplorableItem> extends StatefulWidget {
   });
 
   @override
-  _ItemListState<T> createState() => _ItemListState<T>();
+  State<ItemList<T>> createState() => _ItemListState<T>();
 }
 
 class _ItemListState<T extends ExplorableItem> extends State<ItemList<T>> {
@@ -186,7 +186,7 @@ class ItemSectionListScreen<T extends ExplorableSectionItem>
   const ItemSectionListScreen({super.key});
 
   @override
-  _ItemSectionListScreenState<T> createState() =>
+  State<ItemSectionListScreen<T>> createState() =>
       _ItemSectionListScreenState<T>();
 }
 
@@ -269,7 +269,7 @@ class SectionList<T extends ExplorableSectionItem> extends StatefulWidget {
   });
 
   @override
-  _SectionListState<T> createState() => _SectionListState<T>();
+  State<SectionList<T>> createState() => _SectionListState<T>();
 }
 
 class _SectionListState<T extends ExplorableSectionItem>
@@ -354,17 +354,14 @@ class _SectionListState<T extends ExplorableSectionItem>
                       ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                Container(
-                  child: IconButton(
-                    padding: const EdgeInsets.all(0),
-                    icon: const Icon(Icons.compare_arrows),
-                    iconSize: 32,
-                    splashRadius: 24,
-                    color: Theme.of(context).iconTheme.color,
-                    onPressed: section.items.length > 1
-                        ? () => _onCompare(index)
-                        : null,
-                  ),
+                IconButton(
+                  padding: const EdgeInsets.all(0),
+                  icon: const Icon(Icons.compare_arrows),
+                  iconSize: 32,
+                  splashRadius: 24,
+                  color: Theme.of(context).iconTheme.color,
+                  onPressed:
+                      section.items.length > 1 ? () => _onCompare(index) : null,
                 ),
               ],
             ),
@@ -420,7 +417,7 @@ class ItemCard<T extends ExplorableItem> extends StatefulWidget {
   });
 
   @override
-  _ItemCardState<T> createState() => _ItemCardState<T>();
+  State<ItemCard<T>> createState() => _ItemCardState<T>();
 }
 
 class _ItemCardState<T extends ExplorableItem> extends State<ItemCard<T>> {

@@ -109,7 +109,8 @@ class MoreTab extends StatelessWidget {
                 size: 30,
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://twitter.com/bstategames'),
+              onTab: () =>
+                  openURL(Uri.parse('https://twitter.com/bstategames')),
             ),
           ],
         ),
@@ -125,7 +126,7 @@ class MoreTab extends StatelessWidget {
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL('https://discord.gg/g99WEgG'),
+              onTab: () => openURL(Uri.parse('https://discord.gg/g99WEgG')),
             ),
             CustomTile(
               title: const Text('Rate the app'),
@@ -145,8 +146,8 @@ class MoreTab extends StatelessWidget {
                 size: 34,
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () => openURL(
-                  'https://github.com/battle-buddy/battlebuddy-android'),
+              onTab: () => openURL(Uri.parse(
+                  'https://github.com/battle-buddy/battlebuddy-android')),
             ),
             CustomTile(
               title: const Text('Check Out The Team'),
