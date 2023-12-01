@@ -54,14 +54,13 @@ class VeritasInfo extends StatelessWidget {
             ),
             CustomTile(
               leading: FaIcon(
-                FontAwesomeIcons.twitter,
+                FontAwesomeIcons.xTwitter,
                 color: Theme.of(context).colorScheme.secondary,
                 size: 32,
               ),
               title: const Text('Stay Up to Date'),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () =>
-                  openURL(Uri.parse('https://twitter.com/veriitasgames')),
+              onTab: () => openURL(Uri.parse('https://x.com/VeriitasGames')),
             ),
             CustomTile(
               leading: FaIcon(

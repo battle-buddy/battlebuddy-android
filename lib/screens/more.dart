@@ -104,13 +104,12 @@ class MoreTab extends StatelessWidget {
             CustomTile(
               title: const Text('Battlestate Games Limited'),
               leading: FaIcon(
-                FontAwesomeIcons.twitter,
+                FontAwesomeIcons.xTwitter,
                 color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTab: () =>
-                  openURL(Uri.parse('https://twitter.com/bstategames')),
+              onTab: () => openURL(Uri.parse('https://x.com/bstategames')),
             ),
           ],
         ),
