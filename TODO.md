@@ -34,9 +34,10 @@
 - [ ] Comparison graph color computation
 - [ ] List opening performance
 - [ ] Item detail tile lists
-- [ ] Predefined queries by item type (?)
+- [x] Predefined queries by item type (?)
 - [x] Add unit types to comparison graph values
 - [x] Improve item tables
 - [ ] Cleanup
 - [ ] Polishing
 - [ ] Write tests
+- [ ] Design and visuals
