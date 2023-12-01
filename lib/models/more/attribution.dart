@@ -14,7 +14,7 @@ class Attribution {
         assert(map['index'] != null),
         title = map['title'],
         subtitle = map['subtitle'],
-        url = map['link'],
+        url = map['url'] != null ? Uri.parse(map['url']) : null,
         index = map['index'].toInt();
 
   Attribution.fromSnapshot(DocumentSnapshot snapshot)
