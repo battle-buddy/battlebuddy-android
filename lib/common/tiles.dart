@@ -86,6 +86,7 @@ class CustomTile extends StatelessWidget {
         leading: leading,
         trailing: trailing,
         onTap: onTab,
+        leadingAndTrailingTextStyle: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }
