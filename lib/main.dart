@@ -46,8 +46,6 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _theme = AppTheme.themeData;
-    setNavigationBarColor(
-        _theme.appBarTheme.systemOverlayStyle!.systemNavigationBarColor!);
     initialize();
   }
 
