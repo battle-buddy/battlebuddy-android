@@ -31,7 +31,7 @@ dependencies:
   firebase_auth: ^4.14.1
   cloud_firestore: ^4.13.2
   firebase_storage: ^11.5.2
-  firebase_analytics: ^10.7.1
+  firebase_analytics: ^10.7.4
   firebase_crashlytics: ^3.4.5
 
   package_info_plus: ^5.0.1
