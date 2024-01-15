@@ -39,7 +39,7 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   firebase_cached_image: ^0.4.5
   percent_indicator: ^4.2.2
-  url_launcher: ^6.1.6
+  url_launcher: ^6.2.3
   in_app_review: ^2.0.4
   # youtube_player_flutter: ^7.0.0+7
 
