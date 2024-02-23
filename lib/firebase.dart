@@ -101,7 +101,6 @@ class StorageImage {
         ),
         options: const CacheOptions(
           checkForMetadataChange: true,
-          metadataRefreshInBackground: false,
         ));
   }
 
@@ -118,7 +117,6 @@ class StorageImage {
         ),
         options: const CacheOptions(
           checkForMetadataChange: true,
-          metadataRefreshInBackground: false,
         ));
   }
 }
